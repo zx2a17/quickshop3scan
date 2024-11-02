@@ -9,8 +9,6 @@ My third complete rewrite of the Quickshop app. Using the following stack:
 - UI Theme: material 3
 - HTTP: TBD
 
-A new Flutter project.
-
 ## Getting Started
 
 This project is a starting point for a Flutter application that follows the
@@ -29,8 +27,10 @@ include with your application.
 The `assets/images` directory contains [resolution-aware
 images](https://flutter.dev/to/resolution-aware-images).
 
-## Localization
+### App Icon
+Android Studio was used to import the SVG file of the app icon. The imported icon file did not have any padding around the icon. The import process in Android Studio generates WEBP files at each display density, although it can be configured to create PNG files instead. It also converts the SVG into an Android Vector Drawable format, adding sufficient padding so it can be used as an [adaptive icon](https://developer.android.com/develop/ui/views/launch/icon_design_adaptive). Because the Quickshop icon silhouete is sufficiently distinct when converted to a single colour, `android\app\src\main\res\mipmap-anydpi-v26\ic_launcher.xml` was modified to set the monochrome icon to be the same as the adaptive icon foreground. 
 
+## Localization
 This project generates localized messages based on arb files found in
 the `lib/src/localization` directory.
 
