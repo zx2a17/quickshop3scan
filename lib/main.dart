@@ -1,4 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
 import 'package:flutter/material.dart';
 import 'package:quickshop/firebase/options.dart';
 
@@ -22,5 +24,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FirebaseUIAuth.configureProviders([
+    EmailAuthProvider(),
+    GoogleProvider(
+      clientId: DefaultFirebaseOptions.googleSignInClientId,
+    ),
+  ]);
   runApp(MyApp(settingsController: settingsController));
 }
