@@ -1,5 +1,6 @@
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:quickshop/router.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -7,6 +8,31 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SignInScreen(
+      headerBuilder: (ctx, constraints, shrinkOffset) {
+        return Container(
+          height: constraints.maxHeight,
+          width: constraints.maxWidth,
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/logo/logo.png',
+                height: 64,
+                width: 64,
+              ),
+              Text(
+                'Rocket through your shopping with Quickshop',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontFamily: 'RacingSansOne',
+                      color: Colors.orange,
+                    ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        );
+      },
       actions: [
         AuthStateChangeAction((context, state) {
           if (state is SigningIn) {
@@ -19,6 +45,7 @@ class LoginPage extends StatelessWidget {
             _ => null,
           };
           if (user != null) {
+            AppRouter.goRouter.go(Routes.home);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text('Welcome, ${user.displayName}!'),

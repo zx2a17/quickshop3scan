@@ -30,6 +30,10 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: RacingSansOne
+      fonts:
+        - asset: assets/fonts/RacingSansOne-Regular.ttf
 
   # Enable generation of localized Strings from arb files.
   generate: true
@@ -37,3 +41,5 @@ flutter:
   assets:
     # Add assets from the images directory to the application.
     - assets/images/
+    - assets/logo/
+    - assets/fonts/
