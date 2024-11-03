@@ -10,7 +10,9 @@
             "type": "dart",
             "args": [
                 "--flavor",
-                "dev"
+                "dev",
+                "--dart-define-from-file",
+                "settings/app_secrets_dev.json"
             ]
         },
         {
@@ -20,7 +22,9 @@
             "flutterMode": "release",
             "args": [
                 "--flavor",
-                "dev"
+                "dev",
+                "--dart-define-from-file",
+                "settings/app_secrets_dev.json"
             ]
         },
         {
@@ -29,7 +33,9 @@
             "type": "dart",
             "args": [
                 "--flavor",
-                "prod"
+                "prod",
+                "--dart-define-from-file",
+                "settings/app_secrets_prod.json"
             ]
         },
         {
@@ -39,7 +45,9 @@
             "flutterMode": "release",
             "args": [
                 "--flavor",
-                "prod"
+                "prod",
+                "--dart-define-from-file",
+                "settings/app_secrets_prod.json"
             ]
         }
     ]
