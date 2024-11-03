@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quickshop/router.dart';
 
 import 'sample_item.dart';
@@ -21,12 +22,14 @@ class SampleItemListView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Sample Items'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              AppRouter.goRouter.push(Routes.settings);
-            },
-          ),
+          Consumer(builder: (context, ref, _) {
+            return IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () {
+                ref.read(routerProvider).go(Routes.settings);
+              },
+            );
+          }),
         ],
       ),
 
