@@ -23,7 +23,7 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
 // RiverpodGenerator
 // **************************************************************************
 
-String _$authUserStreamHash() => r'a0e8ec03fcfae84f3dd77351cbe9e4ca8bf0efb3';
+String _$authUserStreamHash() => r'cf8a971876562b407b2fa435bf955011b2ef3425';
 
 /// See also [_authUserStream].
 @ProviderFor(_authUserStream)
@@ -40,7 +40,7 @@ final _authUserStreamProvider = AutoDisposeStreamProvider<auth.User?>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef _AuthUserStreamRef = AutoDisposeStreamProviderRef<auth.User?>;
-String _$userHash() => r'c0fc8a0dacfc48baef772b9604980a013855ffd2';
+String _$userHash() => r'1d63e8bffc8bfdb99f8c367f44898a3f9237c6ca';
 
 /// See also [user].
 @ProviderFor(user)

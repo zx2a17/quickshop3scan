@@ -20,13 +20,11 @@ class User with _$User {
 
 @riverpod
 Stream<auth.User?> _authUserStream(Ref ref) {
-  print('QS: Building authUserStreamProvider');
   return auth.FirebaseAuth.instance.authStateChanges();
 }
 
 @riverpod
 User? user(Ref ref) {
-  print('QS: Building userProvider');
   // Watch for changes to the auth user, but we can get the current user synchronously.
   final _ = ref.watch(_authUserStreamProvider);
   final authUser = auth.FirebaseAuth.instance.currentUser;
@@ -42,6 +40,5 @@ User? user(Ref ref) {
 
 @riverpod
 bool loggedIn(Ref ref) {
-  print('QS: Building loggedInProvider');
   return ref.watch(userProvider) != null;
 }

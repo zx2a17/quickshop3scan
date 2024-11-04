@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quickshop/analytics/logger.dart';
 import 'package:quickshop/data/user.dart';
 import 'package:quickshop/pages/login/login_page.dart';
 import 'package:quickshop/src/sample_feature/sample_item_list_view.dart';
@@ -15,7 +16,6 @@ final settingsController = SettingsController(SettingsService());
 
 @riverpod
 GoRouter router(Ref ref) {
-  print('QS: Building routerProvider');
   final loggedInNotifier = ValueNotifier<bool>(false);
   ref.listen<bool>(
     loggedInProvider,
@@ -40,7 +40,7 @@ GoRouter router(Ref ref) {
     refreshListenable: loggedInNotifier,
     redirect: (context, state) {
       if (!loggedInNotifier.value && state.uri.path != Routes.login) {
-        print('QS: Redirecting to login');
+        ref.read(loggerProvider).log('Redirecting unauthenticated user to login');
         return Routes.login;
       }
       return null;
@@ -48,9 +48,6 @@ GoRouter router(Ref ref) {
   );
   ref.onDispose(loggedInNotifier.dispose);
   ref.onDispose(router.dispose);
-  ref.onDispose(() {
-    print('QS: Disposing rotuerProvider');
-  });
   return router;
 }
 
