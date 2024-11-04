@@ -42,7 +42,7 @@ jobs:
           fi
           echo "pubspecVersion=$pubspecVersion" >> $GITHUB_ENV
 
-          tagVersion = "$pubspecVersion-dev.${{ github.run_id }}"
+          tagVersion="$pubspecVersion-dev.${{ github.run_id }}"
           echo "Tagging commit ${{ github.sha }} with tag $tagVersion"
           git config --global user.email "pipeline@app.quickshop.buntagon.com"
           git config --global user.name "${{ github.actor }}"
