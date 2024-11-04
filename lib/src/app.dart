@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
         darkTheme: ThemeData.dark(),
         themeMode: settingsController.themeMode,
 
-        routerConfig: ref.read(routerProvider),
+        routerConfig: ref.watch(routerProvider),
       );
     });
   }

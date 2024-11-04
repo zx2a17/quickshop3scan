@@ -1,0 +1,47 @@
+import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'user.freezed.dart';
+part 'user.g.dart';
+
+@freezed
+class User with _$User {
+  const factory User({
+    required String id,
+    required String name,
+    required String email,
+  }) = _User;
+
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+}
+
+@riverpod
+Stream<auth.User?> _authUserStream(Ref ref) {
+  print('QS: Building authUserStreamProvider');
+  return auth.FirebaseAuth.instance.authStateChanges();
+}
+
+@riverpod
+User? user(Ref ref) {
+  print('QS: Building userProvider');
+  // Watch for changes to the auth user, but we can get the current user synchronously.
+  final _ = ref.watch(_authUserStreamProvider);
+  final authUser = auth.FirebaseAuth.instance.currentUser;
+  if (authUser != null) {
+    return User(
+      id: authUser.uid,
+      name: authUser.displayName ?? '',
+      email: authUser.email ?? '',
+    );
+  }
+  return null;
+}
+
+@riverpod
+bool loggedIn(Ref ref) {
+  print('QS: Building loggedInProvider');
+  return ref.watch(userProvider) != null;
+}

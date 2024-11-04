@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quickshop/router.dart';
 
 import 'settings_controller.dart';
 
@@ -55,7 +54,6 @@ class SettingsView extends StatelessWidget {
             TextButton(
               onPressed: () {
                 FirebaseAuth.instance.signOut();
-                ref.read(routerProvider).go(Routes.login);
               },
               child: const Text('Sign Out'),
             ),

@@ -1,5 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quickshop/data/user.dart';
 import 'package:quickshop/pages/login/login_page.dart';
 import 'package:quickshop/src/sample_feature/sample_item_list_view.dart';
 import 'package:quickshop/src/settings/settings_controller.dart';
@@ -14,31 +15,44 @@ final settingsController = SettingsController(SettingsService());
 
 @riverpod
 GoRouter router(Ref ref) {
-  return _goRouter;
+  print('QS: Building routerProvider');
+  final loggedInNotifier = ValueNotifier<bool>(false);
+  ref.listen<bool>(
+    loggedInProvider,
+    (_, loggedIn) => loggedInNotifier.value = loggedIn,
+    fireImmediately: true,
+  );
+  final router = GoRouter(
+    routes: [
+      GoRoute(
+        path: Routes.home,
+        builder: (context, state) => const SampleItemListView(),
+      ),
+      GoRoute(
+        path: Routes.login,
+        builder: (context, state) => const LoginPage(),
+      ),
+      GoRoute(
+        path: Routes.settings,
+        builder: (context, state) => SettingsView(controller: settingsController),
+      ),
+    ],
+    refreshListenable: loggedInNotifier,
+    redirect: (context, state) {
+      if (!loggedInNotifier.value && state.uri.path != Routes.login) {
+        print('QS: Redirecting to login');
+        return Routes.login;
+      }
+      return null;
+    },
+  );
+  ref.onDispose(loggedInNotifier.dispose);
+  ref.onDispose(router.dispose);
+  ref.onDispose(() {
+    print('QS: Disposing rotuerProvider');
+  });
+  return router;
 }
-
-final _goRouter = GoRouter(
-  routes: [
-    GoRoute(
-      path: Routes.home,
-      builder: (context, state) => const SampleItemListView(),
-    ),
-    GoRoute(
-      path: Routes.login,
-      builder: (context, state) => const LoginPage(),
-    ),
-    GoRoute(
-      path: Routes.settings,
-      builder: (context, state) => SettingsView(controller: settingsController),
-    ),
-  ],
-  redirect: (context, state) {
-    if (FirebaseAuth.instance.currentUser == null) {
-      return Routes.login;
-    }
-    return null;
-  },
-);
 
 class Routes {
   static const home = '/';
