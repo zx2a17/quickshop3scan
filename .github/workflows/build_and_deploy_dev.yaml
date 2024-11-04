@@ -1,0 +1,63 @@
+name: Dev - Build and Deploy
+on:
+  workflow_dispatch:
+
+jobs:
+  test_and_build:
+    runs-on: ubuntu-latest
+    environment: 'Development'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ vars.FLUTTER_VERSION }}
+          channel: 'stable'
+      - run: flutter doctor -v
+      - run: flutter test
+      - shell: bash
+        name: Load secrets files
+        env:
+          APP_SECRETS: ${{ secrets.APP_SECRETS }}
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: |
+          echo "$DEV_SECRETS" >> settings/app_secrets.json
+          echo "$GOOGLE_SERVICES_JSON" >> android/app/src/dev/google-services.json
+      - shell: bash 
+        name: Tag commit with version
+        run: |
+          # Extract the version from pubspec.yaml
+          pubspecVersion=$(grep '^version:' pubspec.yaml | awk '{print $2}')
+
+          # Define a regex pattern for major.minor.patch format
+          pattern="^[0-9]+\.[0-9]+\.[0-9]+$"
+
+          # Check if the version matches the pattern
+          if [[ $pubspecVersion =~ $pattern ]]; then
+            echo "Building with semantic version: $pubspecVersion"
+          else
+            echo "Version $pubspecVersion from pubspec.yaml is NOT in the correct format (major.minor.patch)."
+            exit 1
+          fi
+          echo "pubspecVersion=$pubspecVersion" >> $GITHUB_ENV
+
+          tagVersion = "$pubspecVersion-dev.${{ github.run_id }}"
+          echo "Tagging commit ${{ github.sha }} with tag $tagVersion"
+          git config --global user.email "pipeline@app.quickshop.buntagon.com"
+          git config --global user.name "${{ github.actor }}"
+          git tag -a $tagVersion -m "Development build $tagVersion" ${{ github.sha }}
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git push origin $tagVersion
+
+      - run: flutter build apk --release --dart-define-from-file=settings/app_settings.json --dart-define-from-file=settings/app_secrets.json --build-number=${{ github.run_id }}
+        name: Build dev android apk
+      - run: |
+          apkName="quickshop-dev-$pubspecVersion.${{ github.run_id }}.apk"
+          echo "apkName=$apkName" >> $GITHUB_ENV
+          mv build/app/outputs/flutter-apk/app-dev-release.apk "build/app/outputs/flutter-apk/$apkName"
+        name: Rename dev apk
+      - uses: actions/upload-artifact@v3
+        with:
+          name: android-dev
+          path: build/app/outputs/flutter-apk/${{ env.apkName }}
