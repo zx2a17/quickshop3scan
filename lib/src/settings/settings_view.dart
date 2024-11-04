@@ -51,6 +51,12 @@ class SettingsView extends StatelessWidget {
                 ],
               ),
             ),
+            ElevatedButton(
+              onPressed: () {
+                throw Exception('This is test exception');
+              },
+              child: const Text('Verify Sentry Setup'),
+            ),
             TextButton(
               onPressed: () {
                 FirebaseAuth.instance.signOut();

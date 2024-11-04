@@ -9,6 +9,7 @@ import 'package:quickshop/src/settings/settings_service.dart';
 import 'package:quickshop/src/settings/settings_view.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 part 'router.g.dart';
 
@@ -45,6 +46,9 @@ GoRouter router(Ref ref) {
       }
       return null;
     },
+    observers: [
+      SentryNavigatorObserver(),
+    ],
   );
   ref.onDispose(loggedInNotifier.dispose);
   ref.onDispose(router.dispose);

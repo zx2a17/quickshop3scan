@@ -12,7 +12,9 @@
                 "--flavor",
                 "dev",
                 "--dart-define-from-file",
-                "settings/app_secrets_dev.json"
+                "settings/app_secrets_dev.json",
+                "--dart-define-from-file",
+                "settings/app_settings_dev.json"
             ]
         },
         {
@@ -24,7 +26,9 @@
                 "--flavor",
                 "dev",
                 "--dart-define-from-file",
-                "settings/app_secrets_dev.json"
+                "settings/app_secrets_dev.json",
+                "--dart-define-from-file",
+                "settings/app_settings_dev.json"
             ]
         },
         {
@@ -35,7 +39,9 @@
                 "--flavor",
                 "prod",
                 "--dart-define-from-file",
-                "settings/app_secrets_prod.json"
+                "settings/app_secrets_prod.json",
+                "--dart-define-from-file",
+                "settings/app_settings_prod.json"
             ]
         },
         {
@@ -47,7 +53,9 @@
                 "--flavor",
                 "prod",
                 "--dart-define-from-file",
-                "settings/app_secrets_prod.json"
+                "settings/app_secrets_prod.json",
+                "--dart-define-from-file",
+                "settings/app_settings_prod.json"
             ]
         }
     ]

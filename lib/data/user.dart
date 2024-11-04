@@ -25,7 +25,7 @@ Stream<auth.User?> _authUserStream(Ref ref) {
 
 @riverpod
 User? user(Ref ref) {
-  // Watch for changes to the auth user, but we can get the current user synchronously.
+  // Watch for changes on the auth user stream, but we can get the current user synchronously.
   final _ = ref.watch(_authUserStreamProvider);
   final authUser = auth.FirebaseAuth.instance.currentUser;
   if (authUser != null) {

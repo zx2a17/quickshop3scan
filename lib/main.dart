@@ -1,25 +1,39 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quickshop/firebase/options.dart';
 import 'package:quickshop/router.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'src/app.dart';
 
-void main() async {
-  // Set up the SettingsController, which will glue user settings to multiple
-  // Flutter Widgets.
+Future<void> main() async {
+  // Only initalise sentry in release mode
+  if (kDebugMode) {
+    await SentryFlutter.init(
+      (options) {
+        // The Sentry DSN is set via the SENTRY_DSN variable in app_secrets_<env>.json
 
-  // Load the user's preferred theme while the splash screen is displayed.
-  // This prevents a sudden theme change when the app is first displayed.
+        // Set tracesSampleRate to 1.0 to capture 100% of transactions for tracing.
+        // We recommend adjusting this value in production.
+        options.tracesSampleRate = 1.0;
+        // The sampling rate for profiling is relative to tracesSampleRate
+        // Setting to 1.0 will profile 100% of sampled transactions:
+        options.profilesSampleRate = 1.0;
+      },
+      appRunner: _main,
+    );
+  } else {
+    WidgetsFlutterBinding.ensureInitialized();
+    await _main();
+  }
+}
+
+Future<void> _main() async {
   await settingsController.loadSettings();
-
-  // Run the app and pass in the SettingsController. The app listens to the
-  // SettingsController for changes, then passes it further down to the
-  // SettingsView.
-  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
