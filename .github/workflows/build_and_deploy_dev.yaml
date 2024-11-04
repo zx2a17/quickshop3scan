@@ -22,7 +22,7 @@ jobs:
           APP_SECRETS: ${{ secrets.APP_SECRETS }}
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
         run: |
-          echo "$APP_SECRETS" >> settings/app_secrets.json
+          echo "$APP_SECRETS" >> settings/app_secrets_dev.json
           echo "$GOOGLE_SERVICES_JSON" >> android/app/src/dev/google-services.json
       - shell: bash 
         name: Determine build version
@@ -43,6 +43,8 @@ jobs:
           echo "pubspecVersion=$pubspecVersion" >> $GITHUB_ENV
 
           tagVersion="$pubspecVersion-dev.${{ github.run_number }}"
+
+          echo "Commit ${{ github.sha }} will be tagged with: $tagVersion"
           echo "tagVersion=$tagVersion" >> $GITHUB_ENV
 
       - name: Tag commit
@@ -52,12 +54,12 @@ jobs:
             github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: 'refs/tags/${{env.tagVersion}}',
+              ref: 'refs/tags/${{ env.tagVersion }}',
               sha: context.sha
             })
 
 
-      - run: flutter build apk --release --dart-define-from-file=settings/app_settings.json --dart-define-from-file=settings/app_secrets.json --build-number=${{ github.run_number }}
+      - run: flutter build apk --release --dart-define-from-file=settings/app_settings_dev.json --dart-define-from-file=settings/app_secrets_dev.json --build-number=${{ github.run_number }}
         name: Build dev android apk
       - run: |
           apkName="quickshop-dev-$pubspecVersion.${{ github.run_number }}.apk"
