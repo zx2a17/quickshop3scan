@@ -22,7 +22,7 @@ jobs:
           APP_SECRETS: ${{ secrets.APP_SECRETS }}
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
         run: |
-          echo "$DEV_SECRETS" >> settings/app_secrets.json
+          echo "$APP_SECRETS" >> settings/app_secrets.json
           echo "$GOOGLE_SERVICES_JSON" >> android/app/src/dev/google-services.json
       - shell: bash 
         name: Tag commit with version
