@@ -6,7 +6,7 @@ part of 'crash_reporter.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$crashReporterHash() => r'98ad8a774ac28bdff6815eb2cd51bdb0141cbef9';
+String _$crashReporterHash() => r'89e71cd1b3814a9f7318d9c0cb983edfe9739f48';
 
 /// See also [crashReporter].
 @ProviderFor(crashReporter)

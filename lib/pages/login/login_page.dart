@@ -1,6 +1,8 @@
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quickshop/analytics/analytics.dart';
+import 'package:quickshop/analytics/crash_reporter.dart';
 import 'package:quickshop/router.dart';
 
 class LoginPage extends StatelessWidget {
@@ -48,20 +50,18 @@ class LoginPage extends StatelessWidget {
             };
             if (user != null) {
               ref.read(routerProvider).go(Routes.home);
+              ref.read(analyticsProvider).logEvent(const AnalyticsEvent.login());
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text('Welcome, ${user.displayName}!'),
                 ),
               );
             } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    'Unexpected state returned from Firebase Sign In: $state',
-                  ),
-                ),
-              );
-              print(StackTrace.current);
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                content: Text('An unexpected error occurred. Please try again later'),
+              ));
+              final errorMessage = 'Unexpected state returned from Firebase Sign In: $state';
+              ref.read(crashReporterProvider).report(errorMessage, StackTrace.current);
             }
           }),
         ],
