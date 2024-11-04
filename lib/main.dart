@@ -12,7 +12,7 @@ import 'src/app.dart';
 
 Future<void> main() async {
   // Only initalise sentry in release mode
-  if (kDebugMode) {
+  if (kReleaseMode) {
     await SentryFlutter.init(
       (options) {
         // The Sentry DSN is set via the SENTRY_DSN variable in app_secrets_<env>.json
