@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 part 'analytics.g.dart';
 
@@ -18,6 +19,11 @@ class Analytics {
     unawaited(FirebaseAnalytics.instance.logEvent(
       name: event.name,
       parameters: event.parameters,
+    ));
+    Sentry.addBreadcrumb(Breadcrumb(
+      message: event.name,
+      data: event.parameters,
+      level: SentryLevel.info,
     ));
   }
 }
