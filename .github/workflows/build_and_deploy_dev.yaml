@@ -63,6 +63,7 @@ jobs:
         with:
           distribution: 'corretto' 
           java-version: '21'
+          cache: gradle
 
       - run: flutter build apk --release --flavor=dev --dart-define-from-file=settings/app_settings_dev.json --dart-define-from-file=settings/app_secrets_dev.json --build-number=${{ github.run_number }}
         name: Build dev android apk
