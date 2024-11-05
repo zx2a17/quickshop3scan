@@ -81,7 +81,7 @@ jobs:
       - shell: bash
         name: Upload dev apk to Firebase App Distribution
         env:
-          SEVICE_ACCOUNT: ${{ secrets.FB_APP_DIST_CREDENTIALS }}
+          SERVICE_ACCOUNT: ${{ secrets.FB_APP_DIST_CREDENTIALS }}
         run: |
           echo "$SERVICE_ACCOUNT" >> google_service_account.json
           export GOOGLE_APPLICATION_CREDENTIALS=google_service_account.json
