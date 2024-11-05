@@ -83,6 +83,6 @@ jobs:
           SEVICE_ACCOUNT: ${{ secrets.FIREBASE_APP_DISTRIBUTION_SERVICE_ACCOUNT_KEY }}
         run: |
           echo "$SERVICE_ACCOUNT" >> google_service_account.json
-          echo "GOOGLE_APPLICATION_CREDENTIALS=$pwd/google_service_account.json" >> $GITHUB_ENV
+          echo "GOOGLE_APPLICATION_CREDENTIALS=${{ github.workspace }}/google_service_account.json" >> $GITHUB_ENV
       - run: firebase appdistribution:distribute build/app/outputs/flutter-apk/${{ env.apkName }} --app ${{ vars.ANDROID_FIREBASE_APP_ID }} --release-notes "Dev Build ${{ env.tagVersion }}"
         name: Upload dev apk to Firebase App Distribution
