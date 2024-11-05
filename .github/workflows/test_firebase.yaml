@@ -16,9 +16,13 @@ jobs:
         name: Upload dev apk to Firebase App Distribution
         env:
           SEVICE_ACCOUNT: ${{ secrets.FIREBASE_APP_DISTRIBUTION_SERVICE_ACCOUNT_KEY }}
+          APP_SECRETS: ${{ secrets.APP_SECRETS }}
         run: |
           echo "$SERVICE_ACCOUNT" >> google_service_account.json
           export GOOGLE_APPLICATION_CREDENTIALS=google_service_account.json
+          echo "$APP_SECRETS" >> settings/app_secrets_dev.json
+          cat settings/app_secrets_dev.json
+          stat --format="%s" settings/app_secrets_dev.json
           echo "google_service_account.json contents"
           cat google_service_account.json
           echo "google_service_account.json file size"
