@@ -1,0 +1,23 @@
+name: Dev - Build and Deploy
+on:
+  workflow_dispatch:
+
+jobs:
+  test_and_build:
+    runs-on: ubuntu-latest
+    environment: 'Development'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: curl -sL https://firebase.tools | bash
+        name: Install Firebase CLI
+      - shell: bash
+        name: Load Firebase service account
+        env:
+          SEVICE_ACCOUNT: ${{ secrets.FIREBASE_APP_DISTRIBUTION_SERVICE_ACCOUNT_KEY }}
+        run: |
+          echo "$SERVICE_ACCOUNT" >> google_service_account.json
+          echo "GOOGLE_APPLICATION_CREDENTIALS=${{ github.workspace }}/google_service_account.json" >> $GITHUB_ENV
+      - run: firebase appdistribution:distribute temp/quickshop-dev-0.1.0.23.apk --debug --app ${{ vars.ANDROID_FIREBASE_APP_ID }} --release-notes "Initial dev build"
+        name: Upload dev apk to Firebase App Distribution
