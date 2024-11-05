@@ -1,3 +1,6 @@
+# 0.1.6 - 2024-11-05
+Fix an issue with google sign in
+
 # 0.1.5 - 2024-11-05
 Improve error reporting for authentication failures
 
