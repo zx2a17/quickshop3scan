@@ -17,11 +17,11 @@ jobs:
         env:
           FB_CREDENTIALS: ${{ secrets.FB_APP_DIST_CREDENTIALS }}
         run: |
-          echo "$FB_CREDENTIALS" >> google_service_account2.json
-          export GOOGLE_APPLICATION_CREDENTIALS=google_service_account2.json
-          echo "google_service_account2.json contents"
-          cat google_service_account2.json
-          echo "google_service_account2.json file size"
-          stat --format="%s" google_service_account2.json
+          echo "$FB_CREDENTIALS" >> google_service_account.json
+          export GOOGLE_APPLICATION_CREDENTIALS=google_service_account.json
+          echo "google_service_account.json contents"
+          cat google_service_account.json
+          echo "google_service_account.json file size"
+          stat --format="%s" google_service_account.json
           firebase --version
           firebase appdistribution:distribute temp/quickshop-dev-0.1.0.23.apk --debug --app ${{ vars.ANDROID_FIREBASE_APP_ID }} --release-notes "Initial dev build"
