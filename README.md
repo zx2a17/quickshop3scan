@@ -42,6 +42,9 @@ Google documentation states that Firebase API keys are safe to included in code 
 
 As such, it might seem pointless to designate any values as secret/sensitive in a public application. However, because this repo itself is public, these API keys and Firebase configuration values have been hidden to encourage anyone cloning the repo to run it against their own Firebase project. 
 
+### Signing Keystore
+Debug and upload keystores and corresponding properties files should be placed into the `android/keystore` folder. See [here](https://docs.flutter.dev/deployment/android#configure-signing-in-gradle) for a general description of the android app signing approach. 
+
 ## Assets
 
 The `assets` directory houses images, fonts, and any other files you want to
@@ -70,6 +73,8 @@ The following environment variables are set in each environment in Github Repo S
 - APP_SECRETS: The contents of the `app_secrets_<ENV>.json` file described above, with all newline characters removed
 - GOOGLE_SERVICES_JSON: The contents of the appropriate google services json file, located at `android/app/src/<ENV>/google-services.json`, with all newline characters removed
 - FB_APP_DIST_CREDENTIALS: A google cloud service account JSON key granting permission to push app builds to firebase app distrubtion. [See steps detailed here](https://firebase.google.com/docs/app-distribution/authenticate-service-account?platform=android) for creating a service account with `Firebase App Distribution Admin` role. Again, all newlines should be removed from the json key file before adding it as a secret in github actions
+- UPLOAD_KEYSTORE_B64: Base64 encoding of a `.jks` java keystore file used to sign the app. Stored in a separate private repository. 
+- UPLOAD_KEYSTORE_PROPS_B64: Base64 encoding of a `.properties` file used to access the keystore. Git bash includes the `base64` command which can be used for encoding files. 
 - ANDROID_FIREBASE_APP_ID: Same as the `firebaseAndroidAppId` in `app_secrets_<ENV>.dart`
 
 

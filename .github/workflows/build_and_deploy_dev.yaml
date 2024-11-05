@@ -7,25 +7,35 @@ jobs:
     runs-on: ubuntu-latest
     environment: 'Development'
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: subosito/flutter-action@v2
+
+      - name: Install flutter
+        uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ vars.FLUTTER_VERSION }}
           channel: 'stable'
+
       - run: flutter doctor -v
       - run: flutter test
-      - shell: bash
-        name: Load secrets files
+
+      - name: Load app secret files and signing keystore
+        shell: bash
         env:
           APP_SECRETS: ${{ secrets.APP_SECRETS }}
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+          UPLOAD_KEYSTORE: ${{ secrets.UPLOAD_KEYSTORE_B64 }}
+          UPLOAD_KEYSTORE_PROPS: ${{ secrets.UPLOAD_KEYSTORE_PROPS_B64 }}
         run: |
           echo "$APP_SECRETS" >> settings/app_secrets_dev.json
           echo "$GOOGLE_SERVICES_JSON" >> android/app/src/dev/google-services.json
-      - shell: bash 
-        name: Determine build version
+          echo "$UPLOAD_KEYSTORE" | base64 -d > android/keystore/upload.keystore
+          echo "$UPLOAD_KEYSTORE_PROPS" | base64 -d > android/keystore/upload.keystore.properties
+
+      - name: Determine build version
+        shell: bash 
         run: |
           # Extract the version from pubspec.yaml
           pubspec_version=$(grep '^version:' pubspec.yaml | awk '{print $2}')
@@ -58,28 +68,33 @@ jobs:
               sha: context.sha
             })
 
-      - uses: actions/setup-java@v4
-        name: Set up JDK 21
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
         with:
           distribution: 'corretto' 
           java-version: '21'
           cache: gradle
 
-      - run: flutter build apk --release --flavor=dev --dart-define-from-file=settings/app_settings_dev.json --dart-define-from-file=settings/app_secrets_dev.json --build-number=${{ github.run_number }}
-        name: Build dev android apk
-      - run: |
+      - name: Build dev android apk
+        run: flutter build apk --release --flavor=dev --dart-define-from-file=settings/app_settings_dev.json --dart-define-from-file=settings/app_secrets_dev.json --build-number=${{ github.run_number }}
+        
+      - name: Rename dev apk
+        run: |
           apk_name="quickshop-dev-$pubspec_version.${{ github.run_number }}.apk"
           echo "apk_name=$apk_name" >> $GITHUB_ENV
           mv build/app/outputs/flutter-apk/app-dev-release.apk "build/app/outputs/flutter-apk/$apk_name"
-        name: Rename dev apk
-      - uses: actions/upload-artifact@v4
+        
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
         with:
           name: android-dev
           path: build/app/outputs/flutter-apk/${{ env.apk_name }}
-      - run: curl -sL https://firebase.tools | bash
-        name: Install Firebase CLI
-      - shell: bash
-        name: Upload dev apk to Firebase App Distribution
+      
+      - name: Install Firebase CLI
+        run: curl -sL https://firebase.tools | bash
+        
+      - name: Upload dev apk to Firebase App Distribution
+        shell: bash
         env:
           SERVICE_ACCOUNT: ${{ secrets.FB_APP_DIST_CREDENTIALS }}
         run: |
