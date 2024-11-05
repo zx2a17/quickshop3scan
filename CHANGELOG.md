@@ -1,3 +1,6 @@
+# 0.1.3 - 2024-11-05
+Test distribution to a tester group in Firebase App Distribution
+
 # 0.1.2 - 2024-11-05
 Further testing of release notes
 - Here is a bullet point
