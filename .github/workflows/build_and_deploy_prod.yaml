@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: 'Production'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - uses: subosito/flutter-action@v2
@@ -78,7 +78,7 @@ jobs:
           echo "apkName=$apkName" >> $GITHUB_ENV
           mv build/app/outputs/flutter-apk/app-prod-release.apk "build/app/outputs/flutter-apk/$apkName"
         name: Rename prod apk
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: android-prod
           path: build/app/outputs/flutter-apk/${{ env.apkName }}
