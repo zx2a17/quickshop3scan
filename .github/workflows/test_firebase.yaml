@@ -17,11 +17,15 @@ jobs:
         env:
           SEVICE_ACCOUNT: ${{ secrets.FIREBASE_APP_DISTRIBUTION_SERVICE_ACCOUNT_KEY }}
           APP_SECRETS: ${{ secrets.APP_SECRETS }}
+          SHORT_VAR: ${{ secrets.SHORT_VAR }}
         run: |
           echo "$SERVICE_ACCOUNT" >> google_service_account.json
           export GOOGLE_APPLICATION_CREDENTIALS=google_service_account.json
-          echo "$APP_SECRETS" >> settings/app_secrets_dev.json
-          cat settings/app_secrets_dev.json
+          echo "$SHORT_VAR" >> google_service_account2.json
+          echo "google_service_account.json2 contents"
+          cat google_service_account2.json
+          echo "google_service_account2.json file size"
+          stat --format="%s" google_service_account2.json
           stat --format="%s" settings/app_secrets_dev.json
           echo "google_service_account.json contents"
           cat google_service_account.json
