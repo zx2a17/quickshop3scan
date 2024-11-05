@@ -1,3 +1,6 @@
+# 0.1.4 - 2024-11-05
+Fix a crash on startup caused by incorrect configuration
+
 # 0.1.3 - 2024-11-05
 Test distribution to a tester group in Firebase App Distribution
 

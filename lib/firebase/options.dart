@@ -55,7 +55,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: String.fromEnvironment('firebaseMessagingSenderId'),
     projectId: String.fromEnvironment('firebaseProjectId'),
     databaseURL: 'https://${const String.fromEnvironment('firebaseProjectId')}.firebaseio.com',
-    storageBucket: '${const String.fromEnvironment('firebaseProjectId')}.firebasestorage.app',
+    storageBucket: String.fromEnvironment('firebaseStorageBucket'),
   );
 
   static const String googleSignInClientId =
