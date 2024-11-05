@@ -24,7 +24,7 @@ jobs:
         run: |
           echo "$APP_SECRETS" >> settings/app_secrets_prod.json
           echo "$GOOGLE_SERVICES_JSON" >> android/app/src/prod/google-services.json
-          
+
       - shell: bash 
         name: Determine build version
         run: |
@@ -51,23 +51,30 @@ jobs:
           if [ ! -f "$changelog_file" ]; then
             echo "Error: $changelog_file does not exist."
             exit 1
+          else 
+            echo "Changelog file found: $changelog_file"
           fi
 
           # Find the line number of the heading
-          start_line=$(grep -n '^# $pubspec_version' "$changelog_file" | cut -d: -f1)
+          start_line=$(grep -n "^# $pubspec_version" "$changelog_file" | cut -d: -f1)
 
           # Check if the heading was found
           if [ -z "$start_line" ]; then
             echo "Error: No changelog heading of format '# $pubspec_version' found in '$changelog_file'."
             exit 1
+          else 
+            echo "Changelog heading for version $pubspec_version found at line: $start_line."
           fi
 
           # Find the line number of the next heading
-          end_line=$(grep -n -m 1 -A 1 '^# ' "$changelog_file" | grep -A 1 "^$start_line:" | tail -n 1 | cut -d: -f1)
+          end_line=$(grep -n -A 0 '^# ' "$changelog_file" | grep -A 2 "^$start_line:" | tail -n 1 | cut -d: -f1)
 
           # If no next heading is found, set end_line to the end of the file
-          if [ -z "$end_line" ]; then
+          if [ "$end_line" == "$start_line" ]; then
             end_line=$(wc -l < "$changelog_file")
+            echo "No next heading found. Setting end line to end of file: $end_line."
+          else 
+            echo "Next heading found at line: $end_line."
           fi
 
           # Extract everything under the heading and before the next heading into the output file
@@ -122,7 +129,9 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: android-prod
-          path: build/app/outputs/flutter-apk/${{ env.apk_name }}
+          path: |
+            build/app/outputs/flutter-apk/${{ env.apk_name }}
+            ${{ env.release_notes_file }}
 
       - run: curl -sL https://firebase.tools | bash
         name: Install Firebase CLI
