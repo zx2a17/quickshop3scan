@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
@@ -8,6 +7,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quickshop/firebase/options.dart';
 import 'package:quickshop/router.dart';
 
+/// When selecting to sign in with google, if the user already had an account with the same
+/// email address and password, the password will be removed from their Firebase Authentication
+/// account and google sign in will become their only available login mechanism.
 class LoginLandingPage extends ConsumerWidget {
   const LoginLandingPage({super.key});
 
@@ -138,7 +140,6 @@ class _BackgroundAnimationState extends State<BackgroundAnimation>
   // In image-sizes moved per second
   final double animationSpeed = 3.5;
   final double imageSize = 64;
-  late final StreamSubscription _subscription;
 
   @override
   void initState() {
@@ -173,7 +174,6 @@ class _BackgroundAnimationState extends State<BackgroundAnimation>
   @override
   void dispose() {
     _controller.dispose();
-    _subscription.cancel();
     super.dispose();
   }
 

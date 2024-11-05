@@ -37,4 +37,10 @@ class AnalyticsEvent {
   const AnalyticsEvent.login() : this._('login', const {});
 
   const AnalyticsEvent.logout() : this._('logout', const {});
+
+  AnalyticsEvent.loginFailed({required String errorCode, required String errorMessage})
+      : this._('login_failed', {
+          'error_code': errorCode,
+          'error_message': errorMessage,
+        });
 }
