@@ -1,0 +1,95 @@
+name: Prod - Build and Deploy
+on:
+  workflow_dispatch:
+
+jobs:
+  test_and_build:
+    runs-on: ubuntu-latest
+    environment: 'Production'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ vars.FLUTTER_VERSION }}
+          channel: 'stable'
+      - run: flutter doctor -v
+      - run: flutter test
+      - shell: bash
+        name: Load secrets files
+        env:
+          APP_SECRETS: ${{ secrets.APP_SECRETS }}
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: |
+          echo "$APP_SECRETS" >> settings/app_secrets_prod.json
+          echo "$GOOGLE_SERVICES_JSON" >> android/app/src/prod/google-services.json
+      - shell: bash 
+        name: Determine build version
+        run: |
+          # Extract the version from pubspec.yaml
+          pubspecVersion=$(grep '^version:' pubspec.yaml | awk '{print $2}')
+
+          # Define a regex pattern for major.minor.patch format
+          pattern="^[0-9]+\.[0-9]+\.[0-9]+$"
+
+          # Check if the version matches the pattern
+          if [[ $pubspecVersion =~ $pattern ]]; then
+            echo "Building with semantic version: $pubspecVersion"
+          else
+            echo "Version $pubspecVersion from pubspec.yaml is NOT in the correct format (major.minor.patch)."
+            exit 1
+          fi
+          echo "pubspecVersion=$pubspecVersion" >> $GITHUB_ENV
+
+          # Check if a tag already exists for this semantic version
+          if git rev-parse "$pubspecVersion" >/dev/null 2>&1; then
+            echo "Error: A production release commit already exists with tag '$pubspecVersion'. Update the semantic version in pubspec.yaml and rerun this pipeline to build a new production release."
+            exit 1
+          else
+            tagVersion="$pubspecVersion"
+            echo "Commit ${{ github.sha }} will be tagged with: $tagVersion"
+          fi  
+          
+          echo "tagVersion=$tagVersion" >> $GITHUB_ENV
+
+      - name: Tag commit
+        uses: actions/github-script@v7
+        with: 
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/${{ env.tagVersion }}',
+              sha: context.sha
+            })
+
+      - uses: actions/setup-java@v4
+        name: Set up JDK 21
+        with:
+          distribution: 'corretto' 
+          java-version: '21'
+          cache: gradle
+
+      - run: flutter build apk --release --flavor=prod --dart-define-from-file=settings/app_settings_prod.json --dart-define-from-file=settings/app_secrets_prod.json --build-number=${{ github.run_number }}
+        name: Build prod android apk
+      - run: |
+          apkName="quickshop-prod-$pubspecVersion.${{ github.run_number }}.apk"
+          echo "apkName=$apkName" >> $GITHUB_ENV
+          mv build/app/outputs/flutter-apk/app-prod-release.apk "build/app/outputs/flutter-apk/$apkName"
+        name: Rename prod apk
+      - uses: actions/upload-artifact@v3
+        with:
+          name: android-prod
+          path: build/app/outputs/flutter-apk/${{ env.apkName }}
+      - run: curl -sL https://firebase.tools | bash
+        name: Install Firebase CLI
+      - shell: bash
+        name: Upload prod apk to Firebase App Distribution
+        env:
+          SERVICE_ACCOUNT: ${{ secrets.FB_APP_DIST_CREDENTIALS }}
+        run: |
+          echo "$SERVICE_ACCOUNT" >> google_service_account.json
+          export GOOGLE_APPLICATION_CREDENTIALS=google_service_account.json
+          firebase --version
+          firebase appdistribution:distribute build/app/outputs/flutter-apk/${{ env.apkName }} --app ${{ vars.ANDROID_FIREBASE_APP_ID }} --release-notes "Prod Build ${{ env.tagVersion }}"
