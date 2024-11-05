@@ -1,3 +1,6 @@
+# 0.1.5 - 2024-11-05
+Improve error reporting for authentication failures
+
 # 0.1.4 - 2024-11-05
 Fix a crash on startup caused by incorrect configuration
 

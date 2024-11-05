@@ -42,6 +42,13 @@ class LoginPage extends StatelessWidget {
             if (state is SigningIn) {
               return;
             }
+            if (state is AuthFailed) {
+              ref.read(crashReporterProvider).report(state.exception, StackTrace.current);
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                content: Text('An unexpected error occurred. Please try again later'),
+              ));
+              return;
+            }
             final user = switch (state) {
               SignedIn(user: final user) => user,
               CredentialLinked(user: final user) => user,
