@@ -1,7 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quickshop/analytics/analytics.dart';
 
 import 'settings_controller.dart';
 
@@ -57,13 +55,6 @@ class SettingsView extends StatelessWidget {
                 throw Exception('This is test exception');
               },
               child: const Text('Verify Sentry Setup'),
-            ),
-            TextButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-                ref.read(analyticsProvider).logEvent(const AnalyticsEvent.logout());
-              },
-              child: const Text('Sign Out'),
             ),
           ],
         ),

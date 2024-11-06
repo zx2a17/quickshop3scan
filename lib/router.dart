@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quickshop/analytics/logger.dart';
 import 'package:quickshop/data/user.dart';
+import 'package:quickshop/pages/home/home_page.dart';
 import 'package:quickshop/pages/login/login_email_page.dart';
 import 'package:quickshop/pages/login/login_landing_page.dart';
-import 'package:quickshop/src/sample_feature/sample_item_list_view.dart';
 import 'package:quickshop/src/settings/settings_controller.dart';
 import 'package:quickshop/src/settings/settings_service.dart';
 import 'package:quickshop/src/settings/settings_view.dart';
@@ -28,7 +28,7 @@ GoRouter router(Ref ref) {
     routes: [
       GoRoute(
         path: Routes.home,
-        builder: (context, state) => const SampleItemListView(),
+        builder: (context, state) => const HomePage(),
       ),
       GoRoute(
         path: Routes.login,
@@ -47,6 +47,7 @@ GoRouter router(Ref ref) {
     ],
     refreshListenable: loggedInNotifier,
     redirect: (context, state) {
+      // Redirect unauthenticated users to login
       if (!loggedInNotifier.value && !state.uri.path.startsWith(Routes.login)) {
         ref.read(loggerProvider).log('Redirecting unauthenticated user to login');
         return Routes.login;
@@ -66,6 +67,7 @@ class _RouteSegments {
   static const login = 'login';
   static const email = 'email';
   static const settings = 'settings';
+  static const lists = 'lists';
 }
 
 class Routes {
@@ -73,4 +75,5 @@ class Routes {
   static const login = '/${_RouteSegments.login}';
   static const loginEmail = '${Routes.login}/${_RouteSegments.email}';
   static const settings = '/${_RouteSegments.settings}';
+  static const lists = '/${_RouteSegments.lists}';
 }
