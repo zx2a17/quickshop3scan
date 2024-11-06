@@ -5,6 +5,29 @@ class ListsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('My lists view'));
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('My lists'),
+      ),
+      body: const Column(
+        children: [
+          ListSummaryTile(listId: '1'),
+          ListSummaryTile(listId: '2'),
+          ListSummaryTile(listId: '3'),
+        ],
+      ),
+    );
+  }
+}
+
+class ListSummaryTile extends StatelessWidget {
+  const ListSummaryTile({required this.listId, super.key});
+  final String listId;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text('List $listId'),
+    );
   }
 }

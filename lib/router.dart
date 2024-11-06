@@ -2,7 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quickshop/analytics/logger.dart';
 import 'package:quickshop/data/user.dart';
+import 'package:quickshop/pages/home/favourites_view.dart';
 import 'package:quickshop/pages/home/home_page.dart';
+import 'package:quickshop/pages/home/lists_view.dart';
+import 'package:quickshop/pages/home/recipes_view.dart';
 import 'package:quickshop/pages/login/login_email_page.dart';
 import 'package:quickshop/pages/login/login_landing_page.dart';
 import 'package:quickshop/src/settings/settings_controller.dart';
@@ -26,9 +29,36 @@ GoRouter router(Ref ref) {
   );
   final router = GoRouter(
     routes: [
-      GoRoute(
-        path: Routes.home,
-        builder: (context, state) => const HomePage(),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, shell) {
+          return HomePage(navigationShell: shell);
+        },
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.lists,
+                builder: (context, state) => const ListsView(),
+              )
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.recipes,
+                builder: (context, state) => const RecipesView(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.favourites,
+                builder: (context, state) => const FavouritesView(),
+              ),
+            ],
+          ),
+        ],
       ),
       GoRoute(
         path: Routes.login,
@@ -52,6 +82,10 @@ GoRouter router(Ref ref) {
         ref.read(loggerProvider).log('Redirecting unauthenticated user to login');
         return Routes.login;
       }
+      // Redirect home to lists
+      if (state.uri.path == '/') {
+        return Routes.lists;
+      }
       return null;
     },
     observers: [
@@ -68,6 +102,8 @@ class _RouteSegments {
   static const email = 'email';
   static const settings = 'settings';
   static const lists = 'lists';
+  static const recipes = 'recipes';
+  static const favourites = 'favourites';
 }
 
 class Routes {
@@ -76,4 +112,6 @@ class Routes {
   static const loginEmail = '${Routes.login}/${_RouteSegments.email}';
   static const settings = '/${_RouteSegments.settings}';
   static const lists = '/${_RouteSegments.lists}';
+  static const recipes = '/${_RouteSegments.recipes}';
+  static const favourites = '/${_RouteSegments.favourites}';
 }
