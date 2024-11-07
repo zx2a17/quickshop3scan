@@ -50,8 +50,14 @@ class MyApp extends StatelessWidget {
           // Define a light and dark color theme. Then, read the user's
           // preferred ThemeMode (light, dark, or system default) from the
           // SettingsController to display the correct theme.
-          theme: ThemeData().copyWith(colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange)),
-          darkTheme: ThemeData.dark(),
+          theme: ThemeData().copyWith(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
+          ),
+          darkTheme: ThemeData.dark().copyWith(
+              colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.orange,
+            brightness: Brightness.dark,
+          )),
           themeMode: settingsController.themeMode,
 
           routerConfig: ref.watch(routerProvider),
