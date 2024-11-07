@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:quickshop/pages/home/profile_icon.dart';
 
-class FavouritesView extends StatelessWidget {
-  const FavouritesView({super.key});
+class FavouritesPage extends StatelessWidget {
+  const FavouritesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My favourites'),
+        leading: const ProfileIcon(),
       ),
       body: const Column(
         children: [

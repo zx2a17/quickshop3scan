@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:quickshop/pages/home/profile_icon.dart';
 
-class RecipesView extends StatelessWidget {
-  const RecipesView({super.key});
+class RecipesPage extends StatelessWidget {
+  const RecipesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My recipes'),
+        leading: const ProfileIcon(),
       ),
       body: const Column(
         children: [
