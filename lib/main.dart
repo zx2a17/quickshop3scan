@@ -5,9 +5,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app.dart';
 import 'firebase/options.dart';
+import 'services/shared_preferences.dart';
 
 Future<void> main() async {
   // Only initalise sentry in release mode
@@ -32,6 +34,9 @@ Future<void> main() async {
 }
 
 Future<void> _main() async {
+  final prefs = await SharedPreferencesWithCache.create(
+    cacheOptions: const SharedPreferencesWithCacheOptions(),
+  );
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -41,5 +46,10 @@ Future<void> _main() async {
       clientId: DefaultFirebaseOptions.googleSignInClientId,
     ),
   ]);
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(ProviderScope(
+    overrides: [
+      sharedPrefsProvider.overrideWithValue(prefs),
+    ],
+    child: const MyApp(),
+  ));
 }
