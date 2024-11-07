@@ -6,9 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
+import 'app.dart';
 import 'firebase/options.dart';
-import 'router.dart';
-import 'src/app.dart';
 
 Future<void> main() async {
   // Only initalise sentry in release mode
@@ -33,7 +32,6 @@ Future<void> main() async {
 }
 
 Future<void> _main() async {
-  await settingsController.loadSettings();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -43,7 +41,5 @@ Future<void> _main() async {
       clientId: DefaultFirebaseOptions.googleSignInClientId,
     ),
   ]);
-  runApp(ProviderScope(
-    child: MyApp(settingsController: settingsController),
-  ));
+  runApp(const ProviderScope(child: MyApp()));
 }

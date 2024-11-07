@@ -108,7 +108,7 @@ This approach ensures there will be only a single production release build with 
 
 ## Localization
 This project generates localized messages based on arb files found in
-the `lib/src/localization` directory.
+the `lib/localization` directory.
 
 To support additional languages, please visit the tutorial on
 [Internationalizing Flutter apps](https://flutter.dev/to/internationalization).

@@ -17,12 +17,8 @@ import 'pages/recipes/recipe_detail_page.dart';
 import 'pages/recipes/recipes_page.dart';
 import 'pages/settings/settings_page.dart';
 import 'repositories/user_repo.dart';
-import 'src/settings/settings_controller.dart';
-import 'src/settings/settings_service.dart';
 
 part 'router.g.dart';
-
-final settingsController = SettingsController(SettingsService());
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -105,7 +101,7 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: Routes.settings,
-        builder: (context, state) => SettingsPage(controller: settingsController),
+        builder: (context, state) => const SettingsPage(),
       ),
     ],
     refreshListenable: loggedInNotifier,

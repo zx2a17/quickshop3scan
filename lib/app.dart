@@ -3,18 +3,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../analytics/crash_reporter.dart';
-import '../router.dart';
-import 'settings/settings_controller.dart';
+import 'analytics/crash_reporter.dart';
+import 'repositories/settings_repo.dart';
+import 'router.dart';
 
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
-  const MyApp({
-    super.key,
-    required this.settingsController,
-  });
-
-  final SettingsController settingsController;
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +53,7 @@ class MyApp extends StatelessWidget {
             seedColor: Colors.orange,
             brightness: Brightness.dark,
           )),
-          themeMode: settingsController.themeMode,
+          themeMode: ref.watch(settingsRepoProvider).themeMode,
 
           routerConfig: ref.watch(routerProvider),
         ),
