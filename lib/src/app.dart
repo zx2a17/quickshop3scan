@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quickshop/analytics/crash_reporter.dart';
-import 'package:quickshop/router.dart';
 
+import '../analytics/crash_reporter.dart';
+import '../router.dart';
 import 'settings/settings_controller.dart';
 
 /// The Widget that configures your application.

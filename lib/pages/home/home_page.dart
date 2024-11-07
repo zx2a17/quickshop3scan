@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quickshop/pages/home/home_drawer.dart';
+
+import 'home_drawer.dart';
 
 final homePageScaffoldKey = GlobalKey<ScaffoldState>(debugLabel: 'Home');
 

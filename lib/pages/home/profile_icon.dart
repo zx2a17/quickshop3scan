@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quickshop/pages/home/home_page.dart';
+
+import 'home_page.dart';
 
 class ProfileIcon extends StatelessWidget {
   const ProfileIcon({super.key});

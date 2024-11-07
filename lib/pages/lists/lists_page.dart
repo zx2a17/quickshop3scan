@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quickshop/pages/home/profile_icon.dart';
-import 'package:quickshop/router.dart';
+
+import '../../router.dart';
+import '../home/profile_icon.dart';
 
 class ListsPage extends StatelessWidget {
   const ListsPage({super.key});

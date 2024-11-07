@@ -2,9 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quickshop/analytics/analytics.dart';
-import 'package:quickshop/analytics/crash_reporter.dart';
-import 'package:quickshop/router.dart';
+
+import '../../analytics/analytics.dart';
+import '../../analytics/crash_reporter.dart';
+import '../../router.dart';
 
 /// Uses FirebaseUI page to handle email login and registration. Errors are handled automatically
 /// in the following cases:

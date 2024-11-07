@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quickshop/analytics/analytics.dart';
-import 'package:quickshop/repositories/user_repo.dart';
-import 'package:quickshop/router.dart';
+
+import '../../analytics/analytics.dart';
+import '../../repositories/user_repo.dart';
+import '../../router.dart';
 
 class HomeDrawer extends ConsumerWidget {
   const HomeDrawer({

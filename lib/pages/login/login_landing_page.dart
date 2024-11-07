@@ -4,8 +4,9 @@ import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quickshop/firebase/options.dart';
-import 'package:quickshop/router.dart';
+
+import '../../firebase/options.dart';
+import '../../router.dart';
 
 /// When selecting to sign in with google, if the user already had an account with the same
 /// email address and password, the password will be removed from their Firebase Authentication

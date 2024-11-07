@@ -4,10 +4,10 @@ import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quickshop/firebase/options.dart';
-import 'package:quickshop/router.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
+import 'firebase/options.dart';
+import 'router.dart';
 import 'src/app.dart';
 
 Future<void> main() async {

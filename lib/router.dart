@@ -1,23 +1,24 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quickshop/analytics/logger.dart';
-import 'package:quickshop/pages/favourites/favourites_page.dart';
-import 'package:quickshop/pages/home/home_page.dart';
-import 'package:quickshop/pages/lists/list_detail_page.dart';
-import 'package:quickshop/pages/lists/lists_page.dart';
-import 'package:quickshop/pages/lists/new_list_page.dart';
-import 'package:quickshop/pages/login/login_email_page.dart';
-import 'package:quickshop/pages/login/login_landing_page.dart';
-import 'package:quickshop/pages/recipes/new_recipe_page.dart';
-import 'package:quickshop/pages/recipes/recipe_detail_page.dart';
-import 'package:quickshop/pages/recipes/recipes_page.dart';
-import 'package:quickshop/pages/settings/settings_page.dart';
-import 'package:quickshop/repositories/user_repo.dart';
-import 'package:quickshop/src/settings/settings_controller.dart';
-import 'package:quickshop/src/settings/settings_service.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+
+import 'analytics/logger.dart';
+import 'pages/favourites/favourites_page.dart';
+import 'pages/home/home_page.dart';
+import 'pages/lists/list_detail_page.dart';
+import 'pages/lists/lists_page.dart';
+import 'pages/lists/new_list_page.dart';
+import 'pages/login/login_email_page.dart';
+import 'pages/login/login_landing_page.dart';
+import 'pages/recipes/new_recipe_page.dart';
+import 'pages/recipes/recipe_detail_page.dart';
+import 'pages/recipes/recipes_page.dart';
+import 'pages/settings/settings_page.dart';
+import 'repositories/user_repo.dart';
+import 'src/settings/settings_controller.dart';
+import 'src/settings/settings_service.dart';
 
 part 'router.g.dart';
 

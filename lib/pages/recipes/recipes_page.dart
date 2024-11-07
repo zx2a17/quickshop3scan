@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quickshop/pages/home/profile_icon.dart';
+
+import '../home/profile_icon.dart';
 
 class RecipesPage extends StatelessWidget {
   const RecipesPage({super.key});

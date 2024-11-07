@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
-import 'package:quickshop/models/user.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../models/user.dart';
 
 part 'user_repo.g.dart';
 
