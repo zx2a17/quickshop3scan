@@ -12,21 +12,28 @@ Stream<auth.User?> _authUserStream(Ref ref) {
 }
 
 @riverpod
-User? user(Ref ref) {
-  // Watch for changes on the auth user stream, but we can get the current user synchronously.
-  final _ = ref.watch(_authUserStreamProvider);
-  final authUser = auth.FirebaseAuth.instance.currentUser;
-  if (authUser != null) {
-    return User(
-      id: authUser.uid,
-      name: authUser.displayName ?? '',
-      email: authUser.email ?? '',
-    );
+class UserRepo extends _$UserRepo {
+  @override
+  User? build() {
+    // Watch for changes on the auth user stream, but we can get the current user synchronously.
+    final _ = ref.watch(_authUserStreamProvider);
+    final authUser = auth.FirebaseAuth.instance.currentUser;
+    if (authUser != null) {
+      return User(
+        id: authUser.uid,
+        name: authUser.displayName ?? '',
+        email: authUser.email ?? '',
+      );
+    }
+    return null;
   }
-  return null;
+
+  void logout() {
+    auth.FirebaseAuth.instance.signOut();
+  }
 }
 
 @riverpod
 bool loggedIn(Ref ref) {
-  return ref.watch(userProvider) != null;
+  return ref.watch(userRepoProvider) != null;
 }

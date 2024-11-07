@@ -10,7 +10,7 @@ part 'crash_reporter.g.dart';
 @riverpod
 CrashReporter crashReporter(Ref ref) {
   ref.listen(
-    userProvider,
+    userRepoProvider,
     (_, user) {
       if (user != null) {
         Sentry.configureScope((scope) {

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,7 +12,7 @@ class HomeDrawer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.read(userProvider);
+    final user = ref.read(userRepoProvider);
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -49,7 +48,7 @@ class HomeDrawer extends ConsumerWidget {
             leading: const Icon(Icons.logout),
             title: const Text('Logout'),
             onTap: () {
-              FirebaseAuth.instance.signOut();
+              ref.read(userRepoProvider.notifier).logout();
               ref.read(analyticsProvider).logEvent(const AnalyticsEvent.logout());
             },
           ),
