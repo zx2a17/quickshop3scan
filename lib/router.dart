@@ -12,6 +12,7 @@ import 'pages/lists/lists_page.dart';
 import 'pages/lists/new_list_page.dart';
 import 'pages/login/login_email_page.dart';
 import 'pages/login/login_landing_page.dart';
+import 'pages/login/login_name_page.dart';
 import 'pages/recipes/new_recipe_page.dart';
 import 'pages/recipes/recipe_detail_page.dart';
 import 'pages/recipes/recipes_page.dart';
@@ -97,6 +98,10 @@ GoRouter router(Ref ref) {
             path: _RouteSegments.email,
             builder: (context, state) => const LoginEmailPage(),
           ),
+          GoRoute(
+            path: _RouteSegments.setName,
+            builder: (context, state) => const LoginNamePage(),
+          ),
         ],
       ),
       GoRoute(
@@ -128,6 +133,7 @@ GoRouter router(Ref ref) {
 
 class _RouteSegments {
   static const login = 'login';
+  static const setName = 'set-name';
   static const email = 'email';
   static const settings = 'settings';
   static const lists = 'lists';
@@ -140,6 +146,7 @@ class Routes {
   static const home = '/';
   static const login = '/${_RouteSegments.login}';
   static const loginEmail = '${Routes.login}/${_RouteSegments.email}';
+  static const loginSetName = '${Routes.login}/${_RouteSegments.setName}';
   static const settings = '/${_RouteSegments.settings}';
   static const lists = '/${_RouteSegments.lists}';
   static const newList = '${Routes.lists}/${_RouteSegments.newItem}';

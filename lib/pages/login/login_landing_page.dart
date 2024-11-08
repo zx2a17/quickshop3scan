@@ -5,6 +5,7 @@ import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../analytics/analytics.dart';
 import '../../firebase/options.dart';
 import '../../router.dart';
 
@@ -103,6 +104,9 @@ class LoginLandingPage extends ConsumerWidget {
                         ),
                         listener: (oldState, newState, ctrl) {
                           if (newState is SignedIn) {
+                            ref
+                                .read(analyticsProvider)
+                                .logEvent(const AnalyticsEvent.loginGoogle());
                             ref.read(routerProvider).go(Routes.home);
                           }
                           return null;

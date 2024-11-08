@@ -59,15 +59,19 @@ class LoginEmailPage extends StatelessWidget {
                   return;
                 }
               }
+              if (state is UserCreated) {
+                ref.read(analyticsProvider).logEvent(const AnalyticsEvent.registeredEmail());
+                ref.read(routerProvider).go(Routes.loginSetName);
+                return;
+              }
               final user = switch (state) {
                 SignedIn(user: final user) => user,
                 CredentialLinked(user: final user) => user,
-                UserCreated(credential: final cred) => cred.user,
                 _ => null,
               };
               if (user != null) {
                 ref.read(routerProvider).go(Routes.home);
-                ref.read(analyticsProvider).logEvent(const AnalyticsEvent.login());
+                ref.read(analyticsProvider).logEvent(const AnalyticsEvent.loginEmail());
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Welcome, ${user.displayName}!'),

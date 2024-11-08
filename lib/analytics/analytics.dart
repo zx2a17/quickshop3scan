@@ -34,7 +34,11 @@ class AnalyticsEvent {
 
   const AnalyticsEvent._(this.name, this.parameters);
 
-  const AnalyticsEvent.login() : this._('login', const {});
+  const AnalyticsEvent.registeredEmail() : this._('registered_email', const {});
+
+  const AnalyticsEvent.loginEmail() : this._('login_email', const {});
+
+  const AnalyticsEvent.loginGoogle() : this._('login_google', const {});
 
   const AnalyticsEvent.logout() : this._('logout', const {});
 

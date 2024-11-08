@@ -19,17 +19,30 @@ class UserRepo extends _$UserRepo {
     final _ = ref.watch(_authUserStreamProvider);
     final authUser = auth.FirebaseAuth.instance.currentUser;
     if (authUser != null) {
-      return User(
-        id: authUser.uid,
-        name: authUser.displayName ?? '',
-        email: authUser.email ?? '',
-      );
+      return _fromFirebase(authUser);
     }
     return null;
   }
 
   void logout() {
     auth.FirebaseAuth.instance.signOut();
+  }
+
+  void setUserName(String name) {
+    final user = auth.FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      user.updateDisplayName(name);
+      // Synchnronously update the local state with the new name
+      state = _fromFirebase(user).copyWith(name: name);
+    }
+  }
+
+  User _fromFirebase(auth.User user) {
+    return User(
+      id: user.uid,
+      name: user.displayName ?? '',
+      email: user.email ?? '',
+    );
   }
 }
 
