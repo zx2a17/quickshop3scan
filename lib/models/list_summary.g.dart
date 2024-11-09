@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'checklist.dart';
+part of 'list_summary.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ChecklistImpl _$$ChecklistImplFromJson(Map<String, dynamic> json) =>
-    _$ChecklistImpl(
+_$ListSummaryImpl _$$ListSummaryImplFromJson(Map<String, dynamic> json) =>
+    _$ListSummaryImpl(
       id: json['id'] as String,
       name: json['name'] as String,
       ownerId: json['ownerId'] as String,
@@ -17,12 +17,12 @@ _$ChecklistImpl _$$ChecklistImplFromJson(Map<String, dynamic> json) =>
       editors: (json['editors'] as List<dynamic>)
           .map((e) => User.fromJson(e as Map<String, dynamic>))
           .toList(),
-      items: (json['items'] as List<dynamic>)
-          .map((e) => ChecklistItem.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      itemCount: (json['itemCount'] as num).toInt(),
+      lastModified: Map<String, int>.from(json['lastModified'] as Map),
+      listType: $enumDecode(_$ListTypeEnumMap, json['listType']),
     );
 
-Map<String, dynamic> _$$ChecklistImplToJson(_$ChecklistImpl instance) =>
+Map<String, dynamic> _$$ListSummaryImplToJson(_$ListSummaryImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -30,5 +30,12 @@ Map<String, dynamic> _$$ChecklistImplToJson(_$ChecklistImpl instance) =>
       'owner': instance.owner,
       'editorIds': instance.editorIds,
       'editors': instance.editors,
-      'items': instance.items,
+      'itemCount': instance.itemCount,
+      'lastModified': instance.lastModified,
+      'listType': _$ListTypeEnumMap[instance.listType]!,
     };
+
+const _$ListTypeEnumMap = {
+  ListType.checklist: 'checklist',
+  ListType.shoppingList: 'shoppingList',
+};
