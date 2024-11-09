@@ -11,7 +11,6 @@ _$ListSummaryImpl _$$ListSummaryImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       name: json['name'] as String,
       ownerId: json['ownerId'] as String,
-      owner: User.fromJson(json['owner'] as Map<String, dynamic>),
       editorIds:
           (json['editorIds'] as List<dynamic>).map((e) => e as String).toList(),
       editors: (json['editors'] as List<dynamic>)
@@ -27,7 +26,6 @@ Map<String, dynamic> _$$ListSummaryImplToJson(_$ListSummaryImpl instance) =>
       'id': instance.id,
       'name': instance.name,
       'ownerId': instance.ownerId,
-      'owner': instance.owner,
       'editorIds': instance.editorIds,
       'editors': instance.editors,
       'itemCount': instance.itemCount,

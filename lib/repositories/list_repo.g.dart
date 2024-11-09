@@ -6,7 +6,7 @@ part of 'list_repo.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$listRepoHash() => r'92818ac4c81325ca3a2b693642ba95d2d8ade4e8';
+String _$listRepoHash() => r'c4a27075358783d70daad563e518d21eab28ac0f';
 
 /// See also [ListRepo].
 @ProviderFor(ListRepo)

@@ -40,24 +40,25 @@ class ListRepo extends _$ListRepo {
     return ListType.values.firstWhere((e) => e.name == data);
   }
 
-  void createList(String name, ListType listType) {
+  /// Creates a new list and returns the list id
+  Future<String> createList(String name, ListType listType) async {
     final user = ref.watch(userRepoProvider);
     if (user == null) {
-      return;
+      throw Exception('User not signed in');
     }
     final fs = ref.read(firestoreProvider);
     final list = ListSummary(
       id: '',
       name: name,
       ownerId: user.id,
-      owner: user,
       editorIds: [user.id],
       editors: [user],
       itemCount: 0,
       lastModified: {user.id: DateTime.now().millisecondsSinceEpoch},
       listType: listType,
     );
-    fs.collection('lists').add(_toFirestore(list));
+    final listDoc = await fs.collection('lists').add(_toFirestore(list));
+    return listDoc.id;
   }
 
   ListSummary _fromFirestore(Map<String, dynamic> data, String listId) {
@@ -65,7 +66,6 @@ class ListRepo extends _$ListRepo {
       id: listId,
       name: data['name'],
       ownerId: data['ownerId'],
-      owner: _parseUser(data['owner']),
       editorIds: List<String>.from(data['editorIds']),
       editors: List<User>.from(data['editors'].map(_parseUser)),
       itemCount: data['itemCount'],
@@ -78,11 +78,6 @@ class ListRepo extends _$ListRepo {
     return {
       'name': list.name,
       'ownerId': list.ownerId,
-      'owner': {
-        'id': list.owner.id,
-        'name': list.owner.name,
-        'email': list.owner.email,
-      },
       'editorIds': list.editorIds,
       'editors': list.editors
           .map((e) => {

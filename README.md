@@ -2,7 +2,7 @@
 
 My third complete rewrite of the Quickshop app. Using the following stack:
 - Global state: Riverpod
-- Local state: Hooks
+- Local state: TODO: Hooks
 - Navigation: Go Router
 - Authentication: Firebase auth
 - Data sync: Firestore
