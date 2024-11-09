@@ -39,7 +39,7 @@ final loggedInProvider = AutoDisposeProvider<bool>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef LoggedInRef = AutoDisposeProviderRef<bool>;
-String _$userRepoHash() => r'4d92d45760aa812c98f07d43b741845298d1d285';
+String _$userRepoHash() => r'2d39f2eeb86f809b207394e4c30f82d2ab3087aa';
 
 /// See also [UserRepo].
 @ProviderFor(UserRepo)

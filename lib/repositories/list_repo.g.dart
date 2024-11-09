@@ -1,26 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'router.dart';
+part of 'list_repo.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$routerHash() => r'c6848fb60bbc5fdb3f6f9f1d42dbdf50458f462a';
+String _$listRepoHash() => r'92818ac4c81325ca3a2b693642ba95d2d8ade4e8';
 
-/// See also [router].
-@ProviderFor(router)
-final routerProvider = AutoDisposeProvider<GoRouter>.internal(
-  router,
-  name: r'routerProvider',
+/// See also [ListRepo].
+@ProviderFor(ListRepo)
+final listRepoProvider =
+    AutoDisposeStreamNotifierProvider<ListRepo, List<ListSummary>>.internal(
+  ListRepo.new,
+  name: r'listRepoProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$routerHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$listRepoHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef RouterRef = AutoDisposeProviderRef<GoRouter>;
+typedef _$ListRepo = AutoDisposeStreamNotifier<List<ListSummary>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

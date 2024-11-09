@@ -26,8 +26,9 @@ mixin _$ListSummary {
   User get owner => throw _privateConstructorUsedError;
   List<String> get editorIds => throw _privateConstructorUsedError;
   List<User> get editors => throw _privateConstructorUsedError;
-  int get itemCount =>
-      throw _privateConstructorUsedError; // When the list was last modified by a specific user, in milliseconds since the epoch.
+  int get itemCount => throw _privateConstructorUsedError;
+
+  /// When the list was last modified by a specific user, in milliseconds since the epoch.
   Map<String, int> get lastModified => throw _privateConstructorUsedError;
   ListType get listType => throw _privateConstructorUsedError;
 
@@ -271,9 +272,11 @@ class _$ListSummaryImpl extends _ListSummary {
 
   @override
   final int itemCount;
-// When the list was last modified by a specific user, in milliseconds since the epoch.
+
+  /// When the list was last modified by a specific user, in milliseconds since the epoch.
   final Map<String, int> _lastModified;
-// When the list was last modified by a specific user, in milliseconds since the epoch.
+
+  /// When the list was last modified by a specific user, in milliseconds since the epoch.
   @override
   Map<String, int> get lastModified {
     if (_lastModified is EqualUnmodifiableMapView) return _lastModified;
@@ -368,7 +371,9 @@ abstract class _ListSummary extends ListSummary {
   @override
   List<User> get editors;
   @override
-  int get itemCount; // When the list was last modified by a specific user, in milliseconds since the epoch.
+  int get itemCount;
+
+  /// When the list was last modified by a specific user, in milliseconds since the epoch.
   @override
   Map<String, int> get lastModified;
   @override

@@ -17,7 +17,8 @@ class ListSummary with _$ListSummary {
     required List<String> editorIds,
     required List<User> editors,
     required int itemCount,
-    // When the list was last modified by a specific user, in milliseconds since the epoch.
+
+    /// When the list was last modified by a specific user, in milliseconds since the epoch.
     required Map<String, int> lastModified,
     required ListType listType,
   }) = _ListSummary;
