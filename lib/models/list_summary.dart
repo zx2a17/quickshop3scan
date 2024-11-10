@@ -37,3 +37,10 @@ enum ListType {
   checklist,
   shoppingList,
 }
+
+ListType parseListType(dynamic data) {
+  return ListType.values.firstWhere(
+    (e) => e.name == data,
+    orElse: () => throw Exception('Invalid list type $dynamic'),
+  );
+}

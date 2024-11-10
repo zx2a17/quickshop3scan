@@ -1,3 +1,4 @@
+import 'package:riverpod/riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../models/list_summary.dart';
@@ -36,10 +37,6 @@ class ListRepo extends _$ListRepo {
     );
   }
 
-  ListType _parseListType(dynamic data) {
-    return ListType.values.firstWhere((e) => e.name == data);
-  }
-
   /// Creates a new list and returns the list id
   Future<String> createList(String name, ListType listType) async {
     final user = ref.watch(userRepoProvider);
@@ -70,7 +67,7 @@ class ListRepo extends _$ListRepo {
       editors: List<User>.from(data['editors'].map(_parseUser)),
       itemCount: data['itemCount'],
       lastModified: Map<String, int>.from(data['lastModified']),
-      listType: _parseListType(data['listType']),
+      listType: parseListType(data['listType']),
     );
   }
 
@@ -91,4 +88,16 @@ class ListRepo extends _$ListRepo {
       'listType': list.listType.name,
     };
   }
+}
+
+@riverpod
+AsyncValue<ListSummary?> list(Ref ref, String listId) {
+  final result = ref.watch(listRepoProvider);
+  return result.when(
+    data: (lists) => AsyncValue.data(
+      lists.any((list) => list.id == listId) ? lists.firstWhere((list) => list.id == listId) : null,
+    ),
+    error: (error, trace) => AsyncValue.error(error, trace),
+    loading: AsyncValue.loading,
+  );
 }

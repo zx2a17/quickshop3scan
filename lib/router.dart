@@ -8,6 +8,7 @@ import 'analytics/logger.dart';
 import 'pages/favourites/favourites_page.dart';
 import 'pages/home/home_page.dart';
 import 'pages/lists/list_detail_page.dart';
+import 'pages/lists/list_sharing_page.dart';
 import 'pages/lists/lists_page.dart';
 import 'pages/lists/new_list_page.dart';
 import 'pages/login/login_email_page.dart';
@@ -55,6 +56,15 @@ GoRouter router(Ref ref) {
                     builder: (context, state) => ListDetailPage(
                       listId: state.pathParameters['listId']!,
                     ),
+                    routes: [
+                      GoRoute(
+                        path: _RouteSegments.share,
+                        parentNavigatorKey: _rootNavigatorKey,
+                        builder: (context, state) => ListSharingPage(
+                          listId: state.pathParameters['listId']!,
+                        ),
+                      ),
+                    ],
                   )
                 ],
               )
@@ -140,6 +150,7 @@ class _RouteSegments {
   static const recipes = 'recipes';
   static const favourites = 'favourites';
   static const newItem = 'new';
+  static const share = 'share';
 }
 
 class Routes {
@@ -151,6 +162,7 @@ class Routes {
   static const lists = '/${_RouteSegments.lists}';
   static const newList = '${Routes.lists}/${_RouteSegments.newItem}';
   static String listDetail(String listId) => '${Routes.lists}/$listId';
+  static String shareList(String listId) => '${Routes.listDetail(listId)}/${_RouteSegments.share}';
   static const recipes = '/${_RouteSegments.recipes}';
   static const newRecipe = '${Routes.recipes}/${_RouteSegments.newItem}';
   static String recipeDetail(String recipeId) => '${Routes.recipes}/$recipeId';
