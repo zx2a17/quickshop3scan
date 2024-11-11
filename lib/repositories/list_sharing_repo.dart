@@ -52,7 +52,7 @@ class ListSharingRepo extends _$ListSharingRepo {
       listType: list.listType,
       listName: list.name,
       inviterId: user.id,
-      inviterName: user.name,
+      inviterName: user.name.isNotEmpty ? user.name : user.email,
     );
     await fs.collection('invites').doc(invite.id).set({
       'listId': invite.listId,
