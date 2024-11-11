@@ -86,9 +86,11 @@ android {
             dimension "env"
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
+            resValue "string", "app_links_domain", "dev.quickshop.buntagon.com"
         }
         prod {
             dimension "env"
+            resValue "string", "app_links_domain", "quickshop.buntagon.com"
         }
     }
 }
