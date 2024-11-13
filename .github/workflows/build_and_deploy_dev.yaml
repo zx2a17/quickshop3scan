@@ -101,4 +101,4 @@ jobs:
           echo "$SERVICE_ACCOUNT" >> google_service_account.json
           export GOOGLE_APPLICATION_CREDENTIALS=google_service_account.json
           firebase --version
-          firebase appdistribution:distribute build/app/outputs/flutter-apk/${{ env.apk_name }} --app ${{ vars.ANDROID_FIREBASE_APP_ID }} --release-notes "Dev Build ${{ env.tag_version }}"
+          firebase appdistribution:distribute build/app/outputs/flutter-apk/${{ env.apk_name }} --app ${{ vars.ANDROID_FIREBASE_APP_ID }} --release-notes "Dev Build ${{ env.tag_version }}" --groups ${{ vars.APP_TESTER_GROUPS }}
