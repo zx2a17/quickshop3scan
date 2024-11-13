@@ -12,6 +12,7 @@ class ListDetailPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final list = ref.watch(listProvider(listId));
+    print(listId);
     return Scaffold(
       appBar: AppBar(
         title: Text('List ${list.valueOrNull?.name ?? ''}'),

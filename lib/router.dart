@@ -4,6 +4,7 @@ import 'package:riverpod/riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
+import 'analytics/crash_reporter.dart';
 import 'analytics/logger.dart';
 import 'pages/favourites/favourites_page.dart';
 import 'pages/home/home_page.dart';
@@ -14,6 +15,7 @@ import 'pages/lists/new_list_page.dart';
 import 'pages/login/login_email_page.dart';
 import 'pages/login/login_landing_page.dart';
 import 'pages/login/login_name_page.dart';
+import 'pages/not_found/not_found_page.dart';
 import 'pages/recipes/new_recipe_page.dart';
 import 'pages/recipes/recipe_detail_page.dart';
 import 'pages/recipes/recipes_page.dart';
@@ -118,6 +120,10 @@ GoRouter router(Ref ref) {
         path: Routes.settings,
         builder: (context, state) => const SettingsPage(),
       ),
+      GoRoute(
+        path: Routes.notFound,
+        builder: (context, state) => const NotFoundPage(),
+      ),
     ],
     refreshListenable: loggedInNotifier,
     redirect: (context, state) {
@@ -135,6 +141,11 @@ GoRouter router(Ref ref) {
     observers: [
       SentryNavigatorObserver(),
     ],
+    // Handle unknown routes with the not found page
+    onException: (context, state, router) {
+      ref.read(crashReporterProvider).report(state.error, StackTrace.current);
+      router.push(Routes.notFound);
+    },
   );
   ref.onDispose(loggedInNotifier.dispose);
   ref.onDispose(router.dispose);
@@ -151,6 +162,7 @@ class _RouteSegments {
   static const favourites = 'favourites';
   static const newItem = 'new';
   static const share = 'share';
+  static const notFound = 'not-found';
 }
 
 class Routes {
@@ -167,4 +179,5 @@ class Routes {
   static const newRecipe = '${Routes.recipes}/${_RouteSegments.newItem}';
   static String recipeDetail(String recipeId) => '${Routes.recipes}/$recipeId';
   static const favourites = '/${_RouteSegments.favourites}';
+  static const notFound = '/${_RouteSegments.notFound}';
 }
