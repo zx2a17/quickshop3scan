@@ -12,10 +12,9 @@ class ListDetailPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final list = ref.watch(listProvider(listId));
-    print(listId);
     return Scaffold(
       appBar: AppBar(
-        title: Text('List ${list.valueOrNull?.name ?? ''}'),
+        title: Text(list.valueOrNull?.name ?? 'Shopping list'),
         actions: [
           MenuAnchor(
             builder: (BuildContext context, MenuController controller, Widget? child) {

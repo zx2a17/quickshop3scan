@@ -16,4 +16,6 @@ class ListInvite with _$ListInvite {
     required String inviterId,
     required String inviterName,
   }) = _ListInvite;
+
+  String get url => 'https://${const String.fromEnvironment('QUICKSHOP_WEB_HOST')}/invites/$id';
 }

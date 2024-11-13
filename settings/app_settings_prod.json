@@ -1,3 +1,4 @@
 {
-    "SENTRY_ENVIRONMENT": "prod"
+    "SENTRY_ENVIRONMENT": "prod",
+    "QUICKSHOP_WEB_HOST": "quickshop.buntagon.com"
 }
