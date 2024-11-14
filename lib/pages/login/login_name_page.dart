@@ -56,7 +56,7 @@ class _LoginNamePageState extends State<LoginNamePage> {
               child: Row(
                 children: [
                   TextButton(
-                    onPressed: () => ref.read(routerProvider).go(Routes.home),
+                    onPressed: () => ref.read(routerProvider).go(Routes.postLogin),
                     child: const Text('Skip'),
                   ),
                   const Spacer(),
@@ -70,7 +70,7 @@ class _LoginNamePageState extends State<LoginNamePage> {
                         return;
                       }
                       ref.read(userRepoProvider.notifier).setUserName(userName);
-                      ref.read(routerProvider).go(Routes.home);
+                      ref.read(routerProvider).go(Routes.postLogin);
                     },
                     child: const Text('Continue'),
                   )

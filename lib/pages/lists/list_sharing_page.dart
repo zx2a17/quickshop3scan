@@ -243,8 +243,6 @@ class _SharingLinkTileState extends ConsumerState<SharingLinkTile> {
 
   void _copyToClipboard(BuildContext context, String text) {
     Clipboard.setData(ClipboardData(text: text));
-    ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text('Copied to clipboard')));
   }
 
   void _shareLink(ListInvite invite) {

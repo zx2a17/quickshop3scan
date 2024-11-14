@@ -70,7 +70,7 @@ class LoginEmailPage extends StatelessWidget {
                 _ => null,
               };
               if (user != null) {
-                ref.read(routerProvider).go(Routes.home);
+                ref.read(routerProvider).go(Routes.postLogin);
                 ref.read(analyticsProvider).logEvent(const AnalyticsEvent.loginEmail());
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(

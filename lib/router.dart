@@ -9,6 +9,7 @@ import 'analytics/logger.dart';
 import 'pages/favourites/favourites_page.dart';
 import 'pages/home/home_page.dart';
 import 'pages/lists/list_detail_page.dart';
+import 'pages/lists/list_invite_details_page.dart';
 import 'pages/lists/list_sharing_page.dart';
 import 'pages/lists/lists_page.dart';
 import 'pages/lists/new_list_page.dart';
@@ -25,6 +26,10 @@ import 'repositories/user_repo.dart';
 part 'router.g.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
+
+/// The invite ID when a deep link to a list invite is opened, but the user must login first
+/// before viewing the invite.
+String? _pendingInviteId;
 
 @riverpod
 GoRouter router(Ref ref) {
@@ -52,6 +57,13 @@ GoRouter router(Ref ref) {
                     parentNavigatorKey: _rootNavigatorKey,
                     path: 'new',
                     builder: (context, state) => const NewListPage(),
+                  ),
+                  GoRoute(
+                    parentNavigatorKey: _rootNavigatorKey,
+                    path: '${_RouteSegments.invites}/:inviteId',
+                    builder: (context, state) => ListInviteDetailsPage(
+                      inviteId: state.pathParameters['inviteId']!,
+                    ),
                   ),
                   GoRoute(
                     path: ':listId',
@@ -104,7 +116,9 @@ GoRouter router(Ref ref) {
       ),
       GoRoute(
         path: Routes.login,
-        builder: (context, state) => const LoginLandingPage(),
+        builder: (context, state) => const LoginLandingPage(
+          greetingType: LoginGreetingType.none,
+        ),
         routes: [
           GoRoute(
             path: _RouteSegments.email,
@@ -117,6 +131,12 @@ GoRouter router(Ref ref) {
         ],
       ),
       GoRoute(
+        path: Routes.loginForInvite,
+        builder: (context, state) => const LoginLandingPage(
+          greetingType: LoginGreetingType.forInvite,
+        ),
+      ),
+      GoRoute(
         path: Routes.settings,
         builder: (context, state) => const SettingsPage(),
       ),
@@ -127,13 +147,48 @@ GoRouter router(Ref ref) {
     ],
     refreshListenable: loggedInNotifier,
     redirect: (context, state) {
-      // Redirect unauthenticated users to login
-      if (!loggedInNotifier.value && !state.uri.path.startsWith(Routes.login)) {
-        ref.read(loggerProvider).log('Redirecting unauthenticated user to login');
-        return Routes.login;
+      // Redirect a path of `/invites/xxx` to `/lists/invites/xxx`. The invite details page has
+      // been defined in the routing configuration as a child route to the /lists page so that when
+      // the app is opened from a deep link, go router automatically builds the /lists page
+      // underneath the invite details page.
+      final segments = state.uri.pathSegments;
+      if (segments.length == 2 && segments[0] == _RouteSegments.invites) {
+        return Routes.inviteDetails(segments[1]);
       }
-      // Redirect home to lists
-      if (state.uri.path == '/') {
+
+      // Handle unauthenticated users
+      if (!loggedInNotifier.value) {
+        // Redirect unauthenticated users who have opened a list invite link to login first
+        if (state.uri.path.startsWith(Routes.inviteDetails(''))) {
+          ref.read(loggerProvider).log('Redirecting unauthenticated user to login');
+
+          // Store the invite ID so the user can be redirected to the invite details after login
+          _pendingInviteId = state.uri.pathSegments.last;
+          return Routes.loginForInvite;
+        }
+
+        // Redirect unauthenticated users to login
+        if (!state.uri.path.startsWith(Routes.login)) {
+          ref.read(loggerProvider).log('Redirecting unauthenticated user to login');
+          return Routes.login;
+        }
+      }
+
+      // Handle redirection after login flow completed
+      if (state.uri.path == Routes.postLogin) {
+        // Redirect users that had opened a list invite link to view the invite details
+        if (_pendingInviteId != null) {
+          final inviteId = _pendingInviteId!;
+          _pendingInviteId = null;
+          return Routes.inviteDetails(inviteId);
+        }
+
+        // Otherwise redirect to the home page
+        return Routes.home;
+      }
+
+      // Redirect home to lists subpath
+      if (state.uri.path == Routes.home) {
         return Routes.lists;
       }
       return null;
@@ -163,11 +218,17 @@ class _RouteSegments {
   static const newItem = 'new';
   static const share = 'share';
   static const notFound = 'not-found';
+  static const invites = 'invites';
 }
 
 class Routes {
   static const home = '/';
   static const login = '/${_RouteSegments.login}';
+
+  /// A path that does not correspond to an actual page, but which allows the routing logic to
+  /// decide if the user should be redirect to a particular page after logging in.
+  static const postLogin = '/post-login';
+  static const loginForInvite = '/${_RouteSegments.login}-invite';
   static const loginEmail = '${Routes.login}/${_RouteSegments.email}';
   static const loginSetName = '${Routes.login}/${_RouteSegments.setName}';
   static const settings = '/${_RouteSegments.settings}';
@@ -180,4 +241,6 @@ class Routes {
   static String recipeDetail(String recipeId) => '${Routes.recipes}/$recipeId';
   static const favourites = '/${_RouteSegments.favourites}';
   static const notFound = '/${_RouteSegments.notFound}';
+  static String inviteDetails(String inviteId) =>
+      '${Routes.lists}/${_RouteSegments.invites}/$inviteId';
 }

@@ -12,8 +12,15 @@ import '../../router.dart';
 /// When selecting to sign in with google, if the user already had an account with the same
 /// email address and password, the password will be removed from their Firebase Authentication
 /// account and google sign in will become their only available login mechanism.
+
+enum LoginGreetingType {
+  none,
+  forInvite,
+}
+
 class LoginLandingPage extends ConsumerWidget {
-  const LoginLandingPage({super.key});
+  const LoginLandingPage({required this.greetingType, super.key});
+  final LoginGreetingType greetingType;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -57,7 +64,16 @@ class LoginLandingPage extends ConsumerWidget {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    switch (greetingType) {
+                      LoginGreetingType.none => const SizedBox(height: 24),
+                      LoginGreetingType.forInvite => const Padding(
+                          padding: EdgeInsets.fromLTRB(32, 0, 24, 32),
+                          child: Text(
+                            'It looks like someone has shared a Quickshop list with you. Please sign in or create an account to view it.',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                    },
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: Consumer(builder: (context, ref, _) {
@@ -107,7 +123,7 @@ class LoginLandingPage extends ConsumerWidget {
                             ref
                                 .read(analyticsProvider)
                                 .logEvent(const AnalyticsEvent.loginGoogle());
-                            ref.read(routerProvider).go(Routes.home);
+                            ref.read(routerProvider).go(Routes.postLogin);
                           }
                           return null;
                         },
