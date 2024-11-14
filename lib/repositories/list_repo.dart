@@ -2,7 +2,6 @@ import 'package:riverpod/riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../models/list_summary.dart';
-import '../models/user.dart';
 import '../services/firestore.dart';
 import 'user_repo.dart';
 
@@ -22,19 +21,8 @@ class ListRepo extends _$ListRepo {
         .where('editorIds', arrayContains: user.id)
         .snapshots()
         .map((snapshot) {
-      return snapshot.docs.map((doc) {
-        final data = doc.data();
-        return _fromFirestore(data, doc.id);
-      }).toList();
+      return snapshot.docs.map(ListSummary.fromFirestore).toList();
     });
-  }
-
-  User _parseUser(dynamic data) {
-    return User(
-      id: data['id'],
-      name: data['name'],
-      email: data['email'],
-    );
   }
 
   /// Creates a new list and returns the list id
@@ -54,39 +42,8 @@ class ListRepo extends _$ListRepo {
       lastModified: {user.id: DateTime.now().millisecondsSinceEpoch},
       listType: listType,
     );
-    final listDoc = await fs.collection('lists').add(_toFirestore(list));
+    final listDoc = await fs.collection('lists').add(list.toFirestore());
     return listDoc.id;
-  }
-
-  ListSummary _fromFirestore(Map<String, dynamic> data, String listId) {
-    return ListSummary(
-      id: listId,
-      name: data['name'],
-      ownerId: data['ownerId'],
-      editorIds: List<String>.from(data['editorIds']),
-      editors: List<User>.from(data['editors'].map(_parseUser)),
-      itemCount: data['itemCount'],
-      lastModified: Map<String, int>.from(data['lastModified']),
-      listType: parseListType(data['listType']),
-    );
-  }
-
-  Map<String, dynamic> _toFirestore(ListSummary list) {
-    return {
-      'name': list.name,
-      'ownerId': list.ownerId,
-      'editorIds': list.editorIds,
-      'editors': list.editors
-          .map((e) => {
-                'id': e.id,
-                'name': e.name,
-                'email': e.email,
-              })
-          .toList(),
-      'itemCount': list.itemCount,
-      'lastModified': list.lastModified,
-      'listType': list.listType.name,
-    };
   }
 }
 

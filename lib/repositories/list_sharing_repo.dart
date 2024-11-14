@@ -29,14 +29,7 @@ class ListSharingRepo extends _$ListSharingRepo {
         return null;
       }
       final doc = snapshot.docs.first;
-      return ListInvite(
-        id: doc.id,
-        listId: doc['listId'],
-        listType: parseListType(doc['listType']),
-        listName: doc['listName'],
-        inviterId: doc['inviterId'],
-        inviterName: doc['inviterName'],
-      );
+      return ListInvite.fromFirestore(doc);
     });
   }
 
@@ -54,12 +47,6 @@ class ListSharingRepo extends _$ListSharingRepo {
       inviterId: user.id,
       inviterName: user.name.isNotEmpty ? user.name : user.email,
     );
-    await fs.collection('invites').doc(invite.id).set({
-      'listId': invite.listId,
-      'listType': invite.listType.name,
-      'listName': invite.listName,
-      'inviterId': invite.inviterId,
-      'inviterName': invite.inviterName,
-    });
+    await fs.collection('invites').doc(invite.id).set(invite.toFirestore());
   }
 }
