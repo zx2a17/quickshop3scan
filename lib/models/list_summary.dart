@@ -1,9 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'user.dart';
 
 part 'list_summary.freezed.dart';
-part 'list_summary.g.dart';
 
 @freezed
 class ListSummary with _$ListSummary {
@@ -30,7 +30,40 @@ class ListSummary with _$ListSummary {
     required ListType listType,
   }) = _ListSummary;
 
-  factory ListSummary.fromJson(Map<String, dynamic> json) => _$ListSummaryFromJson(json);
+  factory ListSummary.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
+    return ListSummary.fromJson(doc.data()!, doc.id);
+  }
+
+  factory ListSummary.fromJson(Map<String, dynamic> json, String listId) {
+    return ListSummary(
+      id: listId,
+      name: json['name'],
+      ownerId: json['ownerId'],
+      editorIds: List<String>.from(json['editorIds']),
+      editors: List<User>.from(json['editors'].map(User.fromJson)),
+      itemCount: json['itemCount'],
+      lastModified: Map<String, int>.from(json['lastModified']),
+      listType: parseListType(json['listType']),
+    );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      'name': name,
+      'ownerId': ownerId,
+      'editorIds': editorIds,
+      'editors': editors
+          .map((e) => {
+                'id': e.id,
+                'name': e.name,
+                'email': e.email,
+              })
+          .toList(),
+      'itemCount': itemCount,
+      'lastModified': lastModified,
+      'listType': listType.name,
+    };
+  }
 }
 
 enum ListType {
@@ -43,4 +76,15 @@ ListType parseListType(dynamic data) {
     (e) => e.name == data,
     orElse: () => throw Exception('Invalid list type $dynamic'),
   );
+}
+
+extension ListTypeExtension on ListType {
+  String get displayName {
+    switch (this) {
+      case ListType.checklist:
+        return 'checklist';
+      case ListType.shoppingList:
+        return 'shopping list';
+    }
+  }
 }

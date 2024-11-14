@@ -14,10 +14,6 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-ListSummary _$ListSummaryFromJson(Map<String, dynamic> json) {
-  return _ListSummary.fromJson(json);
-}
-
 /// @nodoc
 mixin _$ListSummary {
   String get id => throw _privateConstructorUsedError;
@@ -38,9 +34,6 @@ mixin _$ListSummary {
   /// When the list was last modified by a specific user, in milliseconds since the epoch.
   Map<String, int> get lastModified => throw _privateConstructorUsedError;
   ListType get listType => throw _privateConstructorUsedError;
-
-  /// Serializes this ListSummary to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of ListSummary
   /// with the given fields replaced by the non-null parameter values.
@@ -206,7 +199,7 @@ class __$$ListSummaryImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$ListSummaryImpl extends _ListSummary {
   const _$ListSummaryImpl(
       {required this.id,
@@ -221,9 +214,6 @@ class _$ListSummaryImpl extends _ListSummary {
         _editors = editors,
         _lastModified = lastModified,
         super._();
-
-  factory _$ListSummaryImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ListSummaryImplFromJson(json);
 
   @override
   final String id;
@@ -298,7 +288,6 @@ class _$ListSummaryImpl extends _ListSummary {
                 other.listType == listType));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -318,13 +307,6 @@ class _$ListSummaryImpl extends _ListSummary {
   @pragma('vm:prefer-inline')
   _$$ListSummaryImplCopyWith<_$ListSummaryImpl> get copyWith =>
       __$$ListSummaryImplCopyWithImpl<_$ListSummaryImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ListSummaryImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _ListSummary extends ListSummary {
@@ -338,9 +320,6 @@ abstract class _ListSummary extends ListSummary {
       required final Map<String, int> lastModified,
       required final ListType listType}) = _$ListSummaryImpl;
   const _ListSummary._() : super._();
-
-  factory _ListSummary.fromJson(Map<String, dynamic> json) =
-      _$ListSummaryImpl.fromJson;
 
   @override
   String get id;

@@ -14,19 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-ShoppingItem _$ShoppingItemFromJson(Map<String, dynamic> json) {
-  return _ShoppingItem.fromJson(json);
-}
-
 /// @nodoc
 mixin _$ShoppingItem {
   String get name => throw _privateConstructorUsedError;
   String get category => throw _privateConstructorUsedError;
   String get addedByUserId => throw _privateConstructorUsedError;
   bool get completed => throw _privateConstructorUsedError;
-
-  /// Serializes this ShoppingItem to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of ShoppingItem
   /// with the given fields replaced by the non-null parameter values.
@@ -138,7 +131,7 @@ class __$$ShoppingItemImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$ShoppingItemImpl extends _ShoppingItem {
   const _$ShoppingItemImpl(
       {required this.name,
@@ -146,9 +139,6 @@ class _$ShoppingItemImpl extends _ShoppingItem {
       required this.addedByUserId,
       required this.completed})
       : super._();
-
-  factory _$ShoppingItemImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ShoppingItemImplFromJson(json);
 
   @override
   final String name;
@@ -178,7 +168,6 @@ class _$ShoppingItemImpl extends _ShoppingItem {
                 other.completed == completed));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, name, category, addedByUserId, completed);
@@ -190,13 +179,6 @@ class _$ShoppingItemImpl extends _ShoppingItem {
   @pragma('vm:prefer-inline')
   _$$ShoppingItemImplCopyWith<_$ShoppingItemImpl> get copyWith =>
       __$$ShoppingItemImplCopyWithImpl<_$ShoppingItemImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ShoppingItemImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _ShoppingItem extends ShoppingItem {
@@ -206,9 +188,6 @@ abstract class _ShoppingItem extends ShoppingItem {
       required final String addedByUserId,
       required final bool completed}) = _$ShoppingItemImpl;
   const _ShoppingItem._() : super._();
-
-  factory _ShoppingItem.fromJson(Map<String, dynamic> json) =
-      _$ShoppingItemImpl.fromJson;
 
   @override
   String get name;

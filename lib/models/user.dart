@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user.freezed.dart';
-part 'user.g.dart';
 
 @freezed
 class User with _$User {
@@ -12,5 +11,11 @@ class User with _$User {
     required String email,
   }) = _User;
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory User.fromJson(Map<String, dynamic> data) {
+    return User(
+      id: data['id'],
+      name: data['name'],
+      email: data['email'],
+    );
+  }
 }

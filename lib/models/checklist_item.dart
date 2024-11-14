@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'checklist_item.freezed.dart';
-part 'checklist_item.g.dart';
 
 @freezed
 class ChecklistItem with _$ChecklistItem {
@@ -11,6 +10,4 @@ class ChecklistItem with _$ChecklistItem {
     required String name,
     required bool completed,
   }) = _ChecklistItem;
-
-  factory ChecklistItem.fromJson(Map<String, dynamic> json) => _$ChecklistItemFromJson(json);
 }

@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'shopping_item.freezed.dart';
-part 'shopping_item.g.dart';
 
 @freezed
 class ShoppingItem with _$ShoppingItem {
@@ -13,6 +12,4 @@ class ShoppingItem with _$ShoppingItem {
     required String addedByUserId,
     required bool completed,
   }) = _ShoppingItem;
-
-  factory ShoppingItem.fromJson(Map<String, dynamic> json) => _$ShoppingItemFromJson(json);
 }

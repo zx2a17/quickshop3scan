@@ -14,17 +14,10 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-ChecklistItem _$ChecklistItemFromJson(Map<String, dynamic> json) {
-  return _ChecklistItem.fromJson(json);
-}
-
 /// @nodoc
 mixin _$ChecklistItem {
   String get name => throw _privateConstructorUsedError;
   bool get completed => throw _privateConstructorUsedError;
-
-  /// Serializes this ChecklistItem to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of ChecklistItem
   /// with the given fields replaced by the non-null parameter values.
@@ -114,13 +107,10 @@ class __$$ChecklistItemImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$ChecklistItemImpl extends _ChecklistItem {
   const _$ChecklistItemImpl({required this.name, required this.completed})
       : super._();
-
-  factory _$ChecklistItemImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ChecklistItemImplFromJson(json);
 
   @override
   final String name;
@@ -142,7 +132,6 @@ class _$ChecklistItemImpl extends _ChecklistItem {
                 other.completed == completed));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, completed);
 
@@ -153,13 +142,6 @@ class _$ChecklistItemImpl extends _ChecklistItem {
   @pragma('vm:prefer-inline')
   _$$ChecklistItemImplCopyWith<_$ChecklistItemImpl> get copyWith =>
       __$$ChecklistItemImplCopyWithImpl<_$ChecklistItemImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ChecklistItemImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _ChecklistItem extends ChecklistItem {
@@ -167,9 +149,6 @@ abstract class _ChecklistItem extends ChecklistItem {
       {required final String name,
       required final bool completed}) = _$ChecklistItemImpl;
   const _ChecklistItem._() : super._();
-
-  factory _ChecklistItem.fromJson(Map<String, dynamic> json) =
-      _$ChecklistItemImpl.fromJson;
 
   @override
   String get name;
