@@ -1,4 +1,5 @@
 {
     "SENTRY_ENVIRONMENT": "prod",
-    "QUICKSHOP_WEB_HOST": "quickshop.buntagon.com"
+    "QUICKSHOP_WEB_HOST": "quickshop.buntagon.com",
+    "QUICKSHOP_FUNCTIONS_HOST": "australia-southeast1-quickshop-prod.cloudfunctions.net"
 }

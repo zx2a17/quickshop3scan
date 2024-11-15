@@ -42,6 +42,14 @@ class AnalyticsEvent {
 
   const AnalyticsEvent.logout() : this._('logout', const {});
 
+  AnalyticsEvent.httpConnectionError(
+      {required String uri, required int statusCode, required String errorMessage})
+      : this._('http_connection_error', {
+          'uri': uri,
+          'status_code': statusCode,
+          'error_message': errorMessage,
+        });
+
   AnalyticsEvent.loginFailed({required String errorCode, required String errorMessage})
       : this._('login_failed', {
           'error_code': errorCode,
