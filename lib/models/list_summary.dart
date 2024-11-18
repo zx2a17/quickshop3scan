@@ -40,7 +40,7 @@ class ListSummary with _$ListSummary {
       name: json['name'],
       ownerId: json['ownerId'],
       editorIds: List<String>.from(json['editorIds']),
-      editors: List<User>.from(json['editors'].map(User.fromJson)),
+      editors: List<User>.from(List<Map<String, dynamic>>.from(json['editors']).map(User.fromJson)),
       itemCount: json['itemCount'],
       lastModified: Map<String, int>.from(json['lastModified']),
       listType: parseListType(json['listType']),

@@ -49,4 +49,9 @@ class ListSharingRepo extends _$ListSharingRepo {
     );
     await fs.collection('invites').doc(invite.id).set(invite.toFirestore());
   }
+
+  Future<void> deleteSharingLink(ListInvite invite) async {
+    final fs = ref.read(firestoreProvider);
+    await fs.collection('invites').doc(invite.id).delete();
+  }
 }

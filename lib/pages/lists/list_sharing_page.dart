@@ -120,7 +120,7 @@ class _SharingLinkTileState extends ConsumerState<SharingLinkTile> {
                       if (value!) {
                         _createSharingLink();
                       } else {
-                        _deleteSharingLink();
+                        _deleteSharingLink(invite);
                       }
                     }),
                 const Text(
@@ -177,6 +177,10 @@ class _SharingLinkTileState extends ConsumerState<SharingLinkTile> {
     // While link is being created, the checkbox should be checked
     if (linkCreationInProgress) {
       return true;
+    }
+    // While link is being deleted, the checkbox should be unchecked
+    if (linkDeletionInProgress) {
+      return false;
     }
     // While the invite is loading, the checkbox should be unchecked
     if (!invite.hasValue) {
@@ -236,9 +240,19 @@ class _SharingLinkTileState extends ConsumerState<SharingLinkTile> {
     }
   }
 
-  void _deleteSharingLink() {
-    // TODO: Implement
-    throw UnimplementedError();
+  void _deleteSharingLink(AsyncValue<ListInvite?> invite) {
+    final inviteValue = invite.valueOrNull;
+    if (inviteValue == null) {
+      return;
+    }
+    setState(() => linkDeletionInProgress = true);
+    try {
+      ref.read(listSharingRepoProvider(widget.list.id).notifier).deleteSharingLink(inviteValue);
+    } catch (e, stackTrace) {
+      ref.read(crashReporterProvider).report(e, stackTrace);
+    } finally {
+      setState(() => linkDeletionInProgress = false);
+    }
   }
 
   void _copyToClipboard(BuildContext context, String text) {
