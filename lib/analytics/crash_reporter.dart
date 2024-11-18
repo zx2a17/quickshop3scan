@@ -37,4 +37,9 @@ class CrashReporter {
       Sentry.captureException(error, stackTrace: stackTrace);
     }
   }
+
+  void reportAsyncError(AsyncValue asyncValue) {
+    assert(asyncValue is AsyncError);
+    report(asyncValue.error, asyncValue.stackTrace!);
+  }
 }

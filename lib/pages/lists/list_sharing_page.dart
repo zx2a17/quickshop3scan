@@ -233,8 +233,8 @@ class _SharingLinkTileState extends ConsumerState<SharingLinkTile> {
       await ref
           .read(listSharingRepoProvider(widget.list.id).notifier)
           .createSharingLinkForList(widget.list);
-    } catch (e, stackTrace) {
-      ref.read(crashReporterProvider).report(e, stackTrace);
+    } catch (error, trace) {
+      ref.read(crashReporterProvider).report(error, trace);
     } finally {
       setState(() => linkCreationInProgress = false);
     }
@@ -248,8 +248,8 @@ class _SharingLinkTileState extends ConsumerState<SharingLinkTile> {
     setState(() => linkDeletionInProgress = true);
     try {
       ref.read(listSharingRepoProvider(widget.list.id).notifier).deleteSharingLink(inviteValue);
-    } catch (e, stackTrace) {
-      ref.read(crashReporterProvider).report(e, stackTrace);
+    } catch (error, trace) {
+      ref.read(crashReporterProvider).report(error, trace);
     } finally {
       setState(() => linkDeletionInProgress = false);
     }

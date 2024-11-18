@@ -23,7 +23,7 @@ class ListsPage extends ConsumerWidget {
           return const Center(child: CircularProgressIndicator());
         }
         if (listsValue.hasError) {
-          ref.read(crashReporterProvider).report(listsValue.error!, StackTrace.current);
+          ref.read(crashReporterProvider).reportAsyncError(listsValue);
           return const Center(
             child: Text('Failed to load lists'),
           );
