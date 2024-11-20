@@ -3,6 +3,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../models/list_summary.dart';
 import '../services/firestore.dart';
+import '../services/functions_http_client.dart';
+import '../services/http_result.dart';
 import 'user_repo.dart';
 
 part 'list_repo.g.dart';
@@ -45,6 +47,18 @@ class ListRepo extends _$ListRepo {
     final listDoc = await fs.collection('lists').add(list.toFirestore());
     return listDoc.id;
   }
+
+  Future<AcceptInviteResult> acceptListInvite(String inviteId) async {
+    final client = ref.read(functionsHttpClientProvider);
+    final result = await client.post('/acceptListInvite', {'inviteId': inviteId});
+    return switch (result.resultStatus) {
+      HttpResultStatus.success => AcceptInviteResult.success,
+      HttpResultStatus.retryableError ||
+      HttpResultStatus.connectionError =>
+        AcceptInviteResult.retryableError,
+      HttpResultStatus.unknownError => AcceptInviteResult.unknownError,
+    };
+  }
 }
 
 @riverpod
@@ -57,4 +71,10 @@ AsyncValue<ListSummary?> list(Ref ref, String listId) {
     error: (error, trace) => AsyncValue.error(error, trace),
     loading: AsyncValue.loading,
   );
+}
+
+enum AcceptInviteResult {
+  success,
+  retryableError,
+  unknownError,
 }

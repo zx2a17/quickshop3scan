@@ -26,6 +26,7 @@ import 'repositories/user_repo.dart';
 part 'router.g.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
+final _listsNavigatorKey = GlobalKey<NavigatorState>();
 
 /// The invite ID when a deep link to a list invite is opened, but the user must login first
 /// before viewing the invite.
@@ -48,6 +49,7 @@ GoRouter router(Ref ref) {
         },
         branches: [
           StatefulShellBranch(
+            navigatorKey: _listsNavigatorKey,
             routes: [
               GoRoute(
                 path: Routes.lists,
@@ -59,7 +61,6 @@ GoRouter router(Ref ref) {
                     builder: (context, state) => const NewListPage(),
                   ),
                   GoRoute(
-                    parentNavigatorKey: _rootNavigatorKey,
                     path: '${_RouteSegments.invites}/:inviteId',
                     builder: (context, state) => ListInviteDetailsPage(
                       inviteId: state.pathParameters['inviteId']!,

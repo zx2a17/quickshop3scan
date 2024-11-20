@@ -13,7 +13,7 @@ part 'functions_http_client.g.dart';
 
 @Riverpod(keepAlive: true)
 FunctionsHttpClient functionsHttpClient(Ref ref) {
-  throw FunctionsHttpClient(ref);
+  return FunctionsHttpClient(ref);
 }
 
 /// A client for making requests to HTTP-Triggered Firebase Functions in the Quickshop project.
@@ -28,6 +28,7 @@ class FunctionsHttpClient {
 
   final host = const String.fromEnvironment('QUICKSHOP_FUNCTIONS_HOST');
 
+  /// [path] is the path to the function, e.g. '/acceptListInvite'.
   Future<HttpResult> post(String path, Map<String, dynamic> data) async {
     return _getResult(method: _Method.post, path: path, data: jsonEncode(data));
   }
@@ -49,7 +50,8 @@ class FunctionsHttpClient {
       // Report unknown errors to Sentry for debugging
       if (result.resultStatus == HttpResultStatus.unknownError) {
         ref.read(crashReporterProvider).report(
-              Exception('Unknown error from server'),
+              Exception(
+                  'Unknown error from HTTP Triggered Function. Uri: $uri. Status code: ${result.statusCode}. Response: ${result.response}'),
               StackTrace.current,
             );
       }

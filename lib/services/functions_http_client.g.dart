@@ -7,7 +7,7 @@ part of 'functions_http_client.dart';
 // **************************************************************************
 
 String _$functionsHttpClientHash() =>
-    r'bc0c5e42635f0249a8830a10a34bd73ab0426bfa';
+    r'b7e4825fb3136f6f9c1d0c48c01fa049db6aa832';
 
 /// See also [functionsHttpClient].
 @ProviderFor(functionsHttpClient)
