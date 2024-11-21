@@ -30,7 +30,7 @@ final _listsNavigatorKey = GlobalKey<NavigatorState>();
 
 /// The invite ID when a deep link to a list invite is opened, but the user must login first
 /// before viewing the invite.
-String? _pendingInviteId;
+String? _pendingListInviteId;
 
 @riverpod
 GoRouter router(Ref ref) {
@@ -151,11 +151,11 @@ GoRouter router(Ref ref) {
       // Handle unauthenticated users
       if (!loggedInNotifier.value) {
         // Redirect unauthenticated users who have opened a list invite link to login first
-        if (state.uri.path.startsWith(Routes.inviteDetails(''))) {
+        if (state.uri.path.startsWith(Routes.listInviteDetails(''))) {
           ref.read(loggerProvider).log('Redirecting unauthenticated user to login');
 
           // Store the invite ID so the user can be redirected to the invite details after login
-          _pendingInviteId = state.uri.pathSegments.last;
+          _pendingListInviteId = state.uri.pathSegments.last;
           return Routes.loginForInvite;
         }
 
@@ -169,18 +169,18 @@ GoRouter router(Ref ref) {
       // Handle redirection after login flow completed
       if (state.uri.path == Routes.postLogin) {
         // Redirect users that had opened a list invite link to view the invite details
-        if (_pendingInviteId != null) {
-          final inviteId = _pendingInviteId!;
-          _pendingInviteId = null;
-          return Routes.inviteDetails(inviteId);
+        if (_pendingListInviteId != null) {
+          final inviteId = _pendingListInviteId!;
+          _pendingListInviteId = null;
+          return Routes.listInviteDetails(inviteId);
         }
 
-        // Otherwise redirect to the home page
-        return Routes.home;
+        // Otherwise redirect to the lists page
+        return Routes.lists;
       }
 
       // Redirect home to lists subpath
-      if (state.uri.path == Routes.home) {
+      if (state.uri.path == _RouteSegments.home) {
         return Routes.lists;
       }
       return null;
@@ -200,6 +200,7 @@ GoRouter router(Ref ref) {
 }
 
 class _RouteSegments {
+  static const home = '/';
   static const login = 'login';
   static const setName = 'set-name';
   static const email = 'email';
@@ -213,8 +214,9 @@ class _RouteSegments {
   static const invites = 'invites';
 }
 
+/// There is no dedicated home page, only the subpages like /lists, /recipes, etc, so there is no
+/// home route. On opening the application, the default route "/" is redirected to the /lists page.
 class Routes {
-  static const home = '/';
   static const login = '/${_RouteSegments.login}';
 
   /// A path that does not correspond to an actual page, but which allows the routing logic to
@@ -233,6 +235,6 @@ class Routes {
   static String recipeDetail(String recipeId) => '${Routes.recipes}/$recipeId';
   static const favourites = '/${_RouteSegments.favourites}';
   static const notFound = '/${_RouteSegments.notFound}';
-  static String inviteDetails(String inviteId) =>
+  static String listInviteDetails(String inviteId) =>
       '${Routes.lists}/${_RouteSegments.invites}/$inviteId';
 }
