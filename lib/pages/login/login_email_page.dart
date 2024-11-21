@@ -70,13 +70,8 @@ class LoginEmailPage extends StatelessWidget {
                 _ => null,
               };
               if (user != null) {
-                ref.read(routerProvider).go(Routes.postLogin);
                 ref.read(analyticsProvider).logEvent(const AnalyticsEvent.loginEmail());
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Welcome, ${user.displayName}!'),
-                  ),
-                );
+                ref.read(routerProvider).go(Routes.postLogin);
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text('An unexpected error occurred. Please try again later'),
