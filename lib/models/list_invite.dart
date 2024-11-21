@@ -18,7 +18,8 @@ class ListInvite with _$ListInvite {
     required String inviterName,
   }) = _ListInvite;
 
-  String get url => 'https://${const String.fromEnvironment('QUICKSHOP_WEB_HOST')}/invites/$id';
+  String get url =>
+      'https://${const String.fromEnvironment('QUICKSHOP_WEB_HOST')}/lists/invites/$id';
 
   static ListInvite fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
     return ListInvite(

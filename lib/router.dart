@@ -148,15 +148,6 @@ GoRouter router(Ref ref) {
     ],
     refreshListenable: loggedInNotifier,
     redirect: (context, state) {
-      // Redirect a path of `/invites/xxx` to `/lists/invites/xxx`. The invite details page has
-      // been defined in the routing configuration as a child route to the /lists page so that when
-      // the app is opened from a deep link, go router automatically builds the /lists page
-      // underneath the invite details page.
-      final segments = state.uri.pathSegments;
-      if (segments.length == 2 && segments[0] == _RouteSegments.invites) {
-        return Routes.inviteDetails(segments[1]);
-      }
-
       // Handle unauthenticated users
       if (!loggedInNotifier.value) {
         // Redirect unauthenticated users who have opened a list invite link to login first
