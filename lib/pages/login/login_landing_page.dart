@@ -119,7 +119,7 @@ class LoginLandingPage extends ConsumerWidget {
                               GoogleProvider(clientId: DefaultFirebaseOptions.googleSignInClientId),
                         ),
                         listener: (oldState, newState, ctrl) {
-                          if (newState is SignedIn) {
+                          if (newState is SignedIn || newState is UserCreated) {
                             ref
                                 .read(analyticsProvider)
                                 .logEvent(const AnalyticsEvent.loginGoogle());
