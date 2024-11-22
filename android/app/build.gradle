@@ -87,10 +87,12 @@ android {
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
             resValue "string", "app_links_domain", "dev.quickshop.buntagon.com"
+            resValue "string", "app_links_fallback_host", "dev.app"
         }
         prod {
             dimension "env"
             resValue "string", "app_links_domain", "quickshop.buntagon.com"
+            resValue "string", "app_links_fallback_host", "app"
         }
     }
 }
