@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -135,37 +134,18 @@ class _SharingLinkTileState extends ConsumerState<SharingLinkTile> {
               child: _linkDisplay(invite),
             ),
             const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: invite.valueOrNull != null
-                        ? () => _copyToClipboard(context, invite.requireValue!.url)
-                        : null,
-                    child: const Row(
-                      children: [
-                        Icon(Icons.copy),
-                        SizedBox(width: 12),
-                        Text('Copy'),
-                      ],
-                    ),
+            OutlinedButton(
+              onPressed: invite.valueOrNull != null ? () => _shareLink(invite.requireValue!) : null,
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.share),
+                  SizedBox(width: 12),
+                  Text(
+                    'Share',
                   ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed:
-                        invite.valueOrNull != null ? () => _shareLink(invite.requireValue!) : null,
-                    child: const Row(
-                      children: [
-                        Icon(Icons.share),
-                        SizedBox(width: 12),
-                        Text('Share'),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
@@ -255,10 +235,15 @@ class _SharingLinkTileState extends ConsumerState<SharingLinkTile> {
     }
   }
 
-  void _copyToClipboard(BuildContext context, String text) {
-    Clipboard.setData(ClipboardData(text: text));
-  }
-
+  /// Sending a HTTP URL via a Facebook message is broken on Android if the link is the only content
+  /// in the message. A preview of the page is generated which does nothing when tapped. The
+  /// workaround is to include the URL as part of a message. The non-clickable preview will still be
+  /// generated, but the link within the message text is clickable.
+  ///
+  /// The [ListSharingPage] originally had a "Copy" button that would copy the link text to
+  /// clipboard; this button was removed because of the chance that the user would paste the link
+  /// into a Facebook message and trigger the issue. The "Share" button includes the following
+  /// message to workaround the issue.
   void _shareLink(ListInvite invite) {
     Share.share("I'd like to share this Quickshop shopping list with you: ${invite.url}");
   }

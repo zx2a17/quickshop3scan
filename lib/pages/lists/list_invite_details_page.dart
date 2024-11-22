@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -104,42 +103,20 @@ class _IsOwnerView extends StatelessWidget {
             style: const TextStyle(decoration: TextDecoration.underline),
           ),
           const SizedBox(height: 24),
-          Row(
-            children: [
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: () => _copyToClipboard(context, invite.url),
-                  child: const Row(
-                    children: [
-                      Icon(Icons.copy),
-                      SizedBox(width: 12),
-                      Text('Copy'),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: () => _shareLink(invite),
-                  child: const Row(
-                    children: [
-                      Icon(Icons.share),
-                      SizedBox(width: 12),
-                      Text('Share'),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+          OutlinedButton(
+            onPressed: () => _shareLink(invite),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.share),
+                SizedBox(width: 12),
+                Text('Share'),
+              ],
+            ),
           ),
         ],
       ),
     );
-  }
-
-  void _copyToClipboard(BuildContext context, String text) {
-    Clipboard.setData(ClipboardData(text: text));
   }
 
   void _shareLink(ListInvite invite) {
