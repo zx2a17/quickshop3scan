@@ -9,7 +9,7 @@ import 'user_repo.dart';
 
 part 'list_repo.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class ListRepo extends _$ListRepo {
   @override
   Stream<List<ListSummary>> build() {

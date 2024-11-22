@@ -4,6 +4,7 @@ import 'package:uuid/uuid.dart';
 import '../models/list_invite.dart';
 import '../models/list_summary.dart';
 import '../services/firestore.dart';
+import 'delay_provider_dispose.dart';
 import 'user_repo.dart';
 
 part 'list_sharing_repo.g.dart';
@@ -14,6 +15,7 @@ part 'list_sharing_repo.g.dart';
 class ListSharingRepo extends _$ListSharingRepo {
   @override
   Stream<ListInvite?> build(String listId) {
+    ref.delayDispose(const Duration(minutes: 5));
     final fs = ref.read(firestoreProvider);
     final user = ref.read(userRepoProvider);
     if (user == null) {
