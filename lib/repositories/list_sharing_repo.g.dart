@@ -6,7 +6,7 @@ part of 'list_sharing_repo.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$listSharingRepoHash() => r'90cbb16a2c52e74480e7cfb346b62b216adddd7c';
+String _$listSharingRepoHash() => r'7c71f926300a99711db7cffa4251a78ec3fa4f88';
 
 /// Copied from Dart SDK
 class _SystemHash {

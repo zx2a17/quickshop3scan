@@ -8,6 +8,7 @@ import 'analytics/crash_reporter.dart';
 import 'analytics/logger.dart';
 import 'pages/favourites/favourites_page.dart';
 import 'pages/home/home_page.dart';
+import 'pages/lists/items/new_shopping_item_page.dart';
 import 'pages/lists/list_detail_page.dart';
 import 'pages/lists/list_invite_details_page.dart';
 import 'pages/lists/list_sharing_page.dart';
@@ -61,22 +62,29 @@ GoRouter router(Ref ref) {
                     builder: (context, state) => const NewListPage(),
                   ),
                   GoRoute(
-                    path: '${_RouteSegments.invites}/:inviteId',
+                    path: '${_RouteSegments.invites}/:${_RouteParams.inviteId}',
                     builder: (context, state) => ListInviteDetailsPage(
-                      inviteId: state.pathParameters['inviteId']!,
+                      inviteId: state.pathParameters[_RouteParams.inviteId]!,
                     ),
                   ),
                   GoRoute(
-                    path: ':listId',
+                    path: ':${_RouteParams.listId}',
                     builder: (context, state) => ListDetailPage(
-                      listId: state.pathParameters['listId']!,
+                      listId: state.pathParameters[_RouteParams.listId]!,
                     ),
                     routes: [
                       GoRoute(
                         path: _RouteSegments.share,
                         parentNavigatorKey: _rootNavigatorKey,
                         builder: (context, state) => ListSharingPage(
-                          listId: state.pathParameters['listId']!,
+                          listId: state.pathParameters[_RouteParams.listId]!,
+                        ),
+                      ),
+                      GoRoute(
+                        path: '${_RouteSegments.items}/${_RouteSegments.shopping}/new',
+                        parentNavigatorKey: _rootNavigatorKey,
+                        builder: (context, state) => NewShoppingItemPage(
+                          listId: state.pathParameters[_RouteParams.listId]!,
                         ),
                       ),
                     ],
@@ -96,9 +104,9 @@ GoRouter router(Ref ref) {
                     builder: (context, state) => const NewRecipePage(),
                   ),
                   GoRoute(
-                    path: ':recipeId',
+                    path: ':${_RouteParams.recipeId}',
                     builder: (context, state) => RecipeDetailPage(
-                      recipeId: state.pathParameters['recipeId']!,
+                      recipeId: state.pathParameters[_RouteParams.recipeId]!,
                     ),
                   )
                 ],
@@ -191,12 +199,18 @@ GoRouter router(Ref ref) {
     // Handle unknown routes with the not found page
     onException: (context, state, router) {
       ref.read(crashReporterProvider).report(state.error, StackTrace.current);
-      router.push(Routes.notFound);
+      router.go(Routes.notFound);
     },
   );
   ref.onDispose(loggedInNotifier.dispose);
   ref.onDispose(router.dispose);
   return router;
+}
+
+class _RouteParams {
+  static const listId = 'listId';
+  static const recipeId = 'recipeId';
+  static const inviteId = 'inviteId';
 }
 
 class _RouteSegments {
@@ -212,6 +226,9 @@ class _RouteSegments {
   static const share = 'share';
   static const notFound = 'not-found';
   static const invites = 'invites';
+  static const items = 'items';
+  static const shopping = 'shopping';
+  static const checklist = 'checklist';
 }
 
 /// There is no dedicated home page, only the subpages like /lists, /recipes, etc, so there is no
@@ -219,20 +236,27 @@ class _RouteSegments {
 class Routes {
   static const login = '/${_RouteSegments.login}';
 
-  /// A path that does not correspond to an actual page, but which allows the routing logic to
-  /// decide if the user should be redirect to a particular page after logging in.
+  /// A path that does not correspond to an actual page, but which allows the redirect routing logic
+  /// to decide which page the user should be redirected to after logging in.
   static const postLogin = '/post-login';
   static const loginForInvite = '/${_RouteSegments.login}-invite';
   static const loginEmail = '${Routes.login}/${_RouteSegments.email}';
   static const loginSetName = '${Routes.login}/${_RouteSegments.setName}';
+
   static const settings = '/${_RouteSegments.settings}';
   static const lists = '/${_RouteSegments.lists}';
   static const newList = '${Routes.lists}/${_RouteSegments.newItem}';
   static String listDetail(String listId) => '${Routes.lists}/$listId';
+  static String newShoppingListItem(String listId) =>
+      '${Routes.listDetail(listId)}/${_RouteSegments.items}/${_RouteSegments.shopping}/${_RouteSegments.newItem}';
+  static String newChecklistItem(String listId) =>
+      '${Routes.listDetail(listId)}/${_RouteSegments.items}/${_RouteSegments.checklist}/${_RouteSegments.newItem}';
   static String shareList(String listId) => '${Routes.listDetail(listId)}/${_RouteSegments.share}';
+
   static const recipes = '/${_RouteSegments.recipes}';
   static const newRecipe = '${Routes.recipes}/${_RouteSegments.newItem}';
   static String recipeDetail(String recipeId) => '${Routes.recipes}/$recipeId';
+
   static const favourites = '/${_RouteSegments.favourites}';
   static const notFound = '/${_RouteSegments.notFound}';
   static String listInviteDetails(String inviteId) =>

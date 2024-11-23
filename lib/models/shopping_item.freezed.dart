@@ -16,8 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ShoppingItem {
+  String get path => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get category => throw _privateConstructorUsedError;
+  List<String> get categories => throw _privateConstructorUsedError;
   String get addedByUserId => throw _privateConstructorUsedError;
   bool get completed => throw _privateConstructorUsedError;
 
@@ -35,7 +36,11 @@ abstract class $ShoppingItemCopyWith<$Res> {
       _$ShoppingItemCopyWithImpl<$Res, ShoppingItem>;
   @useResult
   $Res call(
-      {String name, String category, String addedByUserId, bool completed});
+      {String path,
+      String name,
+      List<String> categories,
+      String addedByUserId,
+      bool completed});
 }
 
 /// @nodoc
@@ -53,20 +58,25 @@ class _$ShoppingItemCopyWithImpl<$Res, $Val extends ShoppingItem>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? path = null,
     Object? name = null,
-    Object? category = null,
+    Object? categories = null,
     Object? addedByUserId = null,
     Object? completed = null,
   }) {
     return _then(_value.copyWith(
+      path: null == path
+          ? _value.path
+          : path // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      category: null == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as String,
+      categories: null == categories
+          ? _value.categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       addedByUserId: null == addedByUserId
           ? _value.addedByUserId
           : addedByUserId // ignore: cast_nullable_to_non_nullable
@@ -88,7 +98,11 @@ abstract class _$$ShoppingItemImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String name, String category, String addedByUserId, bool completed});
+      {String path,
+      String name,
+      List<String> categories,
+      String addedByUserId,
+      bool completed});
 }
 
 /// @nodoc
@@ -104,20 +118,25 @@ class __$$ShoppingItemImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? path = null,
     Object? name = null,
-    Object? category = null,
+    Object? categories = null,
     Object? addedByUserId = null,
     Object? completed = null,
   }) {
     return _then(_$ShoppingItemImpl(
+      path: null == path
+          ? _value.path
+          : path // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      category: null == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as String,
+      categories: null == categories
+          ? _value._categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       addedByUserId: null == addedByUserId
           ? _value.addedByUserId
           : addedByUserId // ignore: cast_nullable_to_non_nullable
@@ -134,16 +153,26 @@ class __$$ShoppingItemImplCopyWithImpl<$Res>
 
 class _$ShoppingItemImpl extends _ShoppingItem {
   const _$ShoppingItemImpl(
-      {required this.name,
-      required this.category,
+      {required this.path,
+      required this.name,
+      required final List<String> categories,
       required this.addedByUserId,
       required this.completed})
-      : super._();
+      : _categories = categories,
+        super._();
 
   @override
-  final String name;
+  final String path;
   @override
-  final String category;
+  final String name;
+  final List<String> _categories;
+  @override
+  List<String> get categories {
+    if (_categories is EqualUnmodifiableListView) return _categories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_categories);
+  }
+
   @override
   final String addedByUserId;
   @override
@@ -151,7 +180,7 @@ class _$ShoppingItemImpl extends _ShoppingItem {
 
   @override
   String toString() {
-    return 'ShoppingItem(name: $name, category: $category, addedByUserId: $addedByUserId, completed: $completed)';
+    return 'ShoppingItem(path: $path, name: $name, categories: $categories, addedByUserId: $addedByUserId, completed: $completed)';
   }
 
   @override
@@ -159,9 +188,10 @@ class _$ShoppingItemImpl extends _ShoppingItem {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ShoppingItemImpl &&
+            (identical(other.path, path) || other.path == path) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.category, category) ||
-                other.category == category) &&
+            const DeepCollectionEquality()
+                .equals(other._categories, _categories) &&
             (identical(other.addedByUserId, addedByUserId) ||
                 other.addedByUserId == addedByUserId) &&
             (identical(other.completed, completed) ||
@@ -169,8 +199,13 @@ class _$ShoppingItemImpl extends _ShoppingItem {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, name, category, addedByUserId, completed);
+  int get hashCode => Object.hash(
+      runtimeType,
+      path,
+      name,
+      const DeepCollectionEquality().hash(_categories),
+      addedByUserId,
+      completed);
 
   /// Create a copy of ShoppingItem
   /// with the given fields replaced by the non-null parameter values.
@@ -183,16 +218,19 @@ class _$ShoppingItemImpl extends _ShoppingItem {
 
 abstract class _ShoppingItem extends ShoppingItem {
   const factory _ShoppingItem(
-      {required final String name,
-      required final String category,
+      {required final String path,
+      required final String name,
+      required final List<String> categories,
       required final String addedByUserId,
       required final bool completed}) = _$ShoppingItemImpl;
   const _ShoppingItem._() : super._();
 
   @override
+  String get path;
+  @override
   String get name;
   @override
-  String get category;
+  List<String> get categories;
   @override
   String get addedByUserId;
   @override

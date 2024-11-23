@@ -38,9 +38,10 @@ class ListsPage extends ConsumerWidget {
         );
       }),
       floatingActionButton: Consumer(builder: (context, ref, _) {
-        return FloatingActionButton(
+        return FloatingActionButton.extended(
+          label: const Text('New list'),
+          icon: const Icon(Icons.list),
           onPressed: () => ref.read(routerProvider).push(Routes.newList),
-          child: const Icon(Icons.add),
         );
       }),
     );

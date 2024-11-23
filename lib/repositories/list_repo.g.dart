@@ -154,12 +154,12 @@ class _ListProviderElement
   String get listId => (origin as ListProvider).listId;
 }
 
-String _$listRepoHash() => r'18d8dfe36a9538b2f0081367f53754e380239d4f';
+String _$listRepoHash() => r'ee910ad6d0429fc2a851d17dafa653abd90d6d9f';
 
 /// See also [ListRepo].
 @ProviderFor(ListRepo)
 final listRepoProvider =
-    AutoDisposeStreamNotifierProvider<ListRepo, List<ListSummary>>.internal(
+    StreamNotifierProvider<ListRepo, List<ListSummary>>.internal(
   ListRepo.new,
   name: r'listRepoProvider',
   debugGetCreateSourceHash:
@@ -168,6 +168,6 @@ final listRepoProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$ListRepo = AutoDisposeStreamNotifier<List<ListSummary>>;
+typedef _$ListRepo = StreamNotifier<List<ListSummary>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
