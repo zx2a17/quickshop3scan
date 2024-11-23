@@ -1,6 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../models/list_summary.dart';
 import '../models/shopping_item.dart';
 import '../services/firestore.dart';
 import 'delay_provider_dispose.dart';
@@ -19,17 +18,21 @@ class ShoppingListItemRepo extends _$ShoppingListItemRepo {
     });
   }
 
-  Future<void> addItem(ListSummary list, String name, List<String> categories) async {
+  Future<void> addItem({
+    required String listId,
+    required String itemName,
+    required List<String> categories,
+  }) async {
     final fs = ref.read(firestoreProvider);
     final user = ref.read(userRepoProvider);
     final item = ShoppingItem(
       path: '',
-      name: name,
+      name: itemName,
       categories: categories,
       addedByUserId: user!.id,
       completed: false,
     );
-    await fs.collection('lists/${list.id}/items').add(item.toFirestore());
+    await fs.collection('lists/$listId/items').add(item.toFirestore());
   }
 
   Future<void> toggleItem(ShoppingItem item) async {
