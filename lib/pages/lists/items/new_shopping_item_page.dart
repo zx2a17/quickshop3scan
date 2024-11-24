@@ -15,6 +15,28 @@ class NewShoppingItemPage extends ConsumerStatefulWidget {
 class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
   List<String> selectedCategories = [];
   TextEditingController nameController = TextEditingController();
+  FocusNode nameFocusNode = FocusNode();
+  String? nameError;
+  String? categoriesError;
+
+  @override
+  void initState() {
+    super.initState();
+    nameController.addListener(onNameChanges);
+  }
+
+  void onNameChanges() {
+    if (nameError != null && nameController.text.isNotEmpty) {
+      setState(() => nameError = null);
+    }
+  }
+
+  @override
+  void dispose() {
+    nameFocusNode.dispose();
+    nameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,33 +44,207 @@ class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
       appBar: AppBar(
         title: const Text('New Item'),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextField(
-                decoration: const InputDecoration(labelText: 'Name'),
-                controller: nameController,
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    TextField(
+                      autofocus: true,
+                      focusNode: nameFocusNode,
+                      textInputAction: TextInputAction.next,
+                      textCapitalization: TextCapitalization.sentences,
+                      decoration: InputDecoration(
+                        labelText: 'Item name',
+                        hintText: 'Enter item name',
+                        hintStyle: const TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.normal,
+                        ),
+                        border: const OutlineInputBorder(),
+                        errorText: nameError,
+                      ),
+                      controller: nameController,
+                    ),
+                    const SizedBox(height: 24),
+                    CategorySelector(
+                      selectedCategories: selectedCategories,
+                      onCategoriesChanged: (newCategories) {
+                        selectedCategories = newCategories;
+                        if (newCategories.isNotEmpty) {
+                          categoriesError = null;
+                        }
+                        setState(() {});
+                      },
+                      error: categoriesError,
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(height: 16),
-              Wrap(
-                children:
-                    selectedCategories.map((category) => Chip(label: Text(category))).toList(),
-              ),
-              Autocomplete(
-                optionsBuilder: (textEditingValue) {
-                  return categorySuggestions.where((String option) {
-                    return option.toLowerCase().contains(textEditingValue.text.toLowerCase());
-                  });
-                },
-                optionsViewBuilder: (context, onSelected, options) {
-                  return Material(
-                    elevation: 4,
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxHeight: 200),
+            ),
+          ),
+          Material(
+            elevation: 4,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton.icon(
+                  onPressed: () {
+                    if (_validate()) {
+                      _saveItem();
+                      final itemName = nameController.text;
+                      nameController.clear();
+                      selectedCategories.clear();
+                      nameFocusNode.requestFocus();
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('Added $itemName to list'),
+                        duration: const Duration(milliseconds: 2400),
+                      ));
+                    }
+                  },
+                  icon: const Icon(Icons.add),
+                  label: const Text('Add more'),
+                ),
+                TextButton.icon(
+                  onPressed: () {
+                    if (_validate()) {
+                      _saveItem();
+                      ref.read(routerProvider).pop();
+                    }
+                  },
+                  icon: const Icon(Icons.check),
+                  label: const Text('Done'),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  bool _validate() {
+    nameError = nameController.text.isEmpty ? 'Please enter an item name' : null;
+    categoriesError = selectedCategories.isEmpty ? 'Please select at least one category' : null;
+    setState(() {});
+    return ![nameError, categoriesError].any((err) => err != null);
+  }
+
+  void _saveItem() {
+    ref.read(shoppingListItemRepoProvider(widget.listId).notifier).addItem(
+          listId: widget.listId,
+          itemName: nameController.text,
+          categories: selectedCategories,
+        );
+  }
+}
+
+class CategorySelector extends StatefulWidget {
+  const CategorySelector({
+    required this.selectedCategories,
+    required this.onCategoriesChanged,
+    required this.error,
+    super.key,
+  });
+  final List<String> selectedCategories;
+  final void Function(List<String>) onCategoriesChanged;
+  final String? error;
+
+  @override
+  State<CategorySelector> createState() => _CategorySelectorState();
+}
+
+class _CategorySelectorState extends State<CategorySelector> {
+  TextEditingController? controller;
+  FocusNode? focusNode;
+
+  void onBuildField(TextEditingController controller, FocusNode focusNode) {
+    if (controller != this.controller) {
+      this.controller = controller;
+    }
+    if (focusNode != this.focusNode) {
+      this.focusNode?.removeListener(onFocusChanged);
+      this.focusNode = focusNode;
+      this.focusNode?.addListener(onFocusChanged);
+    }
+  }
+
+  void onFocusChanged() {
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    focusNode?.removeListener(onFocusChanged);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InputDecorator(
+      isFocused: focusNode?.hasFocus ?? false,
+      decoration: InputDecoration(
+        labelText: 'Categories',
+        border: const OutlineInputBorder(),
+        contentPadding: const EdgeInsets.fromLTRB(12, 16, 12, 4),
+        errorText: widget.error,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          widget.selectedCategories.isEmpty
+              ? const Text(
+                  'Select one or more categories of where you might find this item in store. We\'ll remember it for next time.',
+                  style: TextStyle(fontStyle: FontStyle.italic))
+              : Wrap(
+                  spacing: 8,
+                  children: widget.selectedCategories
+                      .map((category) => Chip(
+                            label: Text(category),
+                            onDeleted: () => widget.onCategoriesChanged(
+                                List.from(widget.selectedCategories)..remove(category)),
+                          ))
+                      .toList(),
+                ),
+          LayoutBuilder(builder: (context, constraints) {
+            return Autocomplete(
+              optionsBuilder: (textEditingValue) {
+                if (textEditingValue.text.isEmpty) {
+                  return const Iterable<String>.empty();
+                }
+                return categorySuggestions.where((String option) {
+                  return option.toLowerCase().contains(textEditingValue.text.toLowerCase());
+                });
+              },
+              fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
+                onBuildField(textEditingController, focusNode);
+                return TextFormField(
+                  controller: textEditingController,
+                  focusNode: focusNode,
+                  onFieldSubmitted: (String value) {
+                    onFieldSubmitted();
+                  },
+                  textInputAction: TextInputAction.done,
+                  textCapitalization: TextCapitalization.sentences,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter category name',
+                    hintStyle: TextStyle(color: Colors.grey, fontWeight: FontWeight.normal),
+                    border: InputBorder.none,
+                  ),
+                );
+              },
+              optionsViewBuilder: (context, onSelected, options) {
+                return Align(
+                  alignment: Alignment.topLeft,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxHeight: 200, maxWidth: constraints.maxWidth),
+                    child: Material(
+                      elevation: 4,
                       child: ListView.builder(
                         shrinkWrap: true,
                         itemCount: options.length,
@@ -63,25 +259,16 @@ class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
                         },
                       ),
                     ),
-                  );
-                },
-                onSelected: (option) => setState(() => selectedCategories.add(option)),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  ref.read(shoppingListItemRepoProvider(widget.listId).notifier).addItem(
-                        listId: widget.listId,
-                        itemName: nameController.text,
-                        categories: selectedCategories,
-                      );
-                  ref.read(routerProvider).pop();
-                },
-                child: const Text('Save'),
-              ),
-            ],
-          ),
-        ),
+                  ),
+                );
+              },
+              onSelected: (category) {
+                widget.onCategoriesChanged(List.from(widget.selectedCategories)..add(category));
+                controller?.clear();
+              },
+            );
+          }),
+        ],
       ),
     );
   }
