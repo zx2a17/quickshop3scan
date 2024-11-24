@@ -10,6 +10,7 @@ class ShoppingItem with _$ShoppingItem {
   const factory ShoppingItem({
     required String path,
     required String name,
+    required String quantity,
     required List<String> categories,
     required String addedByUserId,
     required bool completed,
@@ -19,6 +20,7 @@ class ShoppingItem with _$ShoppingItem {
     return ShoppingItem(
       path: doc.reference.path,
       name: doc['name'],
+      quantity: doc['quantity'],
       categories: (doc['categories'] as List).cast<String>(),
       addedByUserId: doc['addedByUserId'],
       completed: doc[fieldKeys.completed],
@@ -28,11 +30,14 @@ class ShoppingItem with _$ShoppingItem {
   Map<String, dynamic> toFirestore() {
     return {
       'name': name,
+      'quantity': quantity,
       'categories': categories,
       'addedByUserId': addedByUserId,
       fieldKeys.completed: completed,
     };
   }
+
+  String get displayName => quantity.isEmpty ? name : '$quantity $name';
 
   static const ShoppingItemFieldKeys fieldKeys = ShoppingItemFieldKeys();
 }

@@ -15,7 +15,9 @@ class NewShoppingItemPage extends ConsumerStatefulWidget {
 class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
   List<String> selectedCategories = [];
   TextEditingController nameController = TextEditingController();
+  TextEditingController quantityController = TextEditingController();
   FocusNode nameFocusNode = FocusNode();
+  FocusNode quantityFocusNode = FocusNode();
   String? nameError;
   String? categoriesError;
 
@@ -56,6 +58,25 @@ class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
                   children: [
                     TextField(
                       autofocus: true,
+                      focusNode: quantityFocusNode,
+                      textInputAction: TextInputAction.next,
+                      textCapitalization: TextCapitalization.sentences,
+                      decoration: const InputDecoration(
+                        labelText: 'Quantity (optional)',
+                        hintText: 'Enter quantity',
+                        hintStyle: TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.normal,
+                        ),
+                        border: OutlineInputBorder(),
+                        helperText:
+                            'E.g. one, 2, 3 kg, four litres, 5 cans, two dozen, a few, several, or leave blank',
+                        helperMaxLines: 2,
+                      ),
+                      controller: quantityController,
+                    ),
+                    const SizedBox(height: 24),
+                    TextField(
                       focusNode: nameFocusNode,
                       textInputAction: TextInputAction.next,
                       textCapitalization: TextCapitalization.sentences,
@@ -68,10 +89,13 @@ class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
                         ),
                         border: const OutlineInputBorder(),
                         errorText: nameError,
+                        helperText:
+                            'E.g. milk, tomato sauce, cucumbers, chicken thigh, sourdough bread',
+                        helperMaxLines: 2,
                       ),
                       controller: nameController,
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 28),
                     CategorySelector(
                       selectedCategories: selectedCategories,
                       onCategoriesChanged: (newCategories) {
@@ -139,6 +163,7 @@ class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
     ref.read(shoppingListItemRepoProvider(widget.listId).notifier).addItem(
           listId: widget.listId,
           itemName: nameController.text,
+          quantity: quantityController.text,
           categories: selectedCategories,
         );
   }
@@ -193,14 +218,22 @@ class _CategorySelectorState extends State<CategorySelector> {
         border: const OutlineInputBorder(),
         contentPadding: const EdgeInsets.fromLTRB(12, 16, 12, 4),
         errorText: widget.error,
+        helperText:
+            'E.g. dairy, sauces, fruit & vegetables, meat, bakery. These are the categories where you might find this item in store. We\'ll remember the categories for next time.',
+        helperMaxLines: 3,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           widget.selectedCategories.isEmpty
-              ? const Text(
-                  'Select one or more categories of where you might find this item in store. We\'ll remember it for next time.',
-                  style: TextStyle(fontStyle: FontStyle.italic))
+              ? const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 15.0),
+                  child: Text(
+                    'No categories selected',
+                    style: TextStyle(fontStyle: FontStyle.italic),
+                    textAlign: TextAlign.center,
+                  ),
+                )
               : Wrap(
                   spacing: 8,
                   children: widget.selectedCategories

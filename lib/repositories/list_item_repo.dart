@@ -21,6 +21,7 @@ class ShoppingListItemRepo extends _$ShoppingListItemRepo {
   Future<void> addItem({
     required String listId,
     required String itemName,
+    required String quantity,
     required List<String> categories,
   }) async {
     final fs = ref.read(firestoreProvider);
@@ -28,6 +29,7 @@ class ShoppingListItemRepo extends _$ShoppingListItemRepo {
     final item = ShoppingItem(
       path: '',
       name: itemName,
+      quantity: quantity,
       categories: categories,
       addedByUserId: user!.id,
       completed: false,

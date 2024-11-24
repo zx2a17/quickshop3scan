@@ -118,7 +118,7 @@ class ShoppingItemTile extends ConsumerWidget {
     return ListTile(
       onTap: () => ref.read(shoppingListItemRepoProvider(list.id).notifier).toggleItem(item),
       title: Text(
-        item.name,
+        item.displayName,
         style: TextStyle(decoration: item.completed ? TextDecoration.lineThrough : null),
       ),
       trailing: Checkbox(
