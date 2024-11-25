@@ -90,7 +90,7 @@ class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
                         border: const OutlineInputBorder(),
                         errorText: nameError,
                         helperText:
-                            'E.g. milk, tomato sauce, cucumbers, chicken thigh, sourdough bread',
+                            'E.g. milk, tomato sauce, cucumbers, chicken thigh, sourdough bread, paprika, fabric softener',
                         helperMaxLines: 2,
                       ),
                       controller: nameController,
@@ -122,13 +122,11 @@ class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
                     if (_validate()) {
                       _saveItem();
                       final itemName = nameController.text;
-                      nameController.clear();
-                      selectedCategories.clear();
-                      nameFocusNode.requestFocus();
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text('Added $itemName to list'),
                         duration: const Duration(milliseconds: 2400),
                       ));
+                      _resetPage();
                     }
                   },
                   icon: const Icon(Icons.add),
@@ -166,6 +164,13 @@ class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
           quantity: quantityController.text,
           categories: selectedCategories,
         );
+  }
+
+  void _resetPage() {
+    nameController.clear();
+    quantityController.clear();
+    selectedCategories.clear();
+    quantityFocusNode.requestFocus();
   }
 }
 
@@ -219,7 +224,7 @@ class _CategorySelectorState extends State<CategorySelector> {
         contentPadding: const EdgeInsets.fromLTRB(12, 16, 12, 4),
         errorText: widget.error,
         helperText:
-            'E.g. dairy, sauces, fruit & vegetables, meat, bakery. These are the categories where you might find this item in store. We\'ll remember the categories for next time.',
+            'E.g. dairy, sauces, fruit & vegetables, meat, bakery, herbs and spices, laundry. These are the categories where you might find this item in store.',
         helperMaxLines: 3,
       ),
       child: Column(

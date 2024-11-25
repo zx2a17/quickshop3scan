@@ -92,8 +92,9 @@ class ShoppingCategoryHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+      child: Text(
         categoryName,
         style: const TextStyle(fontWeight: FontWeight.bold),
       ),
