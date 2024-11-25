@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../analytics/crash_reporter.dart';
 import '../../models/list_summary.dart';
 import '../../models/shopping_item.dart';
 import '../../repositories/list_item_repo.dart';
-import '../../repositories/list_repo.dart';
 import '../../router.dart';
+import 'list_detail_page_state.dart';
 
 class ListDetailPage extends ConsumerWidget {
   const ListDetailPage({required this.listId, super.key});
@@ -15,10 +14,15 @@ class ListDetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final list = ref.watch(listProvider(listId));
+    final state = ref.watch(listDetailPageStateProvider(listId));
+    final listTitle = state.maybeWhen(
+      shoppingList: (list, _) => list.name,
+      checklist: (list, _) => list.name,
+      orElse: () => 'Shopping list',
+    );
     return Scaffold(
       appBar: AppBar(
-        title: Text(list.valueOrNull?.name ?? 'Shopping list'),
+        title: Text(listTitle),
         actions: [
           MenuAnchor(
             builder: (BuildContext context, MenuController controller, Widget? child) {
@@ -40,39 +44,23 @@ class ListDetailPage extends ConsumerWidget {
           ),
         ],
       ),
-      body: list.when(
-        data: (list) {
-          if (list == null) {
-            return const Center(child: Text('List not found'));
-          }
-          return switch (list.listType) {
-            ListType.shoppingList => ShoppingListContentsView(list: list),
-            ListType.checklist => ChecklistItemsView(list: list),
-          };
-        },
+      body: state.when(
+        notFound: () => const Center(child: Text('List not found')),
+        error: () => const Center(child: Text('Failed to load list')),
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, _) {
-          return const Center(
-            child: Text('Failed to load list'),
-          );
-        },
+        shoppingList: (list, items) => ShoppingListContentsView(list: list, items: items),
+        checklist: (list, _) => ChecklistItemsView(list: list),
       ),
       floatingActionButton: FloatingActionButton.extended(
         label: const Text('Add item'),
         icon: const Icon(Icons.add),
         onPressed: () {
-          final listValue = list.valueOrNull;
-          if (listValue == null) {
-            return;
-          }
-          switch (listValue.listType) {
-            case ListType.shoppingList:
-              ref.read(routerProvider).go(Routes.newShoppingListItem(listId));
-              break;
-            case ListType.checklist:
-              ref.read(routerProvider).go(Routes.newChecklistItem(listId));
-              break;
-          }
+          state.maybeWhen(
+            shoppingList: (list, _) =>
+                ref.read(routerProvider).go(Routes.newShoppingListItem(list.id)),
+            checklist: (list, _) => ref.read(routerProvider).go(Routes.newChecklistItem(list.id)),
+            orElse: () {},
+          );
         },
       ),
     );
@@ -81,28 +69,34 @@ class ListDetailPage extends ConsumerWidget {
 
 @visibleForTesting
 class ShoppingListContentsView extends ConsumerWidget {
-  const ShoppingListContentsView({required this.list, super.key});
+  const ShoppingListContentsView({required this.list, required this.items, super.key});
   final ListSummary list;
+  final List<ShoppingListPageItem> items;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final itemsAsyncValue = ref.watch(shoppingListItemRepoProvider(list.id));
-    if (itemsAsyncValue.isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    if (itemsAsyncValue.hasError) {
-      ref.read(crashReporterProvider).reportAsyncError(itemsAsyncValue);
-      return const Center(
-        child: Text('Failed to load list items'),
-      );
-    }
-    final items = itemsAsyncValue.requireValue;
-    if (items.isEmpty) {
-      return const ShoppingListEmptyView();
-    }
     return ListView.builder(
       itemCount: items.length,
-      itemBuilder: (context, index) => ShoppingItemTile(list: list, item: items[index]),
+      itemBuilder: (context, index) => items[index].when(
+        item: (item) => ShoppingItemTile(list: list, item: item),
+        category: (category) => ShoppingCategoryHeader(categoryName: category),
+      ),
+    );
+  }
+}
+
+@visibleForTesting
+class ShoppingCategoryHeader extends StatelessWidget {
+  const ShoppingCategoryHeader({required this.categoryName, super.key});
+  final String categoryName;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(
+        categoryName,
+        style: const TextStyle(fontWeight: FontWeight.bold),
+      ),
     );
   }
 }
