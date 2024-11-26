@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'list_invite_state.dart';
+part of 'list_invite_view_model.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -34,7 +34,7 @@ class _SystemHash {
 const listInviteStateProvider = ListInviteStateFamily();
 
 /// See also [listInviteState].
-class ListInviteStateFamily extends Family<ListInviteState> {
+class ListInviteStateFamily extends Family<ListInviteViewModel> {
   /// See also [listInviteState].
   const ListInviteStateFamily();
 
@@ -64,15 +64,14 @@ class ListInviteStateFamily extends Family<ListInviteState> {
   static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies => _allTransitiveDependencies;
 
   @override
   String? get name => r'listInviteStateProvider';
 }
 
 /// See also [listInviteState].
-class ListInviteStateProvider extends AutoDisposeProvider<ListInviteState> {
+class ListInviteStateProvider extends AutoDisposeProvider<ListInviteViewModel> {
   /// See also [listInviteState].
   ListInviteStateProvider(
     String inviteId,
@@ -84,12 +83,9 @@ class ListInviteStateProvider extends AutoDisposeProvider<ListInviteState> {
           from: listInviteStateProvider,
           name: r'listInviteStateProvider',
           debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$listInviteStateHash,
+              const bool.fromEnvironment('dart.vm.product') ? null : _$listInviteStateHash,
           dependencies: ListInviteStateFamily._dependencies,
-          allTransitiveDependencies:
-              ListInviteStateFamily._allTransitiveDependencies,
+          allTransitiveDependencies: ListInviteStateFamily._allTransitiveDependencies,
           inviteId: inviteId,
         );
 
@@ -107,7 +103,7 @@ class ListInviteStateProvider extends AutoDisposeProvider<ListInviteState> {
 
   @override
   Override overrideWith(
-    ListInviteState Function(ListInviteStateRef provider) create,
+    ListInviteViewModel Function(ListInviteStateRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -124,7 +120,7 @@ class ListInviteStateProvider extends AutoDisposeProvider<ListInviteState> {
   }
 
   @override
-  AutoDisposeProviderElement<ListInviteState> createElement() {
+  AutoDisposeProviderElement<ListInviteViewModel> createElement() {
     return _ListInviteStateProviderElement(this);
   }
 
@@ -144,13 +140,12 @@ class ListInviteStateProvider extends AutoDisposeProvider<ListInviteState> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin ListInviteStateRef on AutoDisposeProviderRef<ListInviteState> {
+mixin ListInviteStateRef on AutoDisposeProviderRef<ListInviteViewModel> {
   /// The parameter `inviteId` of this provider.
   String get inviteId;
 }
 
-class _ListInviteStateProviderElement
-    extends AutoDisposeProviderElement<ListInviteState>
+class _ListInviteStateProviderElement extends AutoDisposeProviderElement<ListInviteViewModel>
     with ListInviteStateRef {
   _ListInviteStateProviderElement(super.provider);
 

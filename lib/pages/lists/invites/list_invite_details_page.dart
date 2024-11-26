@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../../analytics/crash_reporter.dart';
-import '../../models/list_invite.dart';
-import '../../models/list_summary.dart';
-import '../../repositories/list_repo.dart';
-import '../../router.dart';
-import 'list_invite_state.dart';
+import '../../../analytics/crash_reporter.dart';
+import '../../../models/list_invite.dart';
+import '../../../models/list_summary.dart';
+import '../../../repositories/list_repo.dart';
+import '../../../router.dart';
+import 'list_invite_view_model.dart';
 
 class ListInviteDetailsPage extends ConsumerWidget {
   const ListInviteDetailsPage({super.key, required this.inviteId});

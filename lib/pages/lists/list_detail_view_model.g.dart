@@ -1,13 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'list_detail_page_state.dart';
+part of 'list_detail_view_model.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$listDetailPageStateHash() =>
-    r'746c3945bcbcb7f2362d5ada2c8166672a7d80ed';
+String _$listDetailPageStateHash() => r'746c3945bcbcb7f2362d5ada2c8166672a7d80ed';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -35,7 +34,7 @@ class _SystemHash {
 const listDetailPageStateProvider = ListDetailPageStateFamily();
 
 /// See also [listDetailPageState].
-class ListDetailPageStateFamily extends Family<ListDetailPageState> {
+class ListDetailPageStateFamily extends Family<ListDetailViewModel> {
   /// See also [listDetailPageState].
   const ListDetailPageStateFamily();
 
@@ -65,16 +64,14 @@ class ListDetailPageStateFamily extends Family<ListDetailPageState> {
   static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies => _allTransitiveDependencies;
 
   @override
   String? get name => r'listDetailPageStateProvider';
 }
 
 /// See also [listDetailPageState].
-class ListDetailPageStateProvider
-    extends AutoDisposeProvider<ListDetailPageState> {
+class ListDetailPageStateProvider extends AutoDisposeProvider<ListDetailViewModel> {
   /// See also [listDetailPageState].
   ListDetailPageStateProvider(
     String listId,
@@ -86,12 +83,9 @@ class ListDetailPageStateProvider
           from: listDetailPageStateProvider,
           name: r'listDetailPageStateProvider',
           debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$listDetailPageStateHash,
+              const bool.fromEnvironment('dart.vm.product') ? null : _$listDetailPageStateHash,
           dependencies: ListDetailPageStateFamily._dependencies,
-          allTransitiveDependencies:
-              ListDetailPageStateFamily._allTransitiveDependencies,
+          allTransitiveDependencies: ListDetailPageStateFamily._allTransitiveDependencies,
           listId: listId,
         );
 
@@ -109,7 +103,7 @@ class ListDetailPageStateProvider
 
   @override
   Override overrideWith(
-    ListDetailPageState Function(ListDetailPageStateRef provider) create,
+    ListDetailViewModel Function(ListDetailPageStateRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -126,7 +120,7 @@ class ListDetailPageStateProvider
   }
 
   @override
-  AutoDisposeProviderElement<ListDetailPageState> createElement() {
+  AutoDisposeProviderElement<ListDetailViewModel> createElement() {
     return _ListDetailPageStateProviderElement(this);
   }
 
@@ -146,13 +140,12 @@ class ListDetailPageStateProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin ListDetailPageStateRef on AutoDisposeProviderRef<ListDetailPageState> {
+mixin ListDetailPageStateRef on AutoDisposeProviderRef<ListDetailViewModel> {
   /// The parameter `listId` of this provider.
   String get listId;
 }
 
-class _ListDetailPageStateProviderElement
-    extends AutoDisposeProviderElement<ListDetailPageState>
+class _ListDetailPageStateProviderElement extends AutoDisposeProviderElement<ListDetailViewModel>
     with ListDetailPageStateRef {
   _ListDetailPageStateProviderElement(super.provider);
 

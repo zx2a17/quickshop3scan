@@ -8,21 +8,21 @@ import '../../models/shopping_item.dart';
 import '../../repositories/list_item_repo.dart';
 import '../../repositories/list_repo.dart';
 
-part 'list_detail_page_state.freezed.dart';
-part 'list_detail_page_state.g.dart';
+part 'list_detail_view_model.freezed.dart';
+part 'list_detail_view_model.g.dart';
 
 @freezed
-class ListDetailPageState with _$ListDetailPageState {
-  const ListDetailPageState._();
+class ListDetailViewModel with _$ListDetailViewModel {
+  const ListDetailViewModel._();
 
-  const factory ListDetailPageState.error() = _Error;
-  const factory ListDetailPageState.loading() = _Loading;
-  const factory ListDetailPageState.notFound() = _NotFound;
-  const factory ListDetailPageState.shoppingList({
+  const factory ListDetailViewModel.error() = _Error;
+  const factory ListDetailViewModel.loading() = _Loading;
+  const factory ListDetailViewModel.notFound() = _NotFound;
+  const factory ListDetailViewModel.shoppingList({
     required ListSummary list,
     required List<ShoppingListPageItem> items,
   }) = _ShoppingList;
-  const factory ListDetailPageState.checklist({
+  const factory ListDetailViewModel.checklist({
     required ListSummary list,
     required List<ChecklistItem> items,
   }) = _Checklist;
@@ -39,19 +39,19 @@ class ShoppingListPageItem with _$ShoppingListPageItem {
 }
 
 @riverpod
-ListDetailPageState listDetailPageState(Ref ref, String listId) {
+ListDetailViewModel listDetailPageState(Ref ref, String listId) {
   final listAsyncValue = ref.watch(listProvider(listId));
   if (listAsyncValue.isLoading) {
-    return const ListDetailPageState.loading();
+    return const ListDetailViewModel.loading();
   }
 
   if (listAsyncValue.hasError) {
-    return const ListDetailPageState.error();
+    return const ListDetailViewModel.error();
   }
 
   final list = listAsyncValue.requireValue;
   if (list == null) {
-    return const ListDetailPageState.notFound();
+    return const ListDetailViewModel.notFound();
   }
 
   switch (list.listType) {
@@ -62,15 +62,15 @@ ListDetailPageState listDetailPageState(Ref ref, String listId) {
   }
 }
 
-ListDetailPageState _shoppingList(Ref ref, ListSummary list) {
+ListDetailViewModel _shoppingList(Ref ref, ListSummary list) {
   final itemsAsyncValue = ref.watch(shoppingListItemRepoProvider(list.id));
 
   if (itemsAsyncValue.isLoading) {
-    return const ListDetailPageState.loading();
+    return const ListDetailViewModel.loading();
   }
 
   if (itemsAsyncValue.hasError) {
-    return const ListDetailPageState.error();
+    return const ListDetailViewModel.error();
   }
 
   final items = itemsAsyncValue.requireValue;
@@ -95,9 +95,9 @@ ListDetailPageState _shoppingList(Ref ref, ListSummary list) {
       pageItems.add(ShoppingListPageItem.item(item: item));
     }
   }
-  return ListDetailPageState.shoppingList(list: list, items: pageItems);
+  return ListDetailViewModel.shoppingList(list: list, items: pageItems);
 }
 
-ListDetailPageState _checklist(Ref ref, ListSummary list) {
+ListDetailViewModel _checklist(Ref ref, ListSummary list) {
   throw UnimplementedError();
 }

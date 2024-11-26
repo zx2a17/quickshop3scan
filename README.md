@@ -9,7 +9,12 @@ My third complete rewrite of the Quickshop app. Using the following stack:
 - UI Theme: material 3
 - HTTP: TBD
 
-
+## Naming Conventions
+- `services`: Services are wrappers around accessing external systems like databases, HTTP calls, and authentication. 
+- `models`: Data models used by the application. All models use [freezed](https://pub.dev/packages/freezed) for immutability and equality generation. 
+- `repositories`: Repositories are [Riverpod](https://riverpod.dev/) `providers` which provide access to fetch and query data models, and may also support update operations as well. Repositories are intended to be used across multiple pages. 
+- `pages`: Pages define top-level widgets within the app; a page is either a fullscreen widget, or a widget which fills the contents of a tabbed view. 
+- `view models`: View models agregate data from repositories and services, transforming the data for presentation in a page. A view model should only be used by its page. Depending on the requirements of the page, the view model may be either a data-only [freezed union class](https://pub.dev/packages/freezed#union-types), or class with both data and methods. 
 
 ## Setup
 

@@ -5,7 +5,7 @@ import '../../models/list_summary.dart';
 import '../../models/shopping_item.dart';
 import '../../repositories/list_item_repo.dart';
 import '../../router.dart';
-import 'list_detail_page_state.dart';
+import 'list_detail_view_model.dart';
 
 class ListDetailPage extends ConsumerWidget {
   const ListDetailPage({required this.listId, super.key});

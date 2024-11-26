@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'list_invite_state.dart';
+part of 'list_invite_view_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$ListInviteState {
+mixin _$ListInviteViewModel {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
@@ -83,12 +83,12 @@ mixin _$ListInviteState {
 /// @nodoc
 abstract class $ListInviteStateCopyWith<$Res> {
   factory $ListInviteStateCopyWith(
-          ListInviteState value, $Res Function(ListInviteState) then) =
-      _$ListInviteStateCopyWithImpl<$Res, ListInviteState>;
+          ListInviteViewModel value, $Res Function(ListInviteViewModel) then) =
+      _$ListInviteStateCopyWithImpl<$Res, ListInviteViewModel>;
 }
 
 /// @nodoc
-class _$ListInviteStateCopyWithImpl<$Res, $Val extends ListInviteState>
+class _$ListInviteStateCopyWithImpl<$Res, $Val extends ListInviteViewModel>
     implements $ListInviteStateCopyWith<$Res> {
   _$ListInviteStateCopyWithImpl(this._value, this._then);
 
@@ -97,26 +97,23 @@ class _$ListInviteStateCopyWithImpl<$Res, $Val extends ListInviteState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of ListInviteState
+  /// Create a copy of ListInviteViewModel
   /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
 abstract class _$$LoadingImplCopyWith<$Res> {
-  factory _$$LoadingImplCopyWith(
-          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
+  factory _$$LoadingImplCopyWith(_$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
       __$$LoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$ListInviteStateCopyWithImpl<$Res, _$LoadingImpl>
+class __$$LoadingImplCopyWithImpl<$Res> extends _$ListInviteStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
-  __$$LoadingImplCopyWithImpl(
-      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
+  __$$LoadingImplCopyWithImpl(_$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ListInviteState
+  /// Create a copy of ListInviteViewModel
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -127,13 +124,12 @@ class _$LoadingImpl extends _Loading {
 
   @override
   String toString() {
-    return 'ListInviteState.loading()';
+    return 'ListInviteViewModel.loading()';
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadingImpl);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$LoadingImpl);
   }
 
   @override
@@ -226,27 +222,24 @@ class _$LoadingImpl extends _Loading {
   }
 }
 
-abstract class _Loading extends ListInviteState {
+abstract class _Loading extends ListInviteViewModel {
   const factory _Loading() = _$LoadingImpl;
   const _Loading._() : super._();
 }
 
 /// @nodoc
 abstract class _$$ErrorImplCopyWith<$Res> {
-  factory _$$ErrorImplCopyWith(
-          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
+  factory _$$ErrorImplCopyWith(_$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
       __$$ErrorImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$ListInviteStateCopyWithImpl<$Res, _$ErrorImpl>
+class __$$ErrorImplCopyWithImpl<$Res> extends _$ListInviteStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
-  __$$ErrorImplCopyWithImpl(
-      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
+  __$$ErrorImplCopyWithImpl(_$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ListInviteState
+  /// Create a copy of ListInviteViewModel
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -257,13 +250,12 @@ class _$ErrorImpl extends _Error {
 
   @override
   String toString() {
-    return 'ListInviteState.error()';
+    return 'ListInviteViewModel.error()';
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ErrorImpl);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$ErrorImpl);
   }
 
   @override
@@ -356,27 +348,24 @@ class _$ErrorImpl extends _Error {
   }
 }
 
-abstract class _Error extends ListInviteState {
+abstract class _Error extends ListInviteViewModel {
   const factory _Error() = _$ErrorImpl;
   const _Error._() : super._();
 }
 
 /// @nodoc
 abstract class _$$NotFoundImplCopyWith<$Res> {
-  factory _$$NotFoundImplCopyWith(
-          _$NotFoundImpl value, $Res Function(_$NotFoundImpl) then) =
+  factory _$$NotFoundImplCopyWith(_$NotFoundImpl value, $Res Function(_$NotFoundImpl) then) =
       __$$NotFoundImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$NotFoundImplCopyWithImpl<$Res>
-    extends _$ListInviteStateCopyWithImpl<$Res, _$NotFoundImpl>
+class __$$NotFoundImplCopyWithImpl<$Res> extends _$ListInviteStateCopyWithImpl<$Res, _$NotFoundImpl>
     implements _$$NotFoundImplCopyWith<$Res> {
-  __$$NotFoundImplCopyWithImpl(
-      _$NotFoundImpl _value, $Res Function(_$NotFoundImpl) _then)
+  __$$NotFoundImplCopyWithImpl(_$NotFoundImpl _value, $Res Function(_$NotFoundImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ListInviteState
+  /// Create a copy of ListInviteViewModel
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -387,13 +376,12 @@ class _$NotFoundImpl extends _NotFound {
 
   @override
   String toString() {
-    return 'ListInviteState.notFound()';
+    return 'ListInviteViewModel.notFound()';
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$NotFoundImpl);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$NotFoundImpl);
   }
 
   @override
@@ -486,15 +474,14 @@ class _$NotFoundImpl extends _NotFound {
   }
 }
 
-abstract class _NotFound extends ListInviteState {
+abstract class _NotFound extends ListInviteViewModel {
   const factory _NotFound() = _$NotFoundImpl;
   const _NotFound._() : super._();
 }
 
 /// @nodoc
 abstract class _$$IsOwnerImplCopyWith<$Res> {
-  factory _$$IsOwnerImplCopyWith(
-          _$IsOwnerImpl value, $Res Function(_$IsOwnerImpl) then) =
+  factory _$$IsOwnerImplCopyWith(_$IsOwnerImpl value, $Res Function(_$IsOwnerImpl) then) =
       __$$IsOwnerImplCopyWithImpl<$Res>;
   @useResult
   $Res call({ListInvite invite});
@@ -503,14 +490,12 @@ abstract class _$$IsOwnerImplCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$IsOwnerImplCopyWithImpl<$Res>
-    extends _$ListInviteStateCopyWithImpl<$Res, _$IsOwnerImpl>
+class __$$IsOwnerImplCopyWithImpl<$Res> extends _$ListInviteStateCopyWithImpl<$Res, _$IsOwnerImpl>
     implements _$$IsOwnerImplCopyWith<$Res> {
-  __$$IsOwnerImplCopyWithImpl(
-      _$IsOwnerImpl _value, $Res Function(_$IsOwnerImpl) _then)
+  __$$IsOwnerImplCopyWithImpl(_$IsOwnerImpl _value, $Res Function(_$IsOwnerImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ListInviteState
+  /// Create a copy of ListInviteViewModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -525,7 +510,7 @@ class __$$IsOwnerImplCopyWithImpl<$Res>
     ));
   }
 
-  /// Create a copy of ListInviteState
+  /// Create a copy of ListInviteViewModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -546,7 +531,7 @@ class _$IsOwnerImpl extends _IsOwner {
 
   @override
   String toString() {
-    return 'ListInviteState.isOwner(invite: $invite)';
+    return 'ListInviteViewModel.isOwner(invite: $invite)';
   }
 
   @override
@@ -560,7 +545,7 @@ class _$IsOwnerImpl extends _IsOwner {
   @override
   int get hashCode => Object.hash(runtimeType, invite);
 
-  /// Create a copy of ListInviteState
+  /// Create a copy of ListInviteViewModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -655,23 +640,21 @@ class _$IsOwnerImpl extends _IsOwner {
   }
 }
 
-abstract class _IsOwner extends ListInviteState {
+abstract class _IsOwner extends ListInviteViewModel {
   const factory _IsOwner(final ListInvite invite) = _$IsOwnerImpl;
   const _IsOwner._() : super._();
 
   ListInvite get invite;
 
-  /// Create a copy of ListInviteState
+  /// Create a copy of ListInviteViewModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$IsOwnerImplCopyWith<_$IsOwnerImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$IsOwnerImplCopyWith<_$IsOwnerImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$PendingImplCopyWith<$Res> {
-  factory _$$PendingImplCopyWith(
-          _$PendingImpl value, $Res Function(_$PendingImpl) then) =
+  factory _$$PendingImplCopyWith(_$PendingImpl value, $Res Function(_$PendingImpl) then) =
       __$$PendingImplCopyWithImpl<$Res>;
   @useResult
   $Res call({ListInvite invite});
@@ -680,14 +663,12 @@ abstract class _$$PendingImplCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$PendingImplCopyWithImpl<$Res>
-    extends _$ListInviteStateCopyWithImpl<$Res, _$PendingImpl>
+class __$$PendingImplCopyWithImpl<$Res> extends _$ListInviteStateCopyWithImpl<$Res, _$PendingImpl>
     implements _$$PendingImplCopyWith<$Res> {
-  __$$PendingImplCopyWithImpl(
-      _$PendingImpl _value, $Res Function(_$PendingImpl) _then)
+  __$$PendingImplCopyWithImpl(_$PendingImpl _value, $Res Function(_$PendingImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ListInviteState
+  /// Create a copy of ListInviteViewModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -702,7 +683,7 @@ class __$$PendingImplCopyWithImpl<$Res>
     ));
   }
 
-  /// Create a copy of ListInviteState
+  /// Create a copy of ListInviteViewModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -723,7 +704,7 @@ class _$PendingImpl extends _Pending {
 
   @override
   String toString() {
-    return 'ListInviteState.pending(invite: $invite)';
+    return 'ListInviteViewModel.pending(invite: $invite)';
   }
 
   @override
@@ -737,7 +718,7 @@ class _$PendingImpl extends _Pending {
   @override
   int get hashCode => Object.hash(runtimeType, invite);
 
-  /// Create a copy of ListInviteState
+  /// Create a copy of ListInviteViewModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -832,23 +813,21 @@ class _$PendingImpl extends _Pending {
   }
 }
 
-abstract class _Pending extends ListInviteState {
+abstract class _Pending extends ListInviteViewModel {
   const factory _Pending(final ListInvite invite) = _$PendingImpl;
   const _Pending._() : super._();
 
   ListInvite get invite;
 
-  /// Create a copy of ListInviteState
+  /// Create a copy of ListInviteViewModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PendingImplCopyWith<_$PendingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$PendingImplCopyWith<_$PendingImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$AcceptedImplCopyWith<$Res> {
-  factory _$$AcceptedImplCopyWith(
-          _$AcceptedImpl value, $Res Function(_$AcceptedImpl) then) =
+  factory _$$AcceptedImplCopyWith(_$AcceptedImpl value, $Res Function(_$AcceptedImpl) then) =
       __$$AcceptedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({ListInvite invite});
@@ -857,14 +836,12 @@ abstract class _$$AcceptedImplCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$AcceptedImplCopyWithImpl<$Res>
-    extends _$ListInviteStateCopyWithImpl<$Res, _$AcceptedImpl>
+class __$$AcceptedImplCopyWithImpl<$Res> extends _$ListInviteStateCopyWithImpl<$Res, _$AcceptedImpl>
     implements _$$AcceptedImplCopyWith<$Res> {
-  __$$AcceptedImplCopyWithImpl(
-      _$AcceptedImpl _value, $Res Function(_$AcceptedImpl) _then)
+  __$$AcceptedImplCopyWithImpl(_$AcceptedImpl _value, $Res Function(_$AcceptedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ListInviteState
+  /// Create a copy of ListInviteViewModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -879,7 +856,7 @@ class __$$AcceptedImplCopyWithImpl<$Res>
     ));
   }
 
-  /// Create a copy of ListInviteState
+  /// Create a copy of ListInviteViewModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -900,7 +877,7 @@ class _$AcceptedImpl extends _Accepted {
 
   @override
   String toString() {
-    return 'ListInviteState.accepted(invite: $invite)';
+    return 'ListInviteViewModel.accepted(invite: $invite)';
   }
 
   @override
@@ -914,7 +891,7 @@ class _$AcceptedImpl extends _Accepted {
   @override
   int get hashCode => Object.hash(runtimeType, invite);
 
-  /// Create a copy of ListInviteState
+  /// Create a copy of ListInviteViewModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -1009,15 +986,14 @@ class _$AcceptedImpl extends _Accepted {
   }
 }
 
-abstract class _Accepted extends ListInviteState {
+abstract class _Accepted extends ListInviteViewModel {
   const factory _Accepted(final ListInvite invite) = _$AcceptedImpl;
   const _Accepted._() : super._();
 
   ListInvite get invite;
 
-  /// Create a copy of ListInviteState
+  /// Create a copy of ListInviteViewModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$AcceptedImplCopyWith<_$AcceptedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$AcceptedImplCopyWith<_$AcceptedImpl> get copyWith => throw _privateConstructorUsedError;
 }
