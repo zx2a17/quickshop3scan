@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../repositories/list_item_repo.dart';
+import '../../../repositories/tooltips_repo.dart';
 import '../../../router.dart';
+import '../../../widgets/toggle_tooltip.dart';
+import 'category_selector.dart';
 
 class NewShoppingItemPage extends ConsumerStatefulWidget {
   const NewShoppingItemPage({required this.listId, super.key});
@@ -42,9 +45,30 @@ class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
 
   @override
   Widget build(BuildContext context) {
+    final showNameTooltip = ref.watch(tooltipsRepoProvider(TooltipType.shoppingItemName));
+    final showQuantityTooltip = ref.watch(tooltipsRepoProvider(TooltipType.shoppingItemQuantity));
+    final showCategoriesTooltip =
+        ref.watch(tooltipsRepoProvider(TooltipType.shoppingItemCategories));
     return Scaffold(
       appBar: AppBar(
         title: const Text('New Item'),
+        actions: [
+          if ([showNameTooltip, showQuantityTooltip, showCategoriesTooltip].any((e) => !e))
+            IconButton(
+              icon: const Icon(Icons.help_outline),
+              onPressed: () {
+                ref
+                    .read(tooltipsRepoProvider(TooltipType.shoppingItemName).notifier)
+                    .setDisplayTooltip(true);
+                ref
+                    .read(tooltipsRepoProvider(TooltipType.shoppingItemQuantity).notifier)
+                    .setDisplayTooltip(true);
+                ref
+                    .read(tooltipsRepoProvider(TooltipType.shoppingItemCategories).notifier)
+                    .setDisplayTooltip(true);
+              },
+            )
+        ],
       ),
       body: Column(
         children: [
@@ -69,11 +93,13 @@ class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
                           fontWeight: FontWeight.normal,
                         ),
                         border: OutlineInputBorder(),
-                        helperText:
-                            'E.g. one, 2, 3 kg, four litres, 5 cans, two dozen, a few, several, or leave blank',
-                        helperMaxLines: 2,
                       ),
                       controller: quantityController,
+                    ),
+                    const ToggleTooltip(
+                      type: TooltipType.shoppingItemQuantity,
+                      message:
+                          'E.g. one, 2, 3 kg, four litres, 5 cans, two dozen, a few, several, or leave blank',
                     ),
                     const SizedBox(height: 24),
                     TextField(
@@ -89,11 +115,13 @@ class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
                         ),
                         border: const OutlineInputBorder(),
                         errorText: nameError,
-                        helperText:
-                            'E.g. milk, tomato sauce, cucumbers, chicken thigh, sourdough bread, paprika, fabric softener',
-                        helperMaxLines: 2,
                       ),
                       controller: nameController,
+                    ),
+                    const ToggleTooltip(
+                      type: TooltipType.shoppingItemName,
+                      message:
+                          'E.g. milk, tomato sauce, cucumbers, chicken thigh, sourdough bread, paprika, fabric softener',
                     ),
                     const SizedBox(height: 28),
                     CategorySelector(
@@ -173,202 +201,3 @@ class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
     quantityFocusNode.requestFocus();
   }
 }
-
-class CategorySelector extends StatefulWidget {
-  const CategorySelector({
-    required this.selectedCategories,
-    required this.onCategoriesChanged,
-    required this.error,
-    super.key,
-  });
-  final List<String> selectedCategories;
-  final void Function(List<String>) onCategoriesChanged;
-  final String? error;
-
-  @override
-  State<CategorySelector> createState() => _CategorySelectorState();
-}
-
-class _CategorySelectorState extends State<CategorySelector> {
-  TextEditingController? controller;
-  FocusNode? focusNode;
-
-  void onBuildField(TextEditingController controller, FocusNode focusNode) {
-    if (controller != this.controller) {
-      this.controller = controller;
-    }
-    if (focusNode != this.focusNode) {
-      this.focusNode?.removeListener(onFocusChanged);
-      this.focusNode = focusNode;
-      this.focusNode?.addListener(onFocusChanged);
-    }
-  }
-
-  void onFocusChanged() {
-    setState(() {});
-  }
-
-  @override
-  void dispose() {
-    focusNode?.removeListener(onFocusChanged);
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return InputDecorator(
-      isFocused: focusNode?.hasFocus ?? false,
-      decoration: InputDecoration(
-        labelText: 'Categories',
-        border: const OutlineInputBorder(),
-        contentPadding: const EdgeInsets.fromLTRB(12, 16, 12, 4),
-        errorText: widget.error,
-        helperText:
-            'E.g. dairy, sauces, fruit & vegetables, meat, bakery, herbs and spices, laundry. These are the categories where you might find this item in store.',
-        helperMaxLines: 3,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          widget.selectedCategories.isEmpty
-              ? const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 15.0),
-                  child: Text(
-                    'No categories selected',
-                    style: TextStyle(fontStyle: FontStyle.italic),
-                    textAlign: TextAlign.center,
-                  ),
-                )
-              : Wrap(
-                  spacing: 8,
-                  children: widget.selectedCategories
-                      .map((category) => Chip(
-                            label: Text(category),
-                            onDeleted: () => widget.onCategoriesChanged(
-                                List.from(widget.selectedCategories)..remove(category)),
-                          ))
-                      .toList(),
-                ),
-          LayoutBuilder(builder: (context, constraints) {
-            return Autocomplete(
-              optionsBuilder: (textEditingValue) {
-                if (textEditingValue.text.isEmpty) {
-                  return const Iterable<String>.empty();
-                }
-                return categorySuggestions.where((String option) {
-                  return option.toLowerCase().contains(textEditingValue.text.toLowerCase());
-                });
-              },
-              fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
-                onBuildField(textEditingController, focusNode);
-                return TextFormField(
-                  controller: textEditingController,
-                  focusNode: focusNode,
-                  onFieldSubmitted: (String value) {
-                    onFieldSubmitted();
-                  },
-                  textInputAction: TextInputAction.done,
-                  textCapitalization: TextCapitalization.sentences,
-                  decoration: const InputDecoration(
-                    hintText: 'Enter category name',
-                    hintStyle: TextStyle(color: Colors.grey, fontWeight: FontWeight.normal),
-                    border: InputBorder.none,
-                  ),
-                );
-              },
-              optionsViewBuilder: (context, onSelected, options) {
-                return Align(
-                  alignment: Alignment.topLeft,
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(maxHeight: 200, maxWidth: constraints.maxWidth),
-                    child: Material(
-                      elevation: 4,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: options.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final String option = options.elementAt(index);
-                          return ListTile(
-                            title: Text(option),
-                            onTap: () {
-                              onSelected(option);
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                );
-              },
-              onSelected: (category) {
-                widget.onCategoriesChanged(List.from(widget.selectedCategories)..add(category));
-                controller?.clear();
-              },
-            );
-          }),
-        ],
-      ),
-    );
-  }
-}
-
-final List<String> itemSuggestions = [
-  'Apples',
-  'Bananas',
-  'Oranges',
-  'Pears',
-  'Potatoes',
-  'Carrots',
-  'Broccoli',
-  'Tomatoes',
-  'Lettuce',
-  'Cucumbers',
-  'Onions',
-  'Garlic',
-  'Peppers',
-  'Milk',
-  'Bread',
-  'Eggs',
-  'Butter',
-  'Cheese',
-  'Yogurt',
-  'Chicken',
-  'Chicken breast',
-  'Chicken thigh',
-  'Beef',
-  'Pork',
-  'Fish',
-  'Rice',
-  'Pasta',
-  'Applesauce',
-  'Peanut Butter',
-  'Jelly',
-  'Cereal',
-  'Oatmeal',
-  'Granola Bars',
-  'Chips',
-  'Salsa',
-  'Cookies',
-  'Crackers',
-  'Popcorn',
-  'Ice Cream',
-  'Frozen Pizza',
-];
-
-final List<String> categorySuggestions = [
-  'Fruit and Vegetables',
-  'Dairy',
-  'Meat',
-  'Laundry',
-  'Cleaning',
-  'Pasta',
-  'Soft Drinks',
-  'Pantry',
-  'Frozen',
-  'Bakery',
-  'Snacks',
-  'Beverages',
-  'Household',
-  'Personal Care',
-  'Pet',
-];
