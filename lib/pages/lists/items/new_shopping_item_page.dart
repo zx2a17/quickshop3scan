@@ -19,8 +19,10 @@ class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
   List<String> selectedCategories = [];
   TextEditingController nameController = TextEditingController();
   TextEditingController quantityController = TextEditingController();
+  TextEditingController categoriesController = TextEditingController();
   FocusNode nameFocusNode = FocusNode();
   FocusNode quantityFocusNode = FocusNode();
+  FocusNode categoriesFocusNode = FocusNode();
   String? nameError;
   String? categoriesError;
 
@@ -40,6 +42,7 @@ class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
   void dispose() {
     nameFocusNode.dispose();
     nameController.dispose();
+    categoriesController.dispose();
     super.dispose();
   }
 
@@ -95,6 +98,7 @@ class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
                         border: OutlineInputBorder(),
                       ),
                       controller: quantityController,
+                      onSubmitted: (_) => nameFocusNode.requestFocus(),
                     ),
                     const ToggleTooltip(
                       type: TooltipType.shoppingItemQuantity,
@@ -117,6 +121,7 @@ class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
                         errorText: nameError,
                       ),
                       controller: nameController,
+                      onSubmitted: (value) => categoriesFocusNode.requestFocus(),
                     ),
                     const ToggleTooltip(
                       type: TooltipType.shoppingItemName,
@@ -125,6 +130,8 @@ class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
                     ),
                     const SizedBox(height: 28),
                     CategorySelector(
+                      focusNode: categoriesFocusNode,
+                      controller: categoriesController,
                       selectedCategories: selectedCategories,
                       onCategoriesChanged: (newCategories) {
                         selectedCategories = newCategories;
@@ -197,6 +204,7 @@ class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
   void _resetPage() {
     nameController.clear();
     quantityController.clear();
+    categoriesController.clear();
     selectedCategories.clear();
     quantityFocusNode.requestFocus();
   }

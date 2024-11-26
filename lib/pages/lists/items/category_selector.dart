@@ -8,28 +8,42 @@ class CategorySelector extends StatefulWidget {
     required this.selectedCategories,
     required this.onCategoriesChanged,
     required this.error,
+    this.focusNode,
+    this.controller,
     super.key,
   });
   final List<String> selectedCategories;
   final void Function(List<String>) onCategoriesChanged;
   final String? error;
+  final FocusNode? focusNode;
+  final TextEditingController? controller;
 
   @override
   State<CategorySelector> createState() => _CategorySelectorState();
 }
 
 class _CategorySelectorState extends State<CategorySelector> {
-  TextEditingController? controller;
-  FocusNode? focusNode;
+  late TextEditingController controller;
+  late FocusNode focusNode;
 
-  void onBuildField(TextEditingController controller, FocusNode focusNode) {
-    if (controller != this.controller) {
-      this.controller = controller;
+  @override
+  void initState() {
+    super.initState();
+    controller = widget.controller ?? TextEditingController();
+    focusNode = widget.focusNode ?? FocusNode();
+    focusNode.addListener(onFocusChanged);
+  }
+
+  @override
+  void didUpdateWidget(CategorySelector oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.controller != oldWidget.controller) {
+      controller = widget.controller ?? TextEditingController();
     }
-    if (focusNode != this.focusNode) {
-      this.focusNode?.removeListener(onFocusChanged);
-      this.focusNode = focusNode;
-      this.focusNode?.addListener(onFocusChanged);
+    if (widget.focusNode != oldWidget.focusNode) {
+      focusNode.removeListener(onFocusChanged);
+      focusNode = widget.focusNode ?? FocusNode();
+      focusNode.addListener(onFocusChanged);
     }
   }
 
@@ -39,7 +53,7 @@ class _CategorySelectorState extends State<CategorySelector> {
 
   @override
   void dispose() {
-    focusNode?.removeListener(onFocusChanged);
+    focusNode.removeListener(onFocusChanged);
     super.dispose();
   }
 
@@ -49,7 +63,7 @@ class _CategorySelectorState extends State<CategorySelector> {
       mainAxisSize: MainAxisSize.min,
       children: [
         InputDecorator(
-          isFocused: focusNode?.hasFocus ?? false,
+          isFocused: focusNode.hasFocus,
           decoration: InputDecoration(
             labelText: 'Categories',
             border: const OutlineInputBorder(),
@@ -79,7 +93,9 @@ class _CategorySelectorState extends State<CategorySelector> {
                           .toList(),
                     ),
               LayoutBuilder(builder: (context, constraints) {
-                return Autocomplete(
+                return RawAutocomplete(
+                  focusNode: focusNode,
+                  textEditingController: controller,
                   optionsBuilder: (textEditingValue) {
                     if (textEditingValue.text.isEmpty) {
                       return const Iterable<String>.empty();
@@ -89,7 +105,6 @@ class _CategorySelectorState extends State<CategorySelector> {
                     });
                   },
                   fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
-                    onBuildField(textEditingController, focusNode);
                     return TextFormField(
                       controller: textEditingController,
                       focusNode: focusNode,
@@ -131,7 +146,7 @@ class _CategorySelectorState extends State<CategorySelector> {
                   },
                   onSelected: (category) {
                     widget.onCategoriesChanged(List.from(widget.selectedCategories)..add(category));
-                    controller?.clear();
+                    controller.clear();
                   },
                 );
               }),
