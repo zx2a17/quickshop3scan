@@ -12,6 +12,7 @@ class CategorySelector extends StatefulWidget {
     required this.error,
     this.focusNode,
     this.controller,
+    this.onSubmitted,
     super.key,
   });
   final List<String> selectedCategories;
@@ -19,6 +20,7 @@ class CategorySelector extends StatefulWidget {
   final String? error;
   final FocusNode? focusNode;
   final TextEditingController? controller;
+  final VoidCallback? onSubmitted;
 
   @override
   State<CategorySelector> createState() => _CategorySelectorState();
@@ -122,30 +124,17 @@ class _CategorySelectorState extends State<CategorySelector> {
                     },
                     fieldViewBuilder:
                         (context, textEditingController, focusNode, onFieldSubmitted) {
-                      return Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              controller: textEditingController,
-                              focusNode: focusNode,
-                              onFieldSubmitted: (String value) => _addCategory(value),
-                              textInputAction: TextInputAction.done,
-                              textCapitalization: TextCapitalization.sentences,
-                              decoration: const InputDecoration(
-                                hintText: 'Enter category name',
-                                hintStyle:
-                                    TextStyle(color: Colors.grey, fontWeight: FontWeight.normal),
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: enableAddCategory
-                                ? () => _addCategory(textEditingController.text)
-                                : null,
-                            child: const Text('Add'),
-                          ),
-                        ],
+                      return TextFormField(
+                        controller: textEditingController,
+                        focusNode: focusNode,
+                        onFieldSubmitted: (String value) => widget.onSubmitted?.call(),
+                        textInputAction: TextInputAction.done,
+                        textCapitalization: TextCapitalization.sentences,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter category name',
+                          hintStyle: TextStyle(color: Colors.grey, fontWeight: FontWeight.normal),
+                          border: InputBorder.none,
+                        ),
                       );
                     },
                     optionsViewBuilder: (context, onSelected, options) {
@@ -163,7 +152,17 @@ class _CategorySelectorState extends State<CategorySelector> {
                                 final option = options.elementAt(index);
                                 return option.when(
                                   newCategory: () => ListTile(
-                                    title: const Text('Create new category'),
+                                    title: Text.rich(
+                                      TextSpan(
+                                        text: 'Add new category: ',
+                                        children: [
+                                          TextSpan(
+                                            text: controller.text,
+                                            style: const TextStyle(fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                     onTap: () => _addCategory(controller.text),
                                   ),
                                   heading: (name) => ListTile(

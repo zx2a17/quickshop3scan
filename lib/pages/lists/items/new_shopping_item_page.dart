@@ -141,6 +141,7 @@ class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
                         setState(() {});
                       },
                       error: categoriesError,
+                      onSubmitted: _onDone,
                     ),
                   ],
                 ),
@@ -153,27 +154,12 @@ class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton.icon(
-                  onPressed: () {
-                    if (_validate()) {
-                      _saveItem();
-                      final itemName = nameController.text;
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text('Added $itemName to list'),
-                        duration: const Duration(milliseconds: 2400),
-                      ));
-                      _resetPage();
-                    }
-                  },
+                  onPressed: _onAddMore,
                   icon: const Icon(Icons.add),
                   label: const Text('Add more'),
                 ),
                 TextButton.icon(
-                  onPressed: () {
-                    if (_validate()) {
-                      _saveItem();
-                      ref.read(routerProvider).pop();
-                    }
-                  },
+                  onPressed: _onDone,
                   icon: const Icon(Icons.check),
                   label: const Text('Done'),
                 ),
@@ -183,6 +169,25 @@ class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
         ],
       ),
     );
+  }
+
+  void _onDone() {
+    if (_validate()) {
+      _saveItem();
+      ref.read(routerProvider).pop();
+    }
+  }
+
+  void _onAddMore() {
+    if (_validate()) {
+      _saveItem();
+      final itemName = nameController.text;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Added $itemName to list'),
+        duration: const Duration(milliseconds: 2400),
+      ));
+      _resetPage();
+    }
   }
 
   bool _validate() {
