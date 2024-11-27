@@ -6,7 +6,8 @@ part of 'list_detail_view_model.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$listDetailPageStateHash() => r'746c3945bcbcb7f2362d5ada2c8166672a7d80ed';
+String _$listDetailPageStateHash() =>
+    r'a3726a33927faed26a1d3aab0d07bda966084651';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -64,14 +65,16 @@ class ListDetailPageStateFamily extends Family<ListDetailViewModel> {
   static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies => _allTransitiveDependencies;
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
 
   @override
   String? get name => r'listDetailPageStateProvider';
 }
 
 /// See also [listDetailPageState].
-class ListDetailPageStateProvider extends AutoDisposeProvider<ListDetailViewModel> {
+class ListDetailPageStateProvider
+    extends AutoDisposeProvider<ListDetailViewModel> {
   /// See also [listDetailPageState].
   ListDetailPageStateProvider(
     String listId,
@@ -83,9 +86,12 @@ class ListDetailPageStateProvider extends AutoDisposeProvider<ListDetailViewMode
           from: listDetailPageStateProvider,
           name: r'listDetailPageStateProvider',
           debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product') ? null : _$listDetailPageStateHash,
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$listDetailPageStateHash,
           dependencies: ListDetailPageStateFamily._dependencies,
-          allTransitiveDependencies: ListDetailPageStateFamily._allTransitiveDependencies,
+          allTransitiveDependencies:
+              ListDetailPageStateFamily._allTransitiveDependencies,
           listId: listId,
         );
 
@@ -145,7 +151,8 @@ mixin ListDetailPageStateRef on AutoDisposeProviderRef<ListDetailViewModel> {
   String get listId;
 }
 
-class _ListDetailPageStateProviderElement extends AutoDisposeProviderElement<ListDetailViewModel>
+class _ListDetailPageStateProviderElement
+    extends AutoDisposeProviderElement<ListDetailViewModel>
     with ListDetailPageStateRef {
   _ListDetailPageStateProviderElement(super.provider);
 

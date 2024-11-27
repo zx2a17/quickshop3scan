@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../repositories/tooltips_repo.dart';
 import '../../../widgets/toggle_tooltip.dart';
+import 'category_selector_view_model.dart';
 
 class CategorySelector extends StatefulWidget {
   const CategorySelector({
@@ -25,6 +27,7 @@ class CategorySelector extends StatefulWidget {
 class _CategorySelectorState extends State<CategorySelector> {
   late TextEditingController controller;
   late FocusNode focusNode;
+  bool enableAddCategory = false;
 
   @override
   void initState() {
@@ -32,13 +35,16 @@ class _CategorySelectorState extends State<CategorySelector> {
     controller = widget.controller ?? TextEditingController();
     focusNode = widget.focusNode ?? FocusNode();
     focusNode.addListener(onFocusChanged);
+    controller.addListener(onInput);
   }
 
   @override
   void didUpdateWidget(CategorySelector oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.controller != oldWidget.controller) {
+      controller.removeListener(onInput);
       controller = widget.controller ?? TextEditingController();
+      controller.addListener(onInput);
     }
     if (widget.focusNode != oldWidget.focusNode) {
       focusNode.removeListener(onFocusChanged);
@@ -51,9 +57,17 @@ class _CategorySelectorState extends State<CategorySelector> {
     setState(() {});
   }
 
+  void onInput() {
+    final newEnableAddCategory = controller.text.length >= 2;
+    if (enableAddCategory != newEnableAddCategory) {
+      setState(() => enableAddCategory = newEnableAddCategory);
+    }
+  }
+
   @override
   void dispose() {
     focusNode.removeListener(onFocusChanged);
+    controller.removeListener(onInput);
     super.dispose();
   }
 
@@ -93,62 +107,86 @@ class _CategorySelectorState extends State<CategorySelector> {
                           .toList(),
                     ),
               LayoutBuilder(builder: (context, constraints) {
-                return RawAutocomplete(
-                  focusNode: focusNode,
-                  textEditingController: controller,
-                  optionsBuilder: (textEditingValue) {
-                    if (textEditingValue.text.isEmpty) {
-                      return const Iterable<String>.empty();
-                    }
-                    return categorySuggestions.where((String option) {
-                      return option.toLowerCase().contains(textEditingValue.text.toLowerCase());
-                    });
-                  },
-                  fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
-                    return TextFormField(
-                      controller: textEditingController,
-                      focusNode: focusNode,
-                      onFieldSubmitted: (String value) {
-                        onFieldSubmitted();
-                      },
-                      textInputAction: TextInputAction.done,
-                      textCapitalization: TextCapitalization.sentences,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter category name',
-                        hintStyle: TextStyle(color: Colors.grey, fontWeight: FontWeight.normal),
-                        border: InputBorder.none,
-                      ),
-                    );
-                  },
-                  optionsViewBuilder: (context, onSelected, options) {
-                    return Align(
-                      alignment: Alignment.topLeft,
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(maxHeight: 200, maxWidth: constraints.maxWidth),
-                        child: Material(
-                          elevation: 4,
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: options.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              final String option = options.elementAt(index);
-                              return ListTile(
-                                title: Text(option),
-                                onTap: () {
-                                  onSelected(option);
-                                },
-                              );
-                            },
+                return Consumer(builder: (context, ref, _) {
+                  final vm = ref.watch(categorySelectorViewModelProvider);
+                  return RawAutocomplete<CategorySelectorItem>(
+                    focusNode: focusNode,
+                    textEditingController: controller,
+                    optionsBuilder: (textEditingValue) {
+                      if (textEditingValue.text.isEmpty) {
+                        return const [];
+                      }
+                      // While the search query for items is being performed, the autocomplete will
+                      // show the items from the last successfully completd query.
+                      return vm.getItems(textEditingValue.text);
+                    },
+                    fieldViewBuilder:
+                        (context, textEditingController, focusNode, onFieldSubmitted) {
+                      return Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              controller: textEditingController,
+                              focusNode: focusNode,
+                              onFieldSubmitted: (String value) => _addCategory(value),
+                              textInputAction: TextInputAction.done,
+                              textCapitalization: TextCapitalization.sentences,
+                              decoration: const InputDecoration(
+                                hintText: 'Enter category name',
+                                hintStyle:
+                                    TextStyle(color: Colors.grey, fontWeight: FontWeight.normal),
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: enableAddCategory
+                                ? () => _addCategory(textEditingController.text)
+                                : null,
+                            child: const Text('Add'),
+                          ),
+                        ],
+                      );
+                    },
+                    optionsViewBuilder: (context, onSelected, options) {
+                      return Align(
+                        alignment: Alignment.topLeft,
+                        child: ConstrainedBox(
+                          constraints:
+                              BoxConstraints(maxHeight: 200, maxWidth: constraints.maxWidth),
+                          child: Material(
+                            elevation: 4,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: options.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final option = options.elementAt(index);
+                                return option.when(
+                                  newCategory: () => ListTile(
+                                    title: const Text('Create new category'),
+                                    onTap: () => _addCategory(controller.text),
+                                  ),
+                                  heading: (name) => ListTile(
+                                    title: Text(name),
+                                    enabled: false,
+                                  ),
+                                  suggestion: (name) => ListTile(
+                                    title: Text(name),
+                                    onTap: () => _addCategory(name),
+                                  ),
+                                  history: (name) => ListTile(
+                                    title: Text(name),
+                                    onTap: () => _addCategory(name),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                  onSelected: (category) {
-                    widget.onCategoriesChanged(List.from(widget.selectedCategories)..add(category));
-                    controller.clear();
-                  },
-                );
+                      );
+                    },
+                  );
+                });
               }),
             ],
           ),
@@ -161,6 +199,11 @@ class _CategorySelectorState extends State<CategorySelector> {
         ),
       ],
     );
+  }
+
+  void _addCategory(String category) {
+    widget.onCategoriesChanged(List.from(widget.selectedCategories)..add(category));
+    controller.clear();
   }
 }
 

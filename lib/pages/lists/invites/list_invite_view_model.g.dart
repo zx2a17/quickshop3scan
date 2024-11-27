@@ -6,7 +6,7 @@ part of 'list_invite_view_model.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$listInviteStateHash() => r'2f3d6afd8681172275331033555006f254dab9b3';
+String _$listInviteStateHash() => r'28594ca34f5296a67687227695f3b0324a52763a';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -64,7 +64,8 @@ class ListInviteStateFamily extends Family<ListInviteViewModel> {
   static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies => _allTransitiveDependencies;
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
 
   @override
   String? get name => r'listInviteStateProvider';
@@ -83,9 +84,12 @@ class ListInviteStateProvider extends AutoDisposeProvider<ListInviteViewModel> {
           from: listInviteStateProvider,
           name: r'listInviteStateProvider',
           debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product') ? null : _$listInviteStateHash,
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$listInviteStateHash,
           dependencies: ListInviteStateFamily._dependencies,
-          allTransitiveDependencies: ListInviteStateFamily._allTransitiveDependencies,
+          allTransitiveDependencies:
+              ListInviteStateFamily._allTransitiveDependencies,
           inviteId: inviteId,
         );
 
@@ -145,7 +149,8 @@ mixin ListInviteStateRef on AutoDisposeProviderRef<ListInviteViewModel> {
   String get inviteId;
 }
 
-class _ListInviteStateProviderElement extends AutoDisposeProviderElement<ListInviteViewModel>
+class _ListInviteStateProviderElement
+    extends AutoDisposeProviderElement<ListInviteViewModel>
     with ListInviteStateRef {
   _ListInviteStateProviderElement(super.provider);
 

@@ -81,16 +81,16 @@ mixin _$ListInviteViewModel {
 }
 
 /// @nodoc
-abstract class $ListInviteStateCopyWith<$Res> {
-  factory $ListInviteStateCopyWith(
+abstract class $ListInviteViewModelCopyWith<$Res> {
+  factory $ListInviteViewModelCopyWith(
           ListInviteViewModel value, $Res Function(ListInviteViewModel) then) =
-      _$ListInviteStateCopyWithImpl<$Res, ListInviteViewModel>;
+      _$ListInviteViewModelCopyWithImpl<$Res, ListInviteViewModel>;
 }
 
 /// @nodoc
-class _$ListInviteStateCopyWithImpl<$Res, $Val extends ListInviteViewModel>
-    implements $ListInviteStateCopyWith<$Res> {
-  _$ListInviteStateCopyWithImpl(this._value, this._then);
+class _$ListInviteViewModelCopyWithImpl<$Res, $Val extends ListInviteViewModel>
+    implements $ListInviteViewModelCopyWith<$Res> {
+  _$ListInviteViewModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -103,14 +103,17 @@ class _$ListInviteStateCopyWithImpl<$Res, $Val extends ListInviteViewModel>
 
 /// @nodoc
 abstract class _$$LoadingImplCopyWith<$Res> {
-  factory _$$LoadingImplCopyWith(_$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
+  factory _$$LoadingImplCopyWith(
+          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
       __$$LoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$LoadingImplCopyWithImpl<$Res> extends _$ListInviteStateCopyWithImpl<$Res, _$LoadingImpl>
+class __$$LoadingImplCopyWithImpl<$Res>
+    extends _$ListInviteViewModelCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
-  __$$LoadingImplCopyWithImpl(_$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
+  __$$LoadingImplCopyWithImpl(
+      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of ListInviteViewModel
@@ -129,7 +132,8 @@ class _$LoadingImpl extends _Loading {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$LoadingImpl);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$LoadingImpl);
   }
 
   @override
@@ -229,14 +233,17 @@ abstract class _Loading extends ListInviteViewModel {
 
 /// @nodoc
 abstract class _$$ErrorImplCopyWith<$Res> {
-  factory _$$ErrorImplCopyWith(_$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
+  factory _$$ErrorImplCopyWith(
+          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
       __$$ErrorImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res> extends _$ListInviteStateCopyWithImpl<$Res, _$ErrorImpl>
+class __$$ErrorImplCopyWithImpl<$Res>
+    extends _$ListInviteViewModelCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
-  __$$ErrorImplCopyWithImpl(_$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
+  __$$ErrorImplCopyWithImpl(
+      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of ListInviteViewModel
@@ -255,7 +262,8 @@ class _$ErrorImpl extends _Error {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$ErrorImpl);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$ErrorImpl);
   }
 
   @override
@@ -355,14 +363,17 @@ abstract class _Error extends ListInviteViewModel {
 
 /// @nodoc
 abstract class _$$NotFoundImplCopyWith<$Res> {
-  factory _$$NotFoundImplCopyWith(_$NotFoundImpl value, $Res Function(_$NotFoundImpl) then) =
+  factory _$$NotFoundImplCopyWith(
+          _$NotFoundImpl value, $Res Function(_$NotFoundImpl) then) =
       __$$NotFoundImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$NotFoundImplCopyWithImpl<$Res> extends _$ListInviteStateCopyWithImpl<$Res, _$NotFoundImpl>
+class __$$NotFoundImplCopyWithImpl<$Res>
+    extends _$ListInviteViewModelCopyWithImpl<$Res, _$NotFoundImpl>
     implements _$$NotFoundImplCopyWith<$Res> {
-  __$$NotFoundImplCopyWithImpl(_$NotFoundImpl _value, $Res Function(_$NotFoundImpl) _then)
+  __$$NotFoundImplCopyWithImpl(
+      _$NotFoundImpl _value, $Res Function(_$NotFoundImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of ListInviteViewModel
@@ -381,7 +392,8 @@ class _$NotFoundImpl extends _NotFound {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$NotFoundImpl);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$NotFoundImpl);
   }
 
   @override
@@ -481,7 +493,8 @@ abstract class _NotFound extends ListInviteViewModel {
 
 /// @nodoc
 abstract class _$$IsOwnerImplCopyWith<$Res> {
-  factory _$$IsOwnerImplCopyWith(_$IsOwnerImpl value, $Res Function(_$IsOwnerImpl) then) =
+  factory _$$IsOwnerImplCopyWith(
+          _$IsOwnerImpl value, $Res Function(_$IsOwnerImpl) then) =
       __$$IsOwnerImplCopyWithImpl<$Res>;
   @useResult
   $Res call({ListInvite invite});
@@ -490,9 +503,11 @@ abstract class _$$IsOwnerImplCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$IsOwnerImplCopyWithImpl<$Res> extends _$ListInviteStateCopyWithImpl<$Res, _$IsOwnerImpl>
+class __$$IsOwnerImplCopyWithImpl<$Res>
+    extends _$ListInviteViewModelCopyWithImpl<$Res, _$IsOwnerImpl>
     implements _$$IsOwnerImplCopyWith<$Res> {
-  __$$IsOwnerImplCopyWithImpl(_$IsOwnerImpl _value, $Res Function(_$IsOwnerImpl) _then)
+  __$$IsOwnerImplCopyWithImpl(
+      _$IsOwnerImpl _value, $Res Function(_$IsOwnerImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of ListInviteViewModel
@@ -649,12 +664,14 @@ abstract class _IsOwner extends ListInviteViewModel {
   /// Create a copy of ListInviteViewModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$IsOwnerImplCopyWith<_$IsOwnerImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$IsOwnerImplCopyWith<_$IsOwnerImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$PendingImplCopyWith<$Res> {
-  factory _$$PendingImplCopyWith(_$PendingImpl value, $Res Function(_$PendingImpl) then) =
+  factory _$$PendingImplCopyWith(
+          _$PendingImpl value, $Res Function(_$PendingImpl) then) =
       __$$PendingImplCopyWithImpl<$Res>;
   @useResult
   $Res call({ListInvite invite});
@@ -663,9 +680,11 @@ abstract class _$$PendingImplCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$PendingImplCopyWithImpl<$Res> extends _$ListInviteStateCopyWithImpl<$Res, _$PendingImpl>
+class __$$PendingImplCopyWithImpl<$Res>
+    extends _$ListInviteViewModelCopyWithImpl<$Res, _$PendingImpl>
     implements _$$PendingImplCopyWith<$Res> {
-  __$$PendingImplCopyWithImpl(_$PendingImpl _value, $Res Function(_$PendingImpl) _then)
+  __$$PendingImplCopyWithImpl(
+      _$PendingImpl _value, $Res Function(_$PendingImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of ListInviteViewModel
@@ -822,12 +841,14 @@ abstract class _Pending extends ListInviteViewModel {
   /// Create a copy of ListInviteViewModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PendingImplCopyWith<_$PendingImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$PendingImplCopyWith<_$PendingImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$AcceptedImplCopyWith<$Res> {
-  factory _$$AcceptedImplCopyWith(_$AcceptedImpl value, $Res Function(_$AcceptedImpl) then) =
+  factory _$$AcceptedImplCopyWith(
+          _$AcceptedImpl value, $Res Function(_$AcceptedImpl) then) =
       __$$AcceptedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({ListInvite invite});
@@ -836,9 +857,11 @@ abstract class _$$AcceptedImplCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$AcceptedImplCopyWithImpl<$Res> extends _$ListInviteStateCopyWithImpl<$Res, _$AcceptedImpl>
+class __$$AcceptedImplCopyWithImpl<$Res>
+    extends _$ListInviteViewModelCopyWithImpl<$Res, _$AcceptedImpl>
     implements _$$AcceptedImplCopyWith<$Res> {
-  __$$AcceptedImplCopyWithImpl(_$AcceptedImpl _value, $Res Function(_$AcceptedImpl) _then)
+  __$$AcceptedImplCopyWithImpl(
+      _$AcceptedImpl _value, $Res Function(_$AcceptedImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of ListInviteViewModel
@@ -995,5 +1018,6 @@ abstract class _Accepted extends ListInviteViewModel {
   /// Create a copy of ListInviteViewModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$AcceptedImplCopyWith<_$AcceptedImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$AcceptedImplCopyWith<_$AcceptedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -21,8 +21,11 @@ mixin _$ListDetailViewModel {
     required TResult Function() error,
     required TResult Function() loading,
     required TResult Function() notFound,
-    required TResult Function(ListSummary list, List<ShoppingListPageItem> items) shoppingList,
-    required TResult Function(ListSummary list, List<ChecklistItem> items) checklist,
+    required TResult Function(
+            ListSummary list, List<ShoppingListPageItem> items)
+        shoppingList,
+    required TResult Function(ListSummary list, List<ChecklistItem> items)
+        checklist,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -30,7 +33,8 @@ mixin _$ListDetailViewModel {
     TResult? Function()? error,
     TResult? Function()? loading,
     TResult? Function()? notFound,
-    TResult? Function(ListSummary list, List<ShoppingListPageItem> items)? shoppingList,
+    TResult? Function(ListSummary list, List<ShoppingListPageItem> items)?
+        shoppingList,
     TResult? Function(ListSummary list, List<ChecklistItem> items)? checklist,
   }) =>
       throw _privateConstructorUsedError;
@@ -39,7 +43,8 @@ mixin _$ListDetailViewModel {
     TResult Function()? error,
     TResult Function()? loading,
     TResult Function()? notFound,
-    TResult Function(ListSummary list, List<ShoppingListPageItem> items)? shoppingList,
+    TResult Function(ListSummary list, List<ShoppingListPageItem> items)?
+        shoppingList,
     TResult Function(ListSummary list, List<ChecklistItem> items)? checklist,
     required TResult orElse(),
   }) =>
@@ -75,16 +80,16 @@ mixin _$ListDetailViewModel {
 }
 
 /// @nodoc
-abstract class $ListDetailPageStateCopyWith<$Res> {
-  factory $ListDetailPageStateCopyWith(
+abstract class $ListDetailViewModelCopyWith<$Res> {
+  factory $ListDetailViewModelCopyWith(
           ListDetailViewModel value, $Res Function(ListDetailViewModel) then) =
-      _$ListDetailPageStateCopyWithImpl<$Res, ListDetailViewModel>;
+      _$ListDetailViewModelCopyWithImpl<$Res, ListDetailViewModel>;
 }
 
 /// @nodoc
-class _$ListDetailPageStateCopyWithImpl<$Res, $Val extends ListDetailViewModel>
-    implements $ListDetailPageStateCopyWith<$Res> {
-  _$ListDetailPageStateCopyWithImpl(this._value, this._then);
+class _$ListDetailViewModelCopyWithImpl<$Res, $Val extends ListDetailViewModel>
+    implements $ListDetailViewModelCopyWith<$Res> {
+  _$ListDetailViewModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -97,14 +102,17 @@ class _$ListDetailPageStateCopyWithImpl<$Res, $Val extends ListDetailViewModel>
 
 /// @nodoc
 abstract class _$$ErrorImplCopyWith<$Res> {
-  factory _$$ErrorImplCopyWith(_$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
+  factory _$$ErrorImplCopyWith(
+          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
       __$$ErrorImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res> extends _$ListDetailPageStateCopyWithImpl<$Res, _$ErrorImpl>
+class __$$ErrorImplCopyWithImpl<$Res>
+    extends _$ListDetailViewModelCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
-  __$$ErrorImplCopyWithImpl(_$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
+  __$$ErrorImplCopyWithImpl(
+      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of ListDetailViewModel
@@ -123,7 +131,8 @@ class _$ErrorImpl extends _Error {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$ErrorImpl);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$ErrorImpl);
   }
 
   @override
@@ -135,8 +144,11 @@ class _$ErrorImpl extends _Error {
     required TResult Function() error,
     required TResult Function() loading,
     required TResult Function() notFound,
-    required TResult Function(ListSummary list, List<ShoppingListPageItem> items) shoppingList,
-    required TResult Function(ListSummary list, List<ChecklistItem> items) checklist,
+    required TResult Function(
+            ListSummary list, List<ShoppingListPageItem> items)
+        shoppingList,
+    required TResult Function(ListSummary list, List<ChecklistItem> items)
+        checklist,
   }) {
     return error();
   }
@@ -147,7 +159,8 @@ class _$ErrorImpl extends _Error {
     TResult? Function()? error,
     TResult? Function()? loading,
     TResult? Function()? notFound,
-    TResult? Function(ListSummary list, List<ShoppingListPageItem> items)? shoppingList,
+    TResult? Function(ListSummary list, List<ShoppingListPageItem> items)?
+        shoppingList,
     TResult? Function(ListSummary list, List<ChecklistItem> items)? checklist,
   }) {
     return error?.call();
@@ -159,7 +172,8 @@ class _$ErrorImpl extends _Error {
     TResult Function()? error,
     TResult Function()? loading,
     TResult Function()? notFound,
-    TResult Function(ListSummary list, List<ShoppingListPageItem> items)? shoppingList,
+    TResult Function(ListSummary list, List<ShoppingListPageItem> items)?
+        shoppingList,
     TResult Function(ListSummary list, List<ChecklistItem> items)? checklist,
     required TResult orElse(),
   }) {
@@ -217,15 +231,17 @@ abstract class _Error extends ListDetailViewModel {
 
 /// @nodoc
 abstract class _$$LoadingImplCopyWith<$Res> {
-  factory _$$LoadingImplCopyWith(_$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
+  factory _$$LoadingImplCopyWith(
+          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
       __$$LoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$ListDetailPageStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$ListDetailViewModelCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
-  __$$LoadingImplCopyWithImpl(_$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
+  __$$LoadingImplCopyWithImpl(
+      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of ListDetailViewModel
@@ -244,7 +260,8 @@ class _$LoadingImpl extends _Loading {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$LoadingImpl);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$LoadingImpl);
   }
 
   @override
@@ -256,8 +273,11 @@ class _$LoadingImpl extends _Loading {
     required TResult Function() error,
     required TResult Function() loading,
     required TResult Function() notFound,
-    required TResult Function(ListSummary list, List<ShoppingListPageItem> items) shoppingList,
-    required TResult Function(ListSummary list, List<ChecklistItem> items) checklist,
+    required TResult Function(
+            ListSummary list, List<ShoppingListPageItem> items)
+        shoppingList,
+    required TResult Function(ListSummary list, List<ChecklistItem> items)
+        checklist,
   }) {
     return loading();
   }
@@ -268,7 +288,8 @@ class _$LoadingImpl extends _Loading {
     TResult? Function()? error,
     TResult? Function()? loading,
     TResult? Function()? notFound,
-    TResult? Function(ListSummary list, List<ShoppingListPageItem> items)? shoppingList,
+    TResult? Function(ListSummary list, List<ShoppingListPageItem> items)?
+        shoppingList,
     TResult? Function(ListSummary list, List<ChecklistItem> items)? checklist,
   }) {
     return loading?.call();
@@ -280,7 +301,8 @@ class _$LoadingImpl extends _Loading {
     TResult Function()? error,
     TResult Function()? loading,
     TResult Function()? notFound,
-    TResult Function(ListSummary list, List<ShoppingListPageItem> items)? shoppingList,
+    TResult Function(ListSummary list, List<ShoppingListPageItem> items)?
+        shoppingList,
     TResult Function(ListSummary list, List<ChecklistItem> items)? checklist,
     required TResult orElse(),
   }) {
@@ -338,15 +360,17 @@ abstract class _Loading extends ListDetailViewModel {
 
 /// @nodoc
 abstract class _$$NotFoundImplCopyWith<$Res> {
-  factory _$$NotFoundImplCopyWith(_$NotFoundImpl value, $Res Function(_$NotFoundImpl) then) =
+  factory _$$NotFoundImplCopyWith(
+          _$NotFoundImpl value, $Res Function(_$NotFoundImpl) then) =
       __$$NotFoundImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
 class __$$NotFoundImplCopyWithImpl<$Res>
-    extends _$ListDetailPageStateCopyWithImpl<$Res, _$NotFoundImpl>
+    extends _$ListDetailViewModelCopyWithImpl<$Res, _$NotFoundImpl>
     implements _$$NotFoundImplCopyWith<$Res> {
-  __$$NotFoundImplCopyWithImpl(_$NotFoundImpl _value, $Res Function(_$NotFoundImpl) _then)
+  __$$NotFoundImplCopyWithImpl(
+      _$NotFoundImpl _value, $Res Function(_$NotFoundImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of ListDetailViewModel
@@ -365,7 +389,8 @@ class _$NotFoundImpl extends _NotFound {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$NotFoundImpl);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$NotFoundImpl);
   }
 
   @override
@@ -377,8 +402,11 @@ class _$NotFoundImpl extends _NotFound {
     required TResult Function() error,
     required TResult Function() loading,
     required TResult Function() notFound,
-    required TResult Function(ListSummary list, List<ShoppingListPageItem> items) shoppingList,
-    required TResult Function(ListSummary list, List<ChecklistItem> items) checklist,
+    required TResult Function(
+            ListSummary list, List<ShoppingListPageItem> items)
+        shoppingList,
+    required TResult Function(ListSummary list, List<ChecklistItem> items)
+        checklist,
   }) {
     return notFound();
   }
@@ -389,7 +417,8 @@ class _$NotFoundImpl extends _NotFound {
     TResult? Function()? error,
     TResult? Function()? loading,
     TResult? Function()? notFound,
-    TResult? Function(ListSummary list, List<ShoppingListPageItem> items)? shoppingList,
+    TResult? Function(ListSummary list, List<ShoppingListPageItem> items)?
+        shoppingList,
     TResult? Function(ListSummary list, List<ChecklistItem> items)? checklist,
   }) {
     return notFound?.call();
@@ -401,7 +430,8 @@ class _$NotFoundImpl extends _NotFound {
     TResult Function()? error,
     TResult Function()? loading,
     TResult Function()? notFound,
-    TResult Function(ListSummary list, List<ShoppingListPageItem> items)? shoppingList,
+    TResult Function(ListSummary list, List<ShoppingListPageItem> items)?
+        shoppingList,
     TResult Function(ListSummary list, List<ChecklistItem> items)? checklist,
     required TResult orElse(),
   }) {
@@ -470,7 +500,7 @@ abstract class _$$ShoppingListImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$ShoppingListImplCopyWithImpl<$Res>
-    extends _$ListDetailPageStateCopyWithImpl<$Res, _$ShoppingListImpl>
+    extends _$ListDetailViewModelCopyWithImpl<$Res, _$ShoppingListImpl>
     implements _$$ShoppingListImplCopyWith<$Res> {
   __$$ShoppingListImplCopyWithImpl(
       _$ShoppingListImpl _value, $Res Function(_$ShoppingListImpl) _then)
@@ -510,7 +540,8 @@ class __$$ShoppingListImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ShoppingListImpl extends _ShoppingList {
-  const _$ShoppingListImpl({required this.list, required final List<ShoppingListPageItem> items})
+  const _$ShoppingListImpl(
+      {required this.list, required final List<ShoppingListPageItem> items})
       : _items = items,
         super._();
 
@@ -539,7 +570,8 @@ class _$ShoppingListImpl extends _ShoppingList {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, list, const DeepCollectionEquality().hash(_items));
+  int get hashCode => Object.hash(
+      runtimeType, list, const DeepCollectionEquality().hash(_items));
 
   /// Create a copy of ListDetailViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -555,8 +587,11 @@ class _$ShoppingListImpl extends _ShoppingList {
     required TResult Function() error,
     required TResult Function() loading,
     required TResult Function() notFound,
-    required TResult Function(ListSummary list, List<ShoppingListPageItem> items) shoppingList,
-    required TResult Function(ListSummary list, List<ChecklistItem> items) checklist,
+    required TResult Function(
+            ListSummary list, List<ShoppingListPageItem> items)
+        shoppingList,
+    required TResult Function(ListSummary list, List<ChecklistItem> items)
+        checklist,
   }) {
     return shoppingList(list, items);
   }
@@ -567,7 +602,8 @@ class _$ShoppingListImpl extends _ShoppingList {
     TResult? Function()? error,
     TResult? Function()? loading,
     TResult? Function()? notFound,
-    TResult? Function(ListSummary list, List<ShoppingListPageItem> items)? shoppingList,
+    TResult? Function(ListSummary list, List<ShoppingListPageItem> items)?
+        shoppingList,
     TResult? Function(ListSummary list, List<ChecklistItem> items)? checklist,
   }) {
     return shoppingList?.call(list, items);
@@ -579,7 +615,8 @@ class _$ShoppingListImpl extends _ShoppingList {
     TResult Function()? error,
     TResult Function()? loading,
     TResult Function()? notFound,
-    TResult Function(ListSummary list, List<ShoppingListPageItem> items)? shoppingList,
+    TResult Function(ListSummary list, List<ShoppingListPageItem> items)?
+        shoppingList,
     TResult Function(ListSummary list, List<ChecklistItem> items)? checklist,
     required TResult orElse(),
   }) {
@@ -648,7 +685,8 @@ abstract class _ShoppingList extends ListDetailViewModel {
 
 /// @nodoc
 abstract class _$$ChecklistImplCopyWith<$Res> {
-  factory _$$ChecklistImplCopyWith(_$ChecklistImpl value, $Res Function(_$ChecklistImpl) then) =
+  factory _$$ChecklistImplCopyWith(
+          _$ChecklistImpl value, $Res Function(_$ChecklistImpl) then) =
       __$$ChecklistImplCopyWithImpl<$Res>;
   @useResult
   $Res call({ListSummary list, List<ChecklistItem> items});
@@ -658,9 +696,10 @@ abstract class _$$ChecklistImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$ChecklistImplCopyWithImpl<$Res>
-    extends _$ListDetailPageStateCopyWithImpl<$Res, _$ChecklistImpl>
+    extends _$ListDetailViewModelCopyWithImpl<$Res, _$ChecklistImpl>
     implements _$$ChecklistImplCopyWith<$Res> {
-  __$$ChecklistImplCopyWithImpl(_$ChecklistImpl _value, $Res Function(_$ChecklistImpl) _then)
+  __$$ChecklistImplCopyWithImpl(
+      _$ChecklistImpl _value, $Res Function(_$ChecklistImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of ListDetailViewModel
@@ -697,7 +736,8 @@ class __$$ChecklistImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ChecklistImpl extends _Checklist {
-  const _$ChecklistImpl({required this.list, required final List<ChecklistItem> items})
+  const _$ChecklistImpl(
+      {required this.list, required final List<ChecklistItem> items})
       : _items = items,
         super._();
 
@@ -726,7 +766,8 @@ class _$ChecklistImpl extends _Checklist {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, list, const DeepCollectionEquality().hash(_items));
+  int get hashCode => Object.hash(
+      runtimeType, list, const DeepCollectionEquality().hash(_items));
 
   /// Create a copy of ListDetailViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -742,8 +783,11 @@ class _$ChecklistImpl extends _Checklist {
     required TResult Function() error,
     required TResult Function() loading,
     required TResult Function() notFound,
-    required TResult Function(ListSummary list, List<ShoppingListPageItem> items) shoppingList,
-    required TResult Function(ListSummary list, List<ChecklistItem> items) checklist,
+    required TResult Function(
+            ListSummary list, List<ShoppingListPageItem> items)
+        shoppingList,
+    required TResult Function(ListSummary list, List<ChecklistItem> items)
+        checklist,
   }) {
     return checklist(list, items);
   }
@@ -754,7 +798,8 @@ class _$ChecklistImpl extends _Checklist {
     TResult? Function()? error,
     TResult? Function()? loading,
     TResult? Function()? notFound,
-    TResult? Function(ListSummary list, List<ShoppingListPageItem> items)? shoppingList,
+    TResult? Function(ListSummary list, List<ShoppingListPageItem> items)?
+        shoppingList,
     TResult? Function(ListSummary list, List<ChecklistItem> items)? checklist,
   }) {
     return checklist?.call(list, items);
@@ -766,7 +811,8 @@ class _$ChecklistImpl extends _Checklist {
     TResult Function()? error,
     TResult Function()? loading,
     TResult Function()? notFound,
-    TResult Function(ListSummary list, List<ShoppingListPageItem> items)? shoppingList,
+    TResult Function(ListSummary list, List<ShoppingListPageItem> items)?
+        shoppingList,
     TResult Function(ListSummary list, List<ChecklistItem> items)? checklist,
     required TResult orElse(),
   }) {
@@ -829,7 +875,8 @@ abstract class _Checklist extends ListDetailViewModel {
   /// Create a copy of ListDetailViewModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ChecklistImplCopyWith<_$ChecklistImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$ChecklistImplCopyWith<_$ChecklistImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -876,13 +923,14 @@ mixin _$ShoppingListPageItem {
 
 /// @nodoc
 abstract class $ShoppingListPageItemCopyWith<$Res> {
-  factory $ShoppingListPageItemCopyWith(
-          ShoppingListPageItem value, $Res Function(ShoppingListPageItem) then) =
+  factory $ShoppingListPageItemCopyWith(ShoppingListPageItem value,
+          $Res Function(ShoppingListPageItem) then) =
       _$ShoppingListPageItemCopyWithImpl<$Res, ShoppingListPageItem>;
 }
 
 /// @nodoc
-class _$ShoppingListPageItemCopyWithImpl<$Res, $Val extends ShoppingListPageItem>
+class _$ShoppingListPageItemCopyWithImpl<$Res,
+        $Val extends ShoppingListPageItem>
     implements $ShoppingListPageItemCopyWith<$Res> {
   _$ShoppingListPageItemCopyWithImpl(this._value, this._then);
 
@@ -897,7 +945,8 @@ class _$ShoppingListPageItemCopyWithImpl<$Res, $Val extends ShoppingListPageItem
 
 /// @nodoc
 abstract class _$$ItemImplCopyWith<$Res> {
-  factory _$$ItemImplCopyWith(_$ItemImpl value, $Res Function(_$ItemImpl) then) =
+  factory _$$ItemImplCopyWith(
+          _$ItemImpl value, $Res Function(_$ItemImpl) then) =
       __$$ItemImplCopyWithImpl<$Res>;
   @useResult
   $Res call({ShoppingItem item});
@@ -906,7 +955,8 @@ abstract class _$$ItemImplCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$ItemImplCopyWithImpl<$Res> extends _$ShoppingListPageItemCopyWithImpl<$Res, _$ItemImpl>
+class __$$ItemImplCopyWithImpl<$Res>
+    extends _$ShoppingListPageItemCopyWithImpl<$Res, _$ItemImpl>
     implements _$$ItemImplCopyWith<$Res> {
   __$$ItemImplCopyWithImpl(_$ItemImpl _value, $Res Function(_$ItemImpl) _then)
       : super(_value, _then);
@@ -1040,12 +1090,14 @@ abstract class _Item implements ShoppingListPageItem {
   /// Create a copy of ShoppingListPageItem
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ItemImplCopyWith<_$ItemImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$ItemImplCopyWith<_$ItemImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$CategoryImplCopyWith<$Res> {
-  factory _$$CategoryImplCopyWith(_$CategoryImpl value, $Res Function(_$CategoryImpl) then) =
+  factory _$$CategoryImplCopyWith(
+          _$CategoryImpl value, $Res Function(_$CategoryImpl) then) =
       __$$CategoryImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String name});
@@ -1055,7 +1107,8 @@ abstract class _$$CategoryImplCopyWith<$Res> {
 class __$$CategoryImplCopyWithImpl<$Res>
     extends _$ShoppingListPageItemCopyWithImpl<$Res, _$CategoryImpl>
     implements _$$CategoryImplCopyWith<$Res> {
-  __$$CategoryImplCopyWithImpl(_$CategoryImpl _value, $Res Function(_$CategoryImpl) _then)
+  __$$CategoryImplCopyWithImpl(
+      _$CategoryImpl _value, $Res Function(_$CategoryImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of ShoppingListPageItem
@@ -1177,5 +1230,6 @@ abstract class _Category implements ShoppingListPageItem {
   /// Create a copy of ShoppingListPageItem
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CategoryImplCopyWith<_$CategoryImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$CategoryImplCopyWith<_$CategoryImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
