@@ -112,6 +112,7 @@ class _CategorySelectorState extends State<CategorySelector> {
                 return Consumer(builder: (context, ref, _) {
                   final vm = ref.watch(categorySelectorViewModelProvider);
                   return RawAutocomplete<CategorySelectorItem>(
+                    optionsViewOpenDirection: OptionsViewOpenDirection.up,
                     focusNode: focusNode,
                     textEditingController: controller,
                     optionsBuilder: (textEditingValue) {
@@ -139,7 +140,7 @@ class _CategorySelectorState extends State<CategorySelector> {
                     },
                     optionsViewBuilder: (context, onSelected, options) {
                       return Align(
-                        alignment: Alignment.topLeft,
+                        alignment: Alignment.bottomLeft,
                         child: ConstrainedBox(
                           constraints:
                               BoxConstraints(maxHeight: 200, maxWidth: constraints.maxWidth),
@@ -205,64 +206,3 @@ class _CategorySelectorState extends State<CategorySelector> {
     controller.clear();
   }
 }
-
-final List<String> itemSuggestions = [
-  'Apples',
-  'Bananas',
-  'Oranges',
-  'Pears',
-  'Potatoes',
-  'Carrots',
-  'Broccoli',
-  'Tomatoes',
-  'Lettuce',
-  'Cucumbers',
-  'Onions',
-  'Garlic',
-  'Peppers',
-  'Milk',
-  'Bread',
-  'Eggs',
-  'Butter',
-  'Cheese',
-  'Yogurt',
-  'Chicken',
-  'Chicken breast',
-  'Chicken thigh',
-  'Beef',
-  'Pork',
-  'Fish',
-  'Rice',
-  'Pasta',
-  'Applesauce',
-  'Peanut Butter',
-  'Jelly',
-  'Cereal',
-  'Oatmeal',
-  'Granola Bars',
-  'Chips',
-  'Salsa',
-  'Cookies',
-  'Crackers',
-  'Popcorn',
-  'Ice Cream',
-  'Frozen Pizza',
-];
-
-final List<String> categorySuggestions = [
-  'Fruit and Vegetables',
-  'Dairy',
-  'Meat',
-  'Laundry',
-  'Cleaning',
-  'Pasta',
-  'Soft Drinks',
-  'Pantry',
-  'Frozen',
-  'Bakery',
-  'Snacks',
-  'Beverages',
-  'Household',
-  'Personal Care',
-  'Pet',
-];
