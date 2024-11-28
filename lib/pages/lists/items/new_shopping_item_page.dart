@@ -17,12 +17,12 @@ class NewShoppingItemPage extends ConsumerStatefulWidget {
 
 class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
   List<String> selectedCategories = [];
-  TextEditingController nameController = TextEditingController();
-  TextEditingController quantityController = TextEditingController();
-  TextEditingController categoriesController = TextEditingController();
-  FocusNode nameFocusNode = FocusNode();
-  FocusNode quantityFocusNode = FocusNode();
-  FocusNode categoriesFocusNode = FocusNode();
+  final nameController = TextEditingController();
+  final quantityController = TextEditingController();
+  final categoriesController = TextEditingController();
+  final nameFocusNode = FocusNode();
+  final quantityFocusNode = FocusNode();
+  final categoriesFocusNode = FocusNode();
   String? nameError;
   String? categoriesError;
 
