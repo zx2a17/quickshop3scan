@@ -92,8 +92,10 @@ class ShoppingCategoryHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+      alignment: Alignment.center,
+      color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.5),
       child: Text(
         categoryName,
         style: const TextStyle(fontWeight: FontWeight.bold),
