@@ -181,29 +181,31 @@ class _NewShoppingItemPageState extends ConsumerState<NewShoppingItemPage> {
   void _onAddMore() {
     if (_validate()) {
       _saveItem();
-      final itemName = nameController.text;
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Added $itemName to list'),
-        duration: const Duration(milliseconds: 2400),
-      ));
       _resetPage();
     }
   }
 
   bool _validate() {
-    nameError = nameController.text.isEmpty ? 'Please enter an item name' : null;
+    nameError = nameController.text.trim().isEmpty ? 'Please enter an item name' : null;
     categoriesError = selectedCategories.isEmpty ? 'Please select at least one category' : null;
     setState(() {});
     return ![nameError, categoriesError].any((err) => err != null);
   }
 
   void _saveItem() {
+    final name = nameController.text.trim();
+    final quantity = quantityController.text.trim();
     ref.read(shoppingListItemRepoProvider(widget.listId).notifier).addItem(
           listId: widget.listId,
-          itemName: nameController.text,
-          quantity: quantityController.text,
+          itemName: name,
+          quantity: quantity,
           categories: selectedCategories,
         );
+    final displayName = quantity.isEmpty ? name : '$quantity $name';
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Added $displayName to list'),
+      duration: const Duration(milliseconds: 2400),
+    ));
   }
 
   void _resetPage() {
