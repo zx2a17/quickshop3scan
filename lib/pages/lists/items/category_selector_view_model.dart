@@ -2,6 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../analytics/logger.dart';
+import '../../../data/category_suggestions.dart' as data;
+import '../../../services/sqlite_db.dart';
+
 part 'category_selector_view_model.freezed.dart';
 part 'category_selector_view_model.g.dart';
 
@@ -37,8 +41,15 @@ class CategorySelectorViewModel {
   CategorySelectorViewModel._(this._ref);
 
   Future<List<CategorySelectorItem>> getItems(String filter) async {
-    final categorySuggestions = _ref.watch(categorySuggestionsProvider);
-    await Future.delayed(const Duration(milliseconds: 100));
+    final db = _ref.read(sqfliteDbProvider);
+    final log = _ref.read(loggerProvider);
+    final start = DateTime.now();
+    final categorySuggestionRows = await db.rawQuery(
+      'SELECT name FROM CategorySuggestions WHERE token LIKE ?',
+      ['${filter.toLowerCase()}%'],
+    );
+    final categorySuggestions = categorySuggestionRows.map((row) => row['name'] as String).toList();
+    log.captureSpan(start, 'Category suggestions query');
     if (filter.isEmpty) {
       return categorySuggestions
           .map((suggestion) => CategorySelectorItem.suggestion(suggestion))
@@ -57,21 +68,5 @@ class CategorySelectorViewModel {
 
 @riverpod
 List<String> categorySuggestions(Ref ref) {
-  return [
-    'Fruit and Vegetables',
-    'Dairy',
-    'Meat',
-    'Laundry',
-    'Cleaning',
-    'Pasta',
-    'Soft Drinks',
-    'Pantry',
-    'Frozen',
-    'Bakery',
-    'Snacks',
-    'Beverages',
-    'Household',
-    'Personal Care',
-    'Pet',
-  ];
+  return data.categorySuggestions;
 }

@@ -12,6 +12,12 @@ class Logger {
   Logger._();
   void log(String message) {
     // Todo: implement a proper logging framework
-    print('QuickShop: $message');
+    print('QSLog: $message');
+  }
+
+  /// Capture a span of time for performance analysis
+  void captureSpan(DateTime startTime, String message) {
+    final completed = DateTime.now();
+    print('QSLog: $message took ${completed.difference(startTime).inMilliseconds}ms');
   }
 }

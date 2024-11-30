@@ -6,6 +6,8 @@ My third complete rewrite of the Quickshop app. Using the following stack:
 - Navigation: Go Router
 - Authentication: Firebase auth
 - Data sync: Firestore
+- Local data storage: SQFlite
+- Local preferences data: Shared preferences
 - UI Theme: material 3
 - HTTP: TBD
 
@@ -50,6 +52,11 @@ flutterfire configure --project=quickshop-ENV --out=lib/firebase/<ENV>.dart --an
 The `firebaseGoogleAuthWebClientId` can be found in the Firebase console as the "Web client ID" described here: https://github.com/firebase/FirebaseUI-Flutter/blob/main/docs/firebase-ui-auth/providers/oauth.md
 
 Debug and upload keystores and corresponding properties files should be placed into the `android/keystore` folder. See [here](https://docs.flutter.dev/deployment/android#configure-signing-in-gradle) for a general description of the android app signing approach. 
+
+### Database Debugging
+[sqflite](https://pub.dev/packages/sqflite) is used for local storage of data on the device. This package is a wrapper around the native sqlite database capability provided in Android and iOS operating systems. During development it can be useful to view the contents of this database. When targeting Android devices, Android Studio includes a built-in database inspector that can attach to Flutter apps running in debug mode, making it easy to browse the tables and rows in the app's sqlite databases. 
+
+The database inspector can be opened in Android Studio from `View > Tool Windows > App Inspection`, then select the process for the application running in debug mode. See full instructions here: https://developer.android.com/studio/inspect/database#open
 
 ## Assets
 The `assets` directory houses images, fonts, and any other files you want to

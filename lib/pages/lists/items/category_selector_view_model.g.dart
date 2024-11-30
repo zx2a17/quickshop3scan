@@ -27,7 +27,7 @@ final categorySelectorViewModelProvider =
 typedef CategorySelectorViewModelRef
     = AutoDisposeProviderRef<CategorySelectorViewModel>;
 String _$categorySuggestionsHash() =>
-    r'69a877ef746d3340a753d237f3fb645d0c440cc9';
+    r'cc09fc6a62f0a0ed370c46cbdc035c486a51fc5a';
 
 /// See also [categorySuggestions].
 @ProviderFor(categorySuggestions)
