@@ -18,6 +18,6 @@ class Logger {
   /// Capture a span of time for performance analysis
   void captureSpan(DateTime startTime, String message) {
     final completed = DateTime.now();
-    print('QSLog: $message took ${completed.difference(startTime).inMilliseconds}ms');
+    print('QSLog-Perf: $message took ${completed.difference(startTime).inMilliseconds}ms');
   }
 }

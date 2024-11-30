@@ -41,5 +41,5 @@ Future _onCreateV1(sqflite.Database db, int version) async {
   }
   await batch.commit(noResult: true);
   final completed = DateTime.now();
-  print('QSLog: V1 Database creation took ${completed.difference(start).inMilliseconds}ms');
+  print('QSLog-Perf: V1 Database creation took ${completed.difference(start).inMilliseconds}ms');
 }
