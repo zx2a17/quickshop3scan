@@ -5,6 +5,7 @@ import '../../models/list_summary.dart';
 import '../../models/shopping_item.dart';
 import '../../repositories/list_item_repo.dart';
 import '../../router.dart';
+import 'list_detail_drawer.dart';
 import 'list_detail_view_model.dart';
 
 class ListDetailPage extends ConsumerWidget {
@@ -24,26 +25,16 @@ class ListDetailPage extends ConsumerWidget {
       appBar: AppBar(
         title: Text(listTitle),
         actions: [
-          MenuAnchor(
-            builder: (BuildContext context, MenuController controller, Widget? child) {
-              return IconButton(
-                icon: const Icon(Icons.more_vert),
-                tooltip: 'Show menu',
-                onPressed: () => controller.isOpen ? controller.close() : controller.open(),
-              );
-            },
-            menuChildren: [
-              MenuItemButton(
-                onPressed: () {
-                  ref.read(routerProvider).push(Routes.shareList(listId));
-                },
-                leadingIcon: const Icon(Icons.people),
-                child: const Text('Share list'),
-              ),
-            ],
-          ),
+          Builder(builder: (context) {
+            return IconButton(
+              icon: const Icon(Icons.more_vert),
+              tooltip: 'Show menu',
+              onPressed: () => Scaffold.of(context).openEndDrawer(),
+            );
+          }),
         ],
       ),
+      endDrawer: ListDetailDrawer(listId: listId),
       body: state.when(
         notFound: () => const Center(child: Text('List not found')),
         error: () => const Center(child: Text('Failed to load list')),
