@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../models/list_summary.dart';
 import '../models/shopping_item.dart';
 import '../services/firestore.dart';
 import 'delay_provider_dispose.dart';
@@ -34,7 +36,15 @@ class ShoppingListItemRepo extends _$ShoppingListItemRepo {
       addedByUserId: user!.id,
       completed: false,
     );
-    await fs.collection('lists/$listId/items').add(item.toFirestore());
+    final batch = fs.batch();
+    final itemDoc = fs.collection('lists/$listId/items').doc();
+    final listDoc = fs.doc('lists/$listId');
+    batch.set(itemDoc, item.toFirestore());
+    batch.update(listDoc, {
+      ListSummary.fieldKeys.itemCount: FieldValue.increment(1),
+      '${ListSummary.fieldKeys.lastModified}.${user.id}': DateTime.now().millisecondsSinceEpoch,
+    });
+    await batch.commit();
   }
 
   Future<void> toggleItem(ShoppingItem item) async {

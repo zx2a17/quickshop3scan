@@ -41,8 +41,8 @@ class ListSummary with _$ListSummary {
       ownerId: json['ownerId'],
       editorIds: List<String>.from(json['editorIds']),
       editors: List<User>.from(List<Map<String, dynamic>>.from(json['editors']).map(User.fromJson)),
-      itemCount: json['itemCount'],
-      lastModified: Map<String, int>.from(json['lastModified']),
+      itemCount: json[fieldKeys.itemCount],
+      lastModified: Map<String, int>.from(json[fieldKeys.lastModified]),
       listType: parseListType(json['listType']),
     );
   }
@@ -59,11 +59,19 @@ class ListSummary with _$ListSummary {
                 'email': e.email,
               })
           .toList(),
-      'itemCount': itemCount,
-      'lastModified': lastModified,
+      fieldKeys.itemCount: itemCount,
+      fieldKeys.lastModified: lastModified,
       'listType': listType.name,
     };
   }
+
+  static const ListSummaryFieldKeys fieldKeys = ListSummaryFieldKeys();
+}
+
+class ListSummaryFieldKeys {
+  const ListSummaryFieldKeys();
+  final String itemCount = 'itemCount';
+  final String lastModified = 'lastModified';
 }
 
 enum ListType {
