@@ -15,7 +15,7 @@ class ListDetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(listDetailPageStateProvider(listId));
+    final state = ref.watch(listDetailViewModelProvider(listId));
     final listTitle = state.maybeWhen(
       shoppingList: (list, _) => list.name,
       checklist: (list, _) => list.name,

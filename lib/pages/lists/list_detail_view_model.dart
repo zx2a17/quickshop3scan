@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../analytics/crash_reporter.dart';
 import '../../models/checklist_item.dart';
 import '../../models/list_summary.dart';
 import '../../models/shopping_item.dart';
@@ -39,13 +40,14 @@ class ShoppingListPageItem with _$ShoppingListPageItem {
 }
 
 @riverpod
-ListDetailViewModel listDetailPageState(Ref ref, String listId) {
+ListDetailViewModel listDetailViewModel(Ref ref, String listId) {
   final listAsyncValue = ref.watch(listProvider(listId));
   if (listAsyncValue.isLoading) {
     return const ListDetailViewModel.loading();
   }
 
   if (listAsyncValue.hasError) {
+    ref.read(crashReporterProvider).reportAsyncError(listAsyncValue);
     return const ListDetailViewModel.error();
   }
 
@@ -70,6 +72,7 @@ ListDetailViewModel _shoppingList(Ref ref, ListSummary list) {
   }
 
   if (itemsAsyncValue.hasError) {
+    ref.read(crashReporterProvider).reportAsyncError(itemsAsyncValue);
     return const ListDetailViewModel.error();
   }
 

@@ -28,7 +28,7 @@ class EditListPage extends ConsumerWidget {
 }
 
 class _EditListView extends ConsumerStatefulWidget {
-  const _EditListView({required this.list, super.key});
+  const _EditListView({required this.list});
   final ListSummary list;
 
   @override
