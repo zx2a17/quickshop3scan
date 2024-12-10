@@ -31,6 +31,7 @@ class CrashReporter {
 
   void report(dynamic error, StackTrace stackTrace) {
     if (kDebugMode) {
+      print('QSLog-Error: See error details below');
       print(error);
       print(stackTrace);
     } else {
