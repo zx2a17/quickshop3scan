@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../repositories/list_repo.dart';
+import '../../repositories/user_repo.dart';
 import '../../router.dart';
 
 class ListDetailDrawer extends ConsumerStatefulWidget {
@@ -16,6 +17,8 @@ class _ListDetailDrawerState extends ConsumerState<ListDetailDrawer> {
   @override
   Widget build(BuildContext context) {
     final list = ref.watch(listProvider(widget.listId)).valueOrNull;
+    final user = ref.watch(userRepoProvider);
+    final isOwner = list?.ownerId == user!.id;
     final listName = list?.name ?? 'List name';
     final itemCount = list?.itemCount ?? 0;
     return Drawer(
@@ -64,25 +67,27 @@ class _ListDetailDrawerState extends ConsumerState<ListDetailDrawer> {
               throw UnimplementedError();
             },
           ),
-          const Divider(
-            thickness: 1,
-            indent: 16,
-            endIndent: 16,
-          ),
-          ListTile(
-            leading: const Icon(Icons.edit),
-            title: const Text('Rename list'),
-            onTap: () {
-              ref.read(routerProvider).push(Routes.editList(widget.listId));
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.delete),
-            title: const Text('Delete list'),
-            onTap: () {
-              throw UnimplementedError();
-            },
-          ),
+          if (isOwner) ...[
+            const Divider(
+              thickness: 1,
+              indent: 16,
+              endIndent: 16,
+            ),
+            ListTile(
+              leading: const Icon(Icons.edit),
+              title: const Text('Rename list'),
+              onTap: () {
+                ref.read(routerProvider).push(Routes.editList(widget.listId));
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.delete),
+              title: const Text('Delete list'),
+              onTap: () {
+                throw UnimplementedError();
+              },
+            )
+          ],
         ],
       ),
     );
