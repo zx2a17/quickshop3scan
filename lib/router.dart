@@ -8,6 +8,7 @@ import 'analytics/crash_reporter.dart';
 import 'analytics/logger.dart';
 import 'pages/favourites/favourites_page.dart';
 import 'pages/home/home_page.dart';
+import 'pages/lists/edit_list_page.dart';
 import 'pages/lists/invites/list_invite_details_page.dart';
 import 'pages/lists/items/new_shopping_item_page.dart';
 import 'pages/lists/list_detail_page.dart';
@@ -84,6 +85,13 @@ GoRouter router(Ref ref) {
                         path: '${_RouteSegments.items}/${_RouteSegments.shopping}/new',
                         parentNavigatorKey: _rootNavigatorKey,
                         builder: (context, state) => NewShoppingItemPage(
+                          listId: state.pathParameters[_RouteParams.listId]!,
+                        ),
+                      ),
+                      GoRoute(
+                        path: _RouteSegments.edit,
+                        parentNavigatorKey: _rootNavigatorKey,
+                        builder: (context, state) => EditListPage(
                           listId: state.pathParameters[_RouteParams.listId]!,
                         ),
                       ),
@@ -223,6 +231,7 @@ class _RouteSegments {
   static const recipes = 'recipes';
   static const favourites = 'favourites';
   static const newItem = 'new';
+  static const edit = 'edit';
   static const share = 'share';
   static const notFound = 'not-found';
   static const invites = 'invites';
@@ -240,18 +249,19 @@ class Routes {
   /// to decide which page the user should be redirected to after logging in.
   static const postLogin = '/post-login';
   static const loginForInvite = '/${_RouteSegments.login}-invite';
-  static const loginEmail = '${Routes.login}/${_RouteSegments.email}';
-  static const loginSetName = '${Routes.login}/${_RouteSegments.setName}';
+  static const loginEmail = '$login/${_RouteSegments.email}';
+  static const loginSetName = '$login/${_RouteSegments.setName}';
 
   static const settings = '/${_RouteSegments.settings}';
   static const lists = '/${_RouteSegments.lists}';
-  static const newList = '${Routes.lists}/${_RouteSegments.newItem}';
-  static String listDetail(String listId) => '${Routes.lists}/$listId';
+  static const newList = '$lists/${_RouteSegments.newItem}';
+  static String listDetail(String listId) => '$lists/$listId';
+  static String editList(String listId) => '${listDetail(listId)}/${_RouteSegments.edit}';
   static String newShoppingListItem(String listId) =>
-      '${Routes.listDetail(listId)}/${_RouteSegments.items}/${_RouteSegments.shopping}/${_RouteSegments.newItem}';
+      '${listDetail(listId)}/${_RouteSegments.items}/${_RouteSegments.shopping}/${_RouteSegments.newItem}';
   static String newChecklistItem(String listId) =>
-      '${Routes.listDetail(listId)}/${_RouteSegments.items}/${_RouteSegments.checklist}/${_RouteSegments.newItem}';
-  static String shareList(String listId) => '${Routes.listDetail(listId)}/${_RouteSegments.share}';
+      '${listDetail(listId)}/${_RouteSegments.items}/${_RouteSegments.checklist}/${_RouteSegments.newItem}';
+  static String shareList(String listId) => '${listDetail(listId)}/${_RouteSegments.share}';
 
   static const recipes = '/${_RouteSegments.recipes}';
   static const newRecipe = '${Routes.recipes}/${_RouteSegments.newItem}';
@@ -259,6 +269,5 @@ class Routes {
 
   static const favourites = '/${_RouteSegments.favourites}';
   static const notFound = '/${_RouteSegments.notFound}';
-  static String listInviteDetails(String inviteId) =>
-      '${Routes.lists}/${_RouteSegments.invites}/$inviteId';
+  static String listInviteDetails(String inviteId) => '$lists/${_RouteSegments.invites}/$inviteId';
 }

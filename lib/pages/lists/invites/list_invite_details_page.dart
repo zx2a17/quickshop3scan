@@ -7,6 +7,7 @@ import '../../../models/list_invite.dart';
 import '../../../models/list_summary.dart';
 import '../../../repositories/list_repo.dart';
 import '../../../router.dart';
+import '../../../widgets/button_progress_indicator.dart';
 import 'list_invite_view_model.dart';
 
 class ListInviteDetailsPage extends ConsumerWidget {
@@ -173,9 +174,7 @@ class _PendingInvitationViewState extends ConsumerState<_PendingInvitationView> 
               Expanded(
                 child: ElevatedButton(
                   onPressed: _acceptInProgress ? null : _acceptListInvitation,
-                  child: _acceptInProgress
-                      ? const SizedBox(height: 16, width: 16, child: CircularProgressIndicator())
-                      : const Text('Accept'),
+                  child: _acceptInProgress ? const ButtonProgressIndicator() : const Text('Accept'),
                 ),
               ),
             ],

@@ -20,7 +20,7 @@ class ListRepo extends _$ListRepo {
     }
     return fs
         .collection('lists')
-        .where('editorIds', arrayContains: user.id)
+        .where(ListSummary.fieldKeys.editorIds, arrayContains: user.id)
         .snapshots()
         .map((snapshot) {
       return snapshot.docs.map(ListSummary.fromFirestore).toList();
@@ -46,6 +46,15 @@ class ListRepo extends _$ListRepo {
     );
     final listDoc = await fs.collection('lists').add(list.toFirestore());
     return listDoc.id;
+  }
+
+  Future<void> updateListName(String listId, String name) async {
+    final fs = ref.read(firestoreProvider);
+    final user = ref.read(userRepoProvider);
+    await fs.collection('lists').doc(listId).update({
+      ListSummary.fieldKeys.name: name,
+      '${ListSummary.fieldKeys.lastModified}.${user!.id}': DateTime.now().millisecondsSinceEpoch,
+    });
   }
 
   Future<AcceptInviteResult> acceptListInvite(String inviteId) async {

@@ -141,9 +141,7 @@ class _SharingLinkTileState extends ConsumerState<SharingLinkTile> {
                 children: [
                   Icon(Icons.share),
                   SizedBox(width: 12),
-                  Text(
-                    'Share',
-                  ),
+                  Text('Share'),
                 ],
               ),
             ),

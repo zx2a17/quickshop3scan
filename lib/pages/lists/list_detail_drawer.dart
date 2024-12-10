@@ -73,7 +73,7 @@ class _ListDetailDrawerState extends ConsumerState<ListDetailDrawer> {
             leading: const Icon(Icons.edit),
             title: const Text('Rename list'),
             onTap: () {
-              throw UnimplementedError();
+              ref.read(routerProvider).push(Routes.editList(widget.listId));
             },
           ),
           ListTile(

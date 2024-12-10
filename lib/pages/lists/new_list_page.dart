@@ -5,6 +5,7 @@ import '../../analytics/crash_reporter.dart';
 import '../../models/list_summary.dart';
 import '../../repositories/list_repo.dart';
 import '../../router.dart';
+import '../../widgets/button_progress_indicator.dart';
 
 class NewListPage extends ConsumerStatefulWidget {
   const NewListPage({super.key});
@@ -83,13 +84,8 @@ class _NewListPageState extends ConsumerState<NewListPage> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: createInProgress ? null : _onSubmit,
-                    child: createInProgress
-                        ? const SizedBox(
-                            height: 12,
-                            width: 12,
-                            child: CircularProgressIndicator(),
-                          )
-                        : const Text('Create'),
+                    child:
+                        createInProgress ? const ButtonProgressIndicator() : const Text('Create'),
                   ),
                 ),
               ],
