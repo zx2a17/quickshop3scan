@@ -15,6 +15,11 @@ extension DelayProviderDisposeExtension on Ref {
   /// Therefore a provider in a delayed disposal state merely maintains the value it had
   /// when the last listener disconnected - i.e. when [onCancel] was called. A new value will only
   /// be rebuilt with the new upstream data once a new listener is connected again.
+  ///
+  /// When a provider [onDispose] is invoked, all existing keepAlive links are removed, so the
+  /// provider will not be notified again of any further upstream changes until a new listener is
+  /// connected again. If using Firestore as an upstream data source, this means the query snapshot
+  /// listener stays active until the data changes, then the snapshot listener is released.
   void delayDispose(Duration duration) {
     KeepAliveLink? link;
     Timer? timer;

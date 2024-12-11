@@ -218,6 +218,36 @@ void main() {
 
   test(
       'GIVEN an auto dispose provider with delay dispose '
+      'WHEN there are multiple upstream data changes while the provider is in a delayed dispose state '
+      'THEN the provider is disposed only once and not rebuilt', () {
+    fakeAsync((fakeAsync) {
+      final auth = FbAuthOverride(user: buildUser());
+      final container = createContainer(overrides: [auth.providerOverride]);
+      final subscription = container.listen(delayDisposeProvider, (_, __) {});
+
+      expect(_rebuildCount, 1);
+
+      // Put the provider in a delayed dispose state by cancelling the listener
+      subscription.close();
+      fakeAsync.elapse(_oneEventLoop);
+      expect(_disposeCount, 0);
+
+      // Simulate upstream data changing multiple times
+      _upstreamController.add(42);
+      fakeAsync.elapse(_oneEventLoop);
+      _upstreamController.add(43);
+      fakeAsync.elapse(_oneEventLoop);
+      _upstreamController.add(44);
+      fakeAsync.elapse(_oneEventLoop);
+
+      // The provider should have been disposed only once and not rebuilt
+      expect(_disposeCount, 1);
+      expect(_rebuildCount, 1);
+    });
+  });
+
+  test(
+      'GIVEN an auto dispose provider with delay dispose '
       'WHEN a new listener attaches while the provider is in a delayed dispose state '
       'THEN it should immediately receive the cached value without rebuilding the provider', () {
     fakeAsync((fakeAsync) {
