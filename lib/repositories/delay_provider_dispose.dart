@@ -40,5 +40,16 @@ extension DelayProviderDisposeExtension on Ref {
         timer = null;
       });
     });
+
+    // When the provider is disposed due to a rebuild triggered by upstream changes, release the
+    // keep alive link if it exists since the data is now out-of-date.
+    // If the provider is being fully disposed of when there are no current listeners and the
+    // keepAlive timer has already expired, then the link and timer will already be null.
+    onDispose(() {
+      link?.close();
+      timer?.cancel();
+      link = null;
+      timer = null;
+    });
   }
 }

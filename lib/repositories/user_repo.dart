@@ -3,12 +3,13 @@ import 'package:riverpod/riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../models/user.dart';
+import '../services/firebase_auth.dart';
 
 part 'user_repo.g.dart';
 
 @riverpod
 Stream<auth.User?> _authUserStream(Ref ref) {
-  return auth.FirebaseAuth.instance.authStateChanges();
+  return ref.read(firebaseAuthProvider).authStateChanges();
 }
 
 @riverpod
@@ -17,7 +18,7 @@ class UserRepo extends _$UserRepo {
   User? build() {
     // Watch for changes on the auth user stream, but we can get the current user synchronously.
     final _ = ref.watch(_authUserStreamProvider);
-    final authUser = auth.FirebaseAuth.instance.currentUser;
+    final authUser = ref.read(firebaseAuthProvider).currentUser;
     if (authUser != null) {
       return _fromFirebase(authUser);
     }
@@ -25,11 +26,11 @@ class UserRepo extends _$UserRepo {
   }
 
   void logout() {
-    auth.FirebaseAuth.instance.signOut();
+    ref.read(firebaseAuthProvider).signOut();
   }
 
   void setUserName(String name) {
-    final user = auth.FirebaseAuth.instance.currentUser;
+    final user = ref.read(firebaseAuthProvider).currentUser;
     if (user != null) {
       user.updateDisplayName(name);
       // Synchnronously update the local state with the new name

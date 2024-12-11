@@ -6,7 +6,7 @@ part of 'user_repo.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$authUserStreamHash() => r'935570a470433a63384f20a1551ec1c98c5063de';
+String _$authUserStreamHash() => r'1367a1a9c96ec782c20b75803f37524c726f2801';
 
 /// See also [_authUserStream].
 @ProviderFor(_authUserStream)
@@ -39,7 +39,7 @@ final loggedInProvider = AutoDisposeProvider<bool>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef LoggedInRef = AutoDisposeProviderRef<bool>;
-String _$userRepoHash() => r'2d39f2eeb86f809b207394e4c30f82d2ab3087aa';
+String _$userRepoHash() => r'98159d9ccaa12714d76b2baee23ca6a93d8529a2';
 
 /// See also [UserRepo].
 @ProviderFor(UserRepo)
