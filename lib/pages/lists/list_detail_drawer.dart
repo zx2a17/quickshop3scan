@@ -82,9 +82,7 @@ class _ListDetailDrawerState extends ConsumerState<ListDetailDrawer> {
             ListTile(
               leading: const Icon(Icons.delete),
               title: const Text('Delete list'),
-              onTap: () {
-                throw UnimplementedError();
-              },
+              onTap: onDeleteList,
             )
           ],
         ],
@@ -105,5 +103,41 @@ class _ListDetailDrawerState extends ConsumerState<ListDetailDrawer> {
         ),
       );
     }
+  }
+
+  void onDeleteList() {
+    showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          title: const Text('Delete list'),
+          content: const Text(
+              'Are you sure you want to delete this list? Any other users will also loose access, and the list cannot be recovered.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                ref.read(listRepoProvider.notifier).deleteList(widget.listId);
+                Navigator.of(dialogContext).pop();
+                Scaffold.of(context).closeEndDrawer();
+                ref.read(routerProvider).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('List deleted'),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              },
+              child: const Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

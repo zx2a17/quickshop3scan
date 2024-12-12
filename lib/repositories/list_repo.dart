@@ -68,6 +68,11 @@ class ListRepo extends _$ListRepo {
       HttpResultStatus.unknownError => AcceptInviteResult.unknownError,
     };
   }
+
+  Future<void> deleteList(String listId) {
+    final fs = ref.read(firestoreProvider);
+    return fs.collection('lists').doc(listId).delete();
+  }
 }
 
 @riverpod
