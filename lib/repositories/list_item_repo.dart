@@ -53,4 +53,38 @@ class ShoppingListItemRepo extends _$ShoppingListItemRepo {
       ShoppingItem.fieldKeys.completed: !item.completed,
     });
   }
+
+  Future<int> deleteCompletedItems() async {
+    final fs = ref.read(firestoreProvider);
+    final user = ref.read(userRepoProvider);
+    final itemDocs = await fs.collection('lists/$listId/items').get();
+    final items = itemDocs.docs.map(ShoppingItem.fromFirestore);
+    final listDoc = fs.doc('lists/$listId');
+
+    final batch = fs.batch();
+
+    int deletedCount = 0;
+    for (final item in items) {
+      if (item.completed) {
+        deletedCount++;
+        batch.delete(fs.doc(item.path));
+      }
+    }
+    batch.update(listDoc, {
+      ListSummary.fieldKeys.itemCount: FieldValue.increment(-deletedCount),
+      '${ListSummary.fieldKeys.lastModified}.${user!.id}': DateTime.now().millisecondsSinceEpoch,
+    });
+
+    // Because we want to prioritize offline support, deletes are not performed in a transaction.
+    // This means that concurrent deletes could cause the itemCount to be incorrect. Creating this
+    // document triggers a cloud function that checks the item count and updates it if needed.
+    final deleteDoc = fs.collection('lists/$listId/_itemDeletes').doc();
+    batch.set(deleteDoc, {
+      'timestamp': DateTime.now().millisecondsSinceEpoch,
+      'userId': user.id,
+      'deletedCount': deletedCount
+    });
+    await batch.commit();
+    return deletedCount;
+  }
 }

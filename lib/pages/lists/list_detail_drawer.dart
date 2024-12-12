@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../repositories/list_item_repo.dart';
 import '../../repositories/list_repo.dart';
 import '../../repositories/user_repo.dart';
 import '../../router.dart';
@@ -63,9 +64,7 @@ class _ListDetailDrawerState extends ConsumerState<ListDetailDrawer> {
           ListTile(
             leading: const Icon(Icons.check_box_outlined),
             title: const Text('Remove checked items'),
-            onTap: () {
-              throw UnimplementedError();
-            },
+            onTap: onRemoveCheckedItems,
           ),
           if (isOwner) ...[
             const Divider(
@@ -91,5 +90,20 @@ class _ListDetailDrawerState extends ConsumerState<ListDetailDrawer> {
         ],
       ),
     );
+  }
+
+  void onRemoveCheckedItems() async {
+    final deleteFuture =
+        ref.read(shoppingListItemRepoProvider(widget.listId).notifier).deleteCompletedItems();
+    Scaffold.of(context).closeEndDrawer();
+    final deletedCount = await deleteFuture;
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Deleted $deletedCount items'),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    }
   }
 }
